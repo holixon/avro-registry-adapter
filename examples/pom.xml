@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.toolisticon.avro._</groupId>
+    <artifactId>avro-adapter-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../parent/pom.xml</relativePath>
+  </parent>
+
+  <artifactId>examples</artifactId>
+  <packaging>pom</packaging>
+
+  <properties>
+    <jacoco.skip>true</jacoco.skip>
+    <maven.javadoc.skip>true</maven.javadoc.skip>
+    <maven.sources.skip>true</maven.sources.skip>
+    <maven.install.skip>true</maven.install.skip>
+    <gpg.skip>true</gpg.skip>
+
+    <springdoc.version>1.5.6</springdoc.version>
+  </properties>
+
+<!--  <modules>-->
+<!--    <module>bankaccount-springboot-kotlin</module>-->
+<!--  </modules>-->
+
+<!--  <dependencyManagement>-->
+<!--    <dependencies>-->
+<!--      <dependency>-->
+<!--        <groupId>org.springdoc</groupId>-->
+<!--        <artifactId>springdoc-openapi-ui</artifactId>-->
+<!--        <version>${springdoc.version}</version>-->
+<!--      </dependency>-->
+<!--      <dependency>-->
+<!--        <groupId>org.springdoc</groupId>-->
+<!--        <artifactId>springdoc-openapi-kotlin</artifactId>-->
+<!--        <version>${springdoc.version}</version>-->
+<!--      </dependency>-->
+<!--    </dependencies>-->
+<!--  </dependencyManagement>-->
+
+  <dependencies>
+    <!-- No dependencies here, define explicitely in example -->
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.tngtech.jgiven</groupId>
+        <artifactId>jgiven-maven-plugin</artifactId>
+        <version>${jgiven.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <format>html</format>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>report-aggregate</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>report-aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
