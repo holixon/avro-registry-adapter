@@ -27,6 +27,12 @@
         <version>${project.version}</version>
       </dependency>
 
+      <dependency>
+        <artifactId>avro-adapter-apicurio-rest</artifactId>
+        <groupId>${project.groupId}</groupId>
+        <version>${project.version}</version>
+      </dependency>
+
       <!-- AVRO -->
       <dependency>
         <groupId>org.apache.avro</groupId>

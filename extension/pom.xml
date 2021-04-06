@@ -16,7 +16,7 @@
   <modules>
     <module>api</module>
     <module>default</module>
-    <module>apicurio-rest</module>
+    <module>apicurio/apicurio-rest</module>
   </modules>
 
   <dependencies>
