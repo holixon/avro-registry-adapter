@@ -1,0 +1,35 @@
+package io.toolisticon.avro.adapter.api
+
+import org.apache.avro.Schema
+import java.util.*
+
+/**
+ * The Schema Registry is responsible for storing and retrieving arvo schema files.
+ */
+interface AvroSchemaRegistry {
+
+  /**
+   * Stores a new [Schema] (version) in the repository.
+   */
+  fun register(schema: Schema): AvroSchemaWithId
+
+  /**
+   * Finds a stored [Schema] based on its unique [SchemaId] (e.g. its fingerprint).
+   */
+  fun findById(globalId: SchemaId): Optional<AvroSchemaWithId>
+
+  /**
+   * Finds a stored [Schema] based on its derived info.
+   */
+  fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId>
+
+  /**
+   * Finds all stored [Schema]s based on its context and name (e.g. FQN).
+   */
+  fun findByContextAndName(context: String, name: String): List<AvroSchemaWithId>
+
+  /**
+   * Simply lists all stored [Schema]s.
+   */
+  fun findAll(): List<AvroSchemaWithId>
+}

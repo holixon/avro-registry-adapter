@@ -12,18 +12,57 @@
   <artifactId>avro-adapter-parent</artifactId>
   <packaging>pom</packaging>
 
+  <properties>
+    <spring-boot.version>2.4.4</spring-boot.version>
+    <kotlin-logging.version>2.0.6</kotlin-logging.version>
+    <jgiven.version>1.0.0</jgiven.version>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-stdlib-jdk8</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-reflect</artifactId>
-    </dependency>
+    <jgiven-kotlin.version>0.1.0</jgiven-kotlin.version>
 
-  </dependencies>
+    <darwin.version>1.2.1</darwin.version>
+
+    <pattern.class.itest>**/*ITest.*</pattern.class.itest>
+    <pattern.package.itest>**/itest/**/*.*</pattern.package.itest>
+
+    <jacoco.skip>true</jacoco.skip>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>io.toolisticon.avro</groupId>
+        <artifactId>avro-adapter-bom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- SPRING -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- KOTLIN (note: this has to be defined AFTER spring boot or the version is overwritten)-->
+      <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-bom</artifactId>
+        <version>${kotlin.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
+      <dependency>
+        <groupId>io.toolisticon.avro._</groupId>
+        <artifactId>avro-adapter-lib-test</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <plugins>

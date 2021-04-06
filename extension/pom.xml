@@ -4,22 +4,20 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-      <groupId>io.toolisticon.avro._</groupId>
-      <artifactId>avro-adapter-parent</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
+    <groupId>io.toolisticon.avro._</groupId>
+    <artifactId>avro-adapter-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
-    </parent>
-
+  </parent>
 
   <artifactId>extension</artifactId>
   <packaging>pom</packaging>
 
-<!--  <modules>-->
-<!--    <module>common</module>-->
-<!--    <module>kotlin</module>-->
-<!--    <module>serializer</module>-->
-<!--    <module>spring</module>-->
-<!--  </modules>-->
+  <modules>
+    <module>api</module>
+    <module>default</module>
+    <module>apicurio-rest</module>
+  </modules>
 
   <dependencies>
     <dependency>
@@ -30,8 +28,16 @@
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-reflect</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.apache.avro</groupId>
+      <artifactId>avro</artifactId>
+    </dependency>
 
-
+    <dependency>
+      <groupId>io.toolisticon.avro._</groupId>
+      <artifactId>avro-adapter-lib-test</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
