@@ -11,7 +11,17 @@
 
   <artifactId>avro-adapter-lib-test</artifactId>
 
+  <properties>
+    <testcontainers.version>1.15.2</testcontainers.version>
+  </properties>
+
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-test</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -33,6 +43,13 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${testcontainers.version}</version>
       <scope>compile</scope>
     </dependency>
 
@@ -115,6 +132,9 @@
               <goal>schema</goal>
             </goals>
             <configuration>
+              <excludes>
+                <exclude>**/*-v4712.avsc</exclude>
+              </excludes>
               <sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
               <outputDirectory>${project.build.directory}/generated-sources/avro/</outputDirectory>
               <stringType>String</stringType>

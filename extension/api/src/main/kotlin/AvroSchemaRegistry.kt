@@ -16,7 +16,7 @@ interface AvroSchemaRegistry {
   /**
    * Finds a stored [Schema] based on its unique [SchemaId] (e.g. its fingerprint).
    */
-  fun findById(globalId: SchemaId): Optional<AvroSchemaWithId>
+  fun findById(schemaId: SchemaId): Optional<AvroSchemaWithId>
 
   /**
    * Finds a stored [Schema] based on its derived info.

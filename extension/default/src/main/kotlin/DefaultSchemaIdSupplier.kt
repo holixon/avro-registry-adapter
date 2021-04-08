@@ -6,5 +6,5 @@ import io.toolisticon.avro.adapter.common.ext.SchemaExt.fingerprint
 import org.apache.avro.Schema
 
 class DefaultSchemaIdSupplier : SchemaIdSupplier {
-  override fun apply(schema: Schema): SchemaId = schema.fingerprint
+  override fun apply(schema: Schema): SchemaId = schema.fingerprint.toString()
 }

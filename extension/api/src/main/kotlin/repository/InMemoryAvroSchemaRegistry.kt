@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap
  * Obviously, this is primarily meant for testing and should not be used for real life projects.
  */
 class InMemoryAvroSchemaRegistry(
-  private val store: ConcurrentHashMap<Long, Pair<AvroSchemaInfo, Schema>> = ConcurrentHashMap(),
+  private val store: ConcurrentHashMap<String, Pair<AvroSchemaInfo, Schema>> = ConcurrentHashMap(),
   val schemaIdSupplier: SchemaIdSupplier,
   val schemaRevisionResolver: SchemaRevisionResolver
 ) : AvroSchemaRegistry, AutoCloseable {
@@ -28,8 +28,9 @@ class InMemoryAvroSchemaRegistry(
       }
   }
 
-  override fun findById(globalId: Long): Optional<AvroSchemaWithId> = Optional.ofNullable(
-    store[globalId]).map { AvroSchemaWithIdData(globalId, it.second, it.first.revision) }
+  override fun findById(schemaId: SchemaId): Optional<AvroSchemaWithId> = Optional.ofNullable(
+    store[schemaId]
+  ).map { AvroSchemaWithIdData(schemaId, it.second, it.first.revision) }
 
   override fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId> = Optional.ofNullable(store.entries
     .filter { it.value.first == info }
@@ -47,6 +48,6 @@ class InMemoryAvroSchemaRegistry(
     store.clear()
   }
 
-  private fun Map.Entry<Long, Pair<AvroSchemaInfo, Schema>>.toSchemaData() = AvroSchemaWithIdData(key, value.second)
+  private fun Map.Entry<SchemaId, Pair<AvroSchemaInfo, Schema>>.toSchemaData() = AvroSchemaWithIdData(key, value.second)
 
 }

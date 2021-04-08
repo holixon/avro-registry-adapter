@@ -27,7 +27,10 @@ object AvroAdapterDefault {
         require(buffer.remaining() > HEADER_LENGTH) { "Needs to have minlength $HEADER_LENGTH" }
         require(buffer[0] == V1_HEADER[0] && buffer[1] == V1_HEADER[1]) { "bytes need to start with ${V1_HEADER.toHexString()}" }
 
-        return SchemaIdAndPayload(schemaId = buffer.getLong(2), payload = bytes.copyOfRange(HEADER_LENGTH, bytes.size))
+        return SchemaIdAndPayload(
+          schemaId = buffer.getLong(2).toString(),
+          payload = bytes.copyOfRange(HEADER_LENGTH, bytes.size)
+        )
       }
     }
 

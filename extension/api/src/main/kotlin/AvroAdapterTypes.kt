@@ -2,18 +2,8 @@ package io.toolisticon.avro.adapter.api
 
 import org.apache.avro.Schema
 
-import org.apache.avro.generic.GenericDatumWriter
 
-import java.io.ByteArrayOutputStream
-
-import org.apache.avro.generic.GenericDatumReader
-import org.apache.avro.io.*
-
-import java.io.IOException
-import java.nio.charset.StandardCharsets
-
-
-typealias SchemaId = Long
+typealias SchemaId = String
 typealias SchemaRevision = String
 typealias AvroSingleObjectEncoded = ByteArray
 
@@ -56,21 +46,49 @@ interface AvroSchemaWithId : AvroSchemaInfo {
 
 }
 
-@Throws(IOException::class)
-fun avroToJson(schema: Schema?, avroBinary: ByteArray?): String? {
-  // byte to datum
-  val datumReader: DatumReader<Any?> = GenericDatumReader(schema)
-  val decoder: Decoder = DecoderFactory.get().binaryDecoder(avroBinary, null)
-  val avroDatum = datumReader.read(null, decoder)
+interface AvroSchemaMeta {
+   val name: String?
 
-  // datum to json
-  val json: String? = null
-  ByteArrayOutputStream().use { baos ->
-    val writer: DatumWriter<Any?> = GenericDatumWriter(schema)
-    val encoder = EncoderFactory.get().jsonEncoder(schema, baos, false)
-    writer.write(avroDatum, encoder)
-    encoder.flush()
-    baos.flush()
-    return String(baos.toByteArray(), StandardCharsets.UTF_8)
-  }
+   val description: String?
+
+    val labels: List<String>?
+
+    // FIXME: implment meta
+//
+//  @JsonProperty("createdBy")
+//  private val createdBy: String? = null
+//
+//  @JsonProperty("createdOn")
+//  private val createdOn: Long = 0
+//
+//  @JsonProperty("modifiedBy")
+//  private val modifiedBy: String? = null
+//
+//  @JsonProperty("modifiedOn")
+//  private val modifiedOn: Long = 0
+//
+//  @JsonProperty("id")
+//  @JsonPropertyDescription("")
+//  private val id: String? = null
+//
+//  @JsonProperty("version")
+//  @JsonPropertyDescription("")
+//  private val version: Int? = null
+//
+//  @JsonProperty("type")
+//  @JsonPropertyDescription("")
+//  private val type: io.apicurio.registry.types.ArtifactType? = null
+//
+//  @JsonProperty("globalId")
+//  @JsonPropertyDescription("")
+//  private val globalId: Long? = null
+//
+//  @JsonProperty("state")
+//  @JsonPropertyDescription("Describes the state of an artifact or artifact version.  The following states\nare possible:\n\n* ENABLED\n* DISABLED\n* DEPRECATED\n")
+//  private val state: ArtifactState? = null
+//
+//  @JsonProperty("properties")
+//  @JsonPropertyDescription("A set of name-value properties for an artifact or artifact version.")
+//  private val properties: Map<String, String>? = null
+
 }

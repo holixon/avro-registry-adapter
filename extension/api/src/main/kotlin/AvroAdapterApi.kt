@@ -5,7 +5,9 @@ import org.apache.avro.Schema
 import org.apache.avro.message.SchemaStore
 import org.apache.avro.specific.SpecificData
 import org.apache.avro.specific.SpecificRecordBase
+import java.io.ByteArrayInputStream
 import java.nio.ByteBuffer
+import java.nio.charset.StandardCharsets
 import java.util.*
 import java.util.function.BiFunction
 import java.util.function.Function
@@ -17,16 +19,9 @@ import kotlin.reflect.KClass
 interface SchemaIdSupplier : Function<Schema, SchemaId>
 
 /**
- * Search schema based on id (fingerprint).
+ * Search schema based on schemaId.
  */
-interface SchemaResolver : Function<SchemaId, Optional<AvroSchemaWithId>>, SchemaStore {
-
-  override fun findByFingerprint(fingerprint: SchemaId): Schema? = apply(fingerprint)
-    .map { it.schema }
-    .orElse(null)
-
-}
-
+interface SchemaResolver : Function<SchemaId, Optional<AvroSchemaWithId>>
 
 /**
  * Takes encoded avro bytes (containing schema reference) and return decoded payload and the resolved schema.
@@ -45,6 +40,8 @@ interface SchemaRevisionResolver : Function<Schema, Optional<SchemaRevision>>
 
 
 object AvroAdapterApi {
+
+  fun Schema.byteContent() = this.toString().byteInputStream(StandardCharsets.UTF_8)
 
   /**
    * Determines the revision of a given schema by reading the String value of the given object-property.

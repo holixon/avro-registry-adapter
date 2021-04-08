@@ -10,4 +10,5 @@ class DefaultSchemaRevisionResolver : SchemaRevisionResolver {
   private val propertyBasedResolver = AvroAdapterApi.propertyBasedSchemaRevisionResolver(AvroAdapterDefault.PROPERTY_REVISION)
 
   override fun apply(schema: Schema): Optional<SchemaRevision> = propertyBasedResolver.apply(schema)
+
 }
