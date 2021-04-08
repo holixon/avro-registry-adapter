@@ -8,6 +8,7 @@ import io.apicurio.registry.types.ArtifactType
 import io.toolisticon.avro.adapter.api.*
 import io.toolisticon.avro.adapter.api.AvroAdapterApi.byteContent
 import io.toolisticon.avro.adapter.api.type.AvroSchemaWithIdData
+import io.toolisticon.avro.adapter.apicurio.AvroAdapterApicurioRest.description
 import org.apache.avro.Schema
 import org.slf4j.LoggerFactory
 import java.io.InputStream
@@ -36,6 +37,7 @@ class ApicurioAvroSchemaRegistry(
     val metaData: ArtifactMetaData = client.createArtifact(schemaId, ArtifactType.AVRO, IfExistsType.RETURN_OR_UPDATE, content)
 
     client.updateArtifactMetaData(schemaId, EditableMetaData().apply {
+      description = schema.description()
       properties = mapOf(
         KEY_CONTEXT to schema.namespace,
         KEY_REVISION to revision
