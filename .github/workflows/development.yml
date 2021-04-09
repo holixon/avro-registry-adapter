@@ -24,11 +24,11 @@ jobs:
             ${{ runner.os }}-maven
 
       # Get GPG private key into GPG
-      - name: Import GPG Owner Trust
-        run: echo ${{ secrets.GPG_OWNERTRUST }} | base64 --decode | gpg --import-ownertrust
+#      - name: Import GPG Owner Trust
+#        run: echo ${{ secrets.GPG_OWNERTRUST }} | base64 --decode | gpg --import-ownertrust
 
-      - name: Import GPG key
-        run: echo ${{ secrets.GPG_SECRET_KEYS }} | base64 --decode | gpg --import --no-tty --batch --yes
+#      - name: Import GPG key
+#        run: echo ${{ secrets.GPG_SECRET_KEYS }} | base64 --decode | gpg --import --no-tty --batch --yes
 
       # Setup JDK and Maven
       - name: Set up JDK 11
