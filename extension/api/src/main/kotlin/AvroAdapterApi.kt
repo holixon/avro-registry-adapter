@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets
 import java.util.*
 import java.util.function.BiFunction
 import java.util.function.Function
+import java.util.function.Predicate
 import kotlin.reflect.KClass
 
 /**
@@ -38,6 +39,7 @@ interface SingleObjectEncoder : BiFunction<AvroSchemaWithId, ByteArray, AvroSing
  */
 interface SchemaRevisionResolver : Function<Schema, Optional<SchemaRevision>>
 
+interface IsAvroSingleObjectEncodedPredicate : Predicate<ByteBuffer>
 
 object AvroAdapterApi {
 
@@ -50,21 +52,7 @@ object AvroAdapterApi {
     override fun apply(schema: Schema): Optional<SchemaRevision> = Optional.ofNullable(schema.getObjectProp(propertyKey) as String?)
   }
 
-  /**
-   * Converts a byte array into its hexadecimal string representation
-   * e.g. for the V1_HEADER => [C3 01]
-   *
-   * @param separator - what to print between the bytes, defaults to " "
-   * @param prefix - start of string, defaults to "["
-   * @param suffix - end of string, defaults to "]"
-   * @return the hexadecimal string representation of the input byte array
-   */
-  @JvmStatic
-  fun ByteArray.toHexString() : String = this.joinToString(
-    separator = " ",
-    prefix = "[",
-    postfix = "]"
-  ) { "%02X".format(it) }
+
 
   @JvmStatic
   fun schemaForClass(recordClass: Class<*>): Schema = SpecificData(recordClass.classLoader).getSchema(recordClass)
