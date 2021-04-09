@@ -39,8 +39,14 @@ interface SingleObjectEncoder : BiFunction<AvroSchemaWithId, ByteArray, AvroSing
  */
 interface SchemaRevisionResolver : Function<Schema, Optional<SchemaRevision>>
 
+/**
+ * Returns `true` if the [ByteBuffer] conforms to the singleObject encoding specification.
+ */
 interface IsAvroSingleObjectEncodedPredicate : Predicate<ByteBuffer>
 
+/**
+ * Global utility methods.
+ */
 object AvroAdapterApi {
 
   fun Schema.byteContent() = this.toString().byteInputStream(StandardCharsets.UTF_8)
@@ -51,7 +57,6 @@ object AvroAdapterApi {
   fun propertyBasedSchemaRevisionResolver(propertyKey: String): SchemaRevisionResolver = object : SchemaRevisionResolver {
     override fun apply(schema: Schema): Optional<SchemaRevision> = Optional.ofNullable(schema.getObjectProp(propertyKey) as String?)
   }
-
 
 
   @JvmStatic

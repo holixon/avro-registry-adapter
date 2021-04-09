@@ -4,6 +4,9 @@ import io.holixon.avro.adapter.api.AvroPayloadAndSchema
 import io.holixon.avro.adapter.api.AvroSchemaWithId
 import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 
+/**
+ * Data class implementing [AvroPayloadAndSchema].
+ */
 data class AvroPayloadAndSchemaData(
   override val schema: AvroSchemaWithId,
   override val payload: AvroSingleObjectEncoded

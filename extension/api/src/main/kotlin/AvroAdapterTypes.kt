@@ -2,9 +2,19 @@ package io.holixon.avro.adapter.api
 
 import org.apache.avro.Schema
 
-
+/**
+ * The unique id of a schema artifact, published to a repo.
+ */
 typealias SchemaId = String
+
+/**
+ * The version of a schema.
+ */
 typealias SchemaRevision = String
+
+/**
+ * Message encoded as ByteArray.
+ */
 typealias AvroSingleObjectEncoded = ByteArray
 
 /**
@@ -13,6 +23,9 @@ typealias AvroSingleObjectEncoded = ByteArray
  */
 typealias Payload = ByteArray
 
+/**
+ * Wrapper type for [SchemaId] and the encoded message [Payload].
+ */
 interface AvroPayloadAndSchemaId {
   val schemaId: SchemaId
   val payload: Payload
@@ -21,6 +34,9 @@ interface AvroPayloadAndSchemaId {
   operator fun component2() = payload
 }
 
+/**
+ * Wrapper type containing the [Payload], the [Schema] and the artifacts [SchemaId].
+ */
 interface AvroPayloadAndSchema {
   val schema: AvroSchemaWithId
   val payload: Payload
