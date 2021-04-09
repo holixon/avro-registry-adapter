@@ -1,9 +1,9 @@
 package io.holixon.avro.adapter.common
 
-import io.holixon.avro.adapter.api.AvroAdapterApi.toHexString
 import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 import io.holixon.avro.adapter.api.SchemaId
 import io.holixon.avro.adapter.api.SchemaIdSupplier
+import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import io.holixon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -14,6 +14,15 @@ object AvroAdapterDefault {
   val V1_HEADER = byteArrayOf(-61, 1)
   private const val LONG_LENGTH = 8
   private val HEADER_LENGTH = V1_HEADER.size + LONG_LENGTH
+
+  @JvmStatic
+  fun isAvroSingleObjectEncoded(data: ByteArray): Boolean = isAvroSingleObjectEncoded(ByteBuffer.wrap(data))
+
+  @JvmStatic
+  fun isAvroSingleObjectEncoded(data: ByteBuffer): Boolean {
+    val position = data.position()
+    return false;
+  }
 
   /**
    * Extracts [SchemaId] and remaining bytes payload from [AvroSingleObjectEncoded] byte array.

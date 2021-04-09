@@ -2,10 +2,10 @@ package io.holixon.avro.adapter.common.converter
 
 import io.holixon.avro.adapter.api.AvroAdapterApi.fromByteArray
 import io.holixon.avro.adapter.api.AvroAdapterApi.toByteArray
-import io.holixon.avro.adapter.api.AvroAdapterApi.toHexString
 import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 import io.holixon.avro.adapter.api.SchemaResolver
 import io.holixon.avro.adapter.api.converter.SpecificRecordToSingleObjectConverter
+import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import org.apache.avro.specific.SpecificRecordBase
 import org.apache.avro.util.ClassUtils
