@@ -2,10 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.toolisticon.avro._</groupId>
+  <groupId>io.holixon.avro._</groupId>
   <artifactId>avro-adapter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <url>https://github.com/toolisticon/avro-adapter/</url>
+  <url>https://github.com/holixon/avro-adapter/</url>
   <packaging>pom</packaging>
 
   <properties>
@@ -38,7 +38,6 @@
     <module>bom</module>
     <module>lib</module>
     <module>extension</module>
-<!--    <module>lib</module>-->
   </modules>
 
   <build>
@@ -546,16 +545,16 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:toolisticon/avro-adapter.git</connection>
-    <url>scm:git:git@github.com:toolisticon/avro-adapter.git</url>
-    <developerConnection>scm:git:git@github.com:toolisticon/avro-adapter.git</developerConnection>
+    <connection>scm:git:git@github.com:holixon/avro-adapter.git</connection>
+    <url>scm:git:git@github.com:holixon/avro-adapter.git</url>
+    <developerConnection>scm:git:git@github.com:holixon/avro-adapter.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
     <site>
       <id>README</id>
-      <url>https://github.com/toolisticon/axon-avro-serializer</url>
+      <url>https://github.com/holixon/avro-adapter</url>
     </site>
     <snapshotRepository>
       <id>ossrh</id>

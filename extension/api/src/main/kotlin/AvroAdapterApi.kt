@@ -1,6 +1,6 @@
-package io.toolisticon.avro.adapter.api
+package io.holixon.avro.adapter.api
 
-import io.toolisticon.avro.adapter.api.type.*
+import io.holixon.avro.adapter.api.type.*
 import org.apache.avro.Schema
 import org.apache.avro.message.SchemaStore
 import org.apache.avro.specific.SpecificData

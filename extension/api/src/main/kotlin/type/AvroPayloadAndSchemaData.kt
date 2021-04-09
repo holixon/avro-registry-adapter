@@ -1,8 +1,8 @@
-package io.toolisticon.avro.adapter.api.type
+package io.holixon.avro.adapter.api.type
 
-import io.toolisticon.avro.adapter.api.AvroPayloadAndSchema
-import io.toolisticon.avro.adapter.api.AvroSchemaWithId
-import io.toolisticon.avro.adapter.api.AvroSingleObjectEncoded
+import io.holixon.avro.adapter.api.AvroPayloadAndSchema
+import io.holixon.avro.adapter.api.AvroSchemaWithId
+import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 
 data class AvroPayloadAndSchemaData(
   override val schema: AvroSchemaWithId,

@@ -1,4 +1,4 @@
-package io.toolisticon.avro.adapter.common.ext
+package io.holixon.avro.adapter.common.ext
 
 import org.apache.avro.Schema
 import org.apache.avro.SchemaNormalization

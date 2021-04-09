@@ -1,4 +1,4 @@
-package io.holixon.axon.avro.lib.test
+package io.holixon.avro.lib.test
 
 import org.junit.jupiter.api.Test
 

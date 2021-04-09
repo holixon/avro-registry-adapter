@@ -1,4 +1,4 @@
-package io.toolisticon.avro.adapter.api
+package io.holixon.avro.adapter.api
 
 import org.apache.avro.Schema
 import java.util.*

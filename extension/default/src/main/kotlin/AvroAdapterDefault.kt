@@ -1,10 +1,10 @@
-package io.toolisticon.avro.adapter.common
+package io.holixon.avro.adapter.common
 
-import io.toolisticon.avro.adapter.api.AvroAdapterApi.toHexString
-import io.toolisticon.avro.adapter.api.AvroSingleObjectEncoded
-import io.toolisticon.avro.adapter.api.SchemaId
-import io.toolisticon.avro.adapter.api.SchemaIdSupplier
-import io.toolisticon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry
+import io.holixon.avro.adapter.api.AvroAdapterApi.toHexString
+import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
+import io.holixon.avro.adapter.api.SchemaId
+import io.holixon.avro.adapter.api.SchemaIdSupplier
+import io.holixon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 

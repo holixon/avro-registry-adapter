@@ -1,7 +1,7 @@
-package io.toolisticon.avro.adapter.api.type
+package io.holixon.avro.adapter.api.type
 
-import io.holixon.axon.avro.lib.test.AvroAdapterTestLib
-import io.toolisticon.avro.adapter.api.AvroSchemaInfo
+import io.holixon.avro.lib.test.AvroAdapterTestLib
+import io.holixon.avro.adapter.api.AvroSchemaInfo
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

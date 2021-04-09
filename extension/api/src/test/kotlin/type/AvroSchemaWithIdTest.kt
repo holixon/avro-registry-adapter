@@ -1,7 +1,7 @@
-package io.toolisticon.avro.adapter.api.type
+package io.holixon.avro.adapter.api.type
 
-import io.holixon.axon.avro.lib.test.AvroAdapterTestLib
-import io.toolisticon.avro.adapter.api.AvroAdapterApiTestHelper
+import io.holixon.avro.lib.test.AvroAdapterTestLib
+import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
 
@@ -15,12 +15,12 @@ internal class AvroSchemaWithIdTest {
   internal fun `read schema and derive values`() {
     val schema = Schema.Parser().parse(sampleEventSchema)
 
-    val axonSchema = AvroSchemaWithIdData(id = "1", schema = schema, revision = AvroAdapterApiTestHelper.schemaRevisionResolver.apply(schema).orElse(null))
+    val avroSchema = AvroSchemaWithIdData(id = "1", schema = schema, revision = AvroAdapterApiTestHelper.schemaRevisionResolver.apply(schema).orElse(null))
 
-    assertThat(axonSchema.id).isEqualTo("1")
-    assertThat(axonSchema.revision).isEqualTo("4711")
-    assertThat(axonSchema.name).isEqualTo("SampleEvent")
-    assertThat(axonSchema.context).isEqualTo("test.fixture")
-    assertThat(axonSchema.canonicalName).isEqualTo("test.fixture.SampleEvent")
+    assertThat(avroSchema.id).isEqualTo("1")
+    assertThat(avroSchema.revision).isEqualTo("4711")
+    assertThat(avroSchema.name).isEqualTo("SampleEvent")
+    assertThat(avroSchema.context).isEqualTo("test.fixture")
+    assertThat(avroSchema.canonicalName).isEqualTo("test.fixture.SampleEvent")
   }
 }

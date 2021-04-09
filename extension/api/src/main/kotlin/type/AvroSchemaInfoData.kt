@@ -1,7 +1,7 @@
-package io.toolisticon.avro.adapter.api.type
+package io.holixon.avro.adapter.api.type
 
-import io.toolisticon.avro.adapter.api.AvroSchemaInfo
-import io.toolisticon.avro.adapter.api.SchemaRevision
+import io.holixon.avro.adapter.api.AvroSchemaInfo
+import io.holixon.avro.adapter.api.SchemaRevision
 
 /**
  * Data class implementing [AvroSchemaInfo].

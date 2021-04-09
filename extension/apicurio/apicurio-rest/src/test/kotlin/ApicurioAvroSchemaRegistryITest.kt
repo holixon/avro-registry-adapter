@@ -1,10 +1,10 @@
-package io.toolisticon.avro.adapter.apicurio
+package io.holixon.avro.adapter.apicurio
 
 import io.apicurio.registry.client.RegistryRestClient
 import io.apicurio.registry.client.RegistryRestClientFactory
-import io.holixon.axon.avro.lib.test.AvroAdapterTestLib
-import io.toolisticon.avro.adapter.api.type.AvroSchemaInfoData
-import io.toolisticon.avro.adapter.common.AvroAdapterDefault
+import io.holixon.avro.lib.test.AvroAdapterTestLib
+import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
+import io.holixon.avro.adapter.common.AvroAdapterDefault
 import mu.KLogging
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
