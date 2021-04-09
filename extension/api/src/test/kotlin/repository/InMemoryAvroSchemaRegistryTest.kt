@@ -17,7 +17,7 @@ internal class InMemoryAvroSchemaRegistryTest {
 
   private val schema = Schema.Parser().parse(AvroAdapterTestLib.loadArvoResource("test.fixture.SampleEvent-v4711"))
 
-  private val id = schemaIdSupplier.apply(schema)
+  private val schemaId = schemaIdSupplier.apply(schema)
 
   @BeforeEach
   internal fun setUp() {
@@ -29,7 +29,7 @@ internal class InMemoryAvroSchemaRegistryTest {
     val registered = registry.register(schema)
 
     assertThat(registry.findAll()).hasSize(1)
-    assertThat(registered.id).isEqualTo(id)
+    assertThat(registered.schemaId).isEqualTo(schemaId)
     assertThat(registered.schema).isEqualTo(schema)
     assertThat(registered.canonicalName).isEqualTo("test.fixture.SampleEvent")
     assertThat(registered.revision).isEqualTo("4711")
@@ -48,9 +48,9 @@ internal class InMemoryAvroSchemaRegistryTest {
     registry.register(schema)
     assertThat(registry.findAll()).isNotEmpty
 
-    val found = registry.findById(id).orElseThrow()
+    val found = registry.findById(schemaId).orElseThrow()
 
-    assertThat(found.id).isEqualTo(id)
+    assertThat(found.schemaId).isEqualTo(schemaId)
     assertThat(found.schema).isEqualTo(schema)
     assertThat(found.revision).isEqualTo("4711")
   }

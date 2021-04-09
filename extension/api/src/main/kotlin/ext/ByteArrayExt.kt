@@ -1,5 +1,6 @@
 package io.holixon.avro.adapter.api.ext
 
+import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 import java.nio.ByteBuffer
 
 object ByteArrayExt {
@@ -20,7 +21,7 @@ object ByteArrayExt {
     postfix = "]"
   ) { "%02X".format(it) }
 
-  fun ByteArray.toBuffer(): ByteBuffer = ByteBuffer.wrap(this)
+  fun ByteArray.buffer(): ByteBuffer = ByteBuffer.wrap(this)
 
   fun ByteArray.split(vararg indexes: Int): List<ByteArray> {
     require(indexes.none { it < 0 || it > size - 1 }) { "all indexes have to match '0 < index < size-1', was: indexes=${indexes.toList()}, size=$size" }
@@ -31,6 +32,8 @@ object ByteArrayExt {
       indexes.fold(0 to emptyList<ByteArray>()) { pair, nextIndex -> nextIndex to pair.second + this.copyOfRange(pair.first, nextIndex) }
     return allButLast.second + this.copyOfRange(allButLast.first, size)
   }
+
+  fun ByteBuffer.split(vararg indexes: Int): List<ByteArray> = this.array().split(*indexes)
 
   fun ByteBuffer.extract(position: Int, size: Int? = null): ByteArray {
     val originalPosition = this.position()

@@ -7,6 +7,7 @@ import io.holixon.avro.adapter.api.SchemaResolver
 import io.holixon.avro.adapter.api.converter.SpecificRecordToSingleObjectConverter
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import io.holixon.avro.adapter.common.AvroAdapterDefault
+import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
 import org.apache.avro.specific.SpecificRecordBase
 import org.apache.avro.util.ClassUtils
 
@@ -22,7 +23,7 @@ class DefaultSpecificRecordToSingleObjectConverter(
 
   @Suppress("UNCHECKED_CAST")
   override fun <T : SpecificRecordBase> decode(bytes: AvroSingleObjectEncoded): T {
-    val schemaId = AvroAdapterDefault.SchemaIdAndPayload(bytes).schemaId
+    val schemaId = bytes.readPayloadAndSchemaId().schemaId
 
     val writerSchemaWithId = schemaResolver.apply(schemaId).orElseThrow { IllegalArgumentException("can not read ${bytes.toHexString()}") }
 

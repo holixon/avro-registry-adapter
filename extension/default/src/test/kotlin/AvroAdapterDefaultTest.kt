@@ -2,42 +2,53 @@ package io.holixon.avro.adapter.common
 
 import io.holixon.avro.adapter.api.AvroAdapterApi.toByteArray
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
+import io.holixon.avro.adapter.common.AvroAdapterDefault.isAvroSingleObjectEncoded
+import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
+import io.holixon.avro.adapter.common.ext.SchemaExt.fingerprint
 import io.holixon.avro.lib.test.AvroAdapterTestLib
+import mu.KLogging
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Disabled
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
-import java.nio.ByteBuffer
 
 internal class AvroAdapterDefaultTest {
+  companion object : KLogging()
 
   private val bytes = AvroAdapterTestLib.sampleFoo.toByteArray()
 
+
+  @Test
+  internal fun `read payload and schemaId from encoded bytes`() {
+    logger.info { bytes.toHexString() }
+
+    // too short
+    assertThatThrownBy { "foo".encodeToByteArray().readPayloadAndSchemaId() }.isInstanceOf(IllegalArgumentException::class.java)
+      .hasMessage("single object encoded bytes must have at least length > 10, was: 3")
+
+    // long enough, but does not start with V1_Header
+    assertThatThrownBy {
+      "hello my precious world".encodeToByteArray().readPayloadAndSchemaId()
+    }.isInstanceOf(IllegalArgumentException::class.java)
+      .hasMessage("single object encoded bytes need to start with [C3 01]")
+
+    val payloadAndSchemaId = bytes.readPayloadAndSchemaId()
+    assertThat(payloadAndSchemaId.schemaId).isEqualTo(AvroAdapterTestLib.sampleFoo.schema.fingerprint.toString())
+    assertThat(payloadAndSchemaId.payload.toHexString()).isEqualTo("[06 66 6F 6F]")
+  }
+
   @Test
   internal fun `extract schemaId and payload`() {
-    val data = AvroAdapterDefault.SchemaIdAndPayload(bytes)
+    val (schemaId, payload) = bytes.readPayloadAndSchemaId()
 
-    assertThat(data.schemaId).isEqualTo(AvroAdapterTestLib.sampleEventFingerprint.toString())
-    assertThat(data.payload.toHexString()).isEqualTo("[06 66 6F 6F]")
+    assertThat(schemaId).isEqualTo(AvroAdapterTestLib.sampleEventFingerprint.toString())
+    assertThat(payload.toHexString()).isEqualTo("[06 66 6F 6F]")
   }
 
   @Test
-  @Disabled("see predicate")
-  internal fun `isAvroSingleObjectEncoded true`() {
-    val buffer = ByteBuffer.wrap(bytes)
-    buffer.position(10)
+  internal fun `is avro single object encoded`() {
+    assertThat(bytes.isAvroSingleObjectEncoded()).isTrue
 
-    assertThat(AvroAdapterDefault.isAvroSingleObjectEncoded(buffer)).isTrue
-    assertThat(buffer.position()).isEqualTo(10)
+    assertThat("foo".encodeToByteArray().isAvroSingleObjectEncoded()).isFalse
   }
 
-  @Test
-  internal fun `isAvroSingleObjectEncoded false`() {
-    val firstByteRemoved = bytes.copyOfRange(1, bytes.size)
-
-    val buffer = ByteBuffer.wrap(bytes)
-    buffer.position(10)
-
-    assertThat(AvroAdapterDefault.isAvroSingleObjectEncoded(buffer)).isFalse
-    assertThat(buffer.position()).isEqualTo(10)
-  }
 }

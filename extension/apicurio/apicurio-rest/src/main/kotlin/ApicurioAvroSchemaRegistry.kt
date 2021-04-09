@@ -47,15 +47,19 @@ class ApicurioAvroSchemaRegistry(
     logger.info("meta date: ${client.getArtifactMetaData(schemaId)}")
 
     return AvroSchemaWithIdData(
-      id = schemaId,
+      schemaId = schemaId,
       schema = schema,
       revision = revision
     )
   }
 
   override fun findById(schemaId: SchemaId): Optional<AvroSchemaWithId> {
+
     val schema = client.getLatestArtifact(schemaId).schema()
-    return Optional.of(AvroSchemaWithIdData(id = schemaId, schema = schema, revision = schemaRevisionResolver.apply(schema).orElse(null)))
+    return Optional.of(AvroSchemaWithIdData(
+      schemaId = schemaId,
+      schema = schema,
+      revision = schemaRevisionResolver.apply(schema).orElse(null)))
   }
 
   override fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId> {
@@ -85,4 +89,6 @@ class ApicurioAvroSchemaRegistry(
     Schema.Parser().parse(text)
   }
 
+  private fun ArtifactMetaData.revision() : SchemaRevision? = this.properties[KEY_REVISION]
+  private fun ArtifactMetaData.context() : Optional<String> = Optional.ofNullable(this.properties[KEY_CONTEXT])
 }

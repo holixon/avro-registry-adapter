@@ -2,7 +2,7 @@ package io.holixon.avro.adapter.api.ext
 
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.extract
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.split
-import io.holixon.avro.adapter.api.ext.ByteArrayExt.toBuffer
+import io.holixon.avro.adapter.api.ext.ByteArrayExt.buffer
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import mu.KLogging
 import org.assertj.core.api.Assertions.assertThat
@@ -22,7 +22,7 @@ internal class ByteArrayExtTest {
 
   @Test
   internal fun `extract from byte buffer`() {
-    val buffer = helloBytes.toBuffer()
+    val buffer = helloBytes.buffer()
     buffer.position(7)
 
     // extract 3,4,5
@@ -41,7 +41,7 @@ internal class ByteArrayExtTest {
       .hasMessage("Cannot extract from position=0, size=100, remaining=${helloBytes.size}")
     assertThat(buffer.position()).isEqualTo(7)
 
-    assertThatThrownBy { byteArrayOf(-61).toBuffer().extract(1, 1) }
+    assertThatThrownBy { byteArrayOf(-61).buffer().extract(1, 1) }
       .isInstanceOf(IllegalArgumentException::class.javaObjectType)
       .hasMessage("Cannot extract from position=1, size=1, remaining=0")
 

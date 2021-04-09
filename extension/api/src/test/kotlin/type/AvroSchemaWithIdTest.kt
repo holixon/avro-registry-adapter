@@ -15,9 +15,9 @@ internal class AvroSchemaWithIdTest {
   internal fun `read schema and derive values`() {
     val schema = Schema.Parser().parse(sampleEventSchema)
 
-    val avroSchema = AvroSchemaWithIdData(id = "1", schema = schema, revision = AvroAdapterApiTestHelper.schemaRevisionResolver.apply(schema).orElse(null))
+    val avroSchema = AvroSchemaWithIdData(schemaId = "1", schema = schema, revision = AvroAdapterApiTestHelper.schemaRevisionResolver.apply(schema).orElse(null))
 
-    assertThat(avroSchema.id).isEqualTo("1")
+    assertThat(avroSchema.schemaId).isEqualTo("1")
     assertThat(avroSchema.revision).isEqualTo("4711")
     assertThat(avroSchema.name).isEqualTo("SampleEvent")
     assertThat(avroSchema.context).isEqualTo("test.fixture")

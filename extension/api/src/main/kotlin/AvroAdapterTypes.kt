@@ -7,13 +7,26 @@ typealias SchemaId = String
 typealias SchemaRevision = String
 typealias AvroSingleObjectEncoded = ByteArray
 
+/**
+ * The encoded message. This is only the payload data,
+ * so no marker header and encoded schemaId are present.
+ */
+typealias Payload = ByteArray
+
+interface AvroPayloadAndSchemaId {
+  val schemaId: SchemaId
+  val payload: Payload
+
+  operator fun component1() = schemaId
+  operator fun component2() = payload
+}
 
 interface AvroPayloadAndSchema {
-
   val schema: AvroSchemaWithId
+  val payload: Payload
 
-  val payload: ByteArray
-
+  operator fun component1() = schema
+  operator fun component2() = payload
 }
 
 /**
@@ -26,9 +39,7 @@ interface AvroPayloadAndSchema {
 interface AvroSchemaInfo {
 
   val context: String
-
   val name: String
-
   val revision: SchemaRevision?
 
   val canonicalName : String
@@ -39,11 +50,12 @@ interface AvroSchemaInfo {
  * Tuple wrapping the schema and its id.
  */
 interface AvroSchemaWithId : AvroSchemaInfo {
-
-  val id: SchemaId
-
+  val schemaId: SchemaId
   val schema: Schema
 
+  operator fun component1() = schemaId
+  operator fun component2() = schema
+  operator fun component3() = revision
 }
 
 interface AvroSchemaMeta {

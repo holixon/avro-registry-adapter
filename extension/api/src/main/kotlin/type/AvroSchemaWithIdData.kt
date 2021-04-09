@@ -9,7 +9,7 @@ import org.apache.avro.Schema
  * Data class implementing [AvroSchemaWithId].
  */
 data class AvroSchemaWithIdData(
-  override val id: SchemaId,
+  override val schemaId: SchemaId,
   override val schema: Schema,
   override val revision: SchemaRevision? = null
 ) : AvroSchemaWithId {
