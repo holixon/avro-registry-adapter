@@ -13,7 +13,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <spring-boot.version>2.4.4</spring-boot.version>
+    <spring-boot.version>2.4.5</spring-boot.version>
     <kotlin-logging.version>2.0.6</kotlin-logging.version>
     <jgiven.version>1.0.0</jgiven.version>
 
