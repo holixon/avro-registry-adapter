@@ -32,7 +32,7 @@ object AvroAdapterTestLib {
 
   val schemaSampleEvent4711 = loadSchema(SCHEMA_SAMPLE_4711)
 
-  fun loadResource(resName:String) = {}::class.java.getResource(resName.trailingSlash()).readText()
+  fun loadResource(resName:String) = {}::class.java.getResource(resName.trailingSlash())?.readText()
   fun loadArvoResource(resName:String) = loadResource("/avro/$resName.avsc")
 
   private fun String.trailingSlash() = if (startsWith("/")) this else "/$this"
