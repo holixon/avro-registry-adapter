@@ -119,8 +119,8 @@
 
         <plugin>
           <!-- kotlin compiler -->
-          <artifactId>kotlin-maven-plugin</artifactId>
           <groupId>org.jetbrains.kotlin</groupId>
+          <artifactId>kotlin-maven-plugin</artifactId>
           <version>${kotlin.version}</version>
           <configuration>
             <jvmTarget>${java.version}</jvmTarget>
@@ -434,6 +434,13 @@
             </goals>
           </execution>
         </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+          </dependency>
+        </dependencies>
         <configuration>
           <jvmTarget>1.8</jvmTarget>
         </configuration>
