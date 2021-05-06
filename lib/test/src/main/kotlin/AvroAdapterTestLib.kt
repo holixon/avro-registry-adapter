@@ -3,6 +3,7 @@ package io.holixon.avro.lib.test
 import org.apache.avro.Schema
 import org.apache.avro.SchemaNormalization
 import test.fixture.SampleEvent
+import java.lang.IllegalStateException
 
 object AvroAdapterTestLib {
 
@@ -32,8 +33,8 @@ object AvroAdapterTestLib {
 
   val schemaSampleEvent4711 = loadSchema(SCHEMA_SAMPLE_4711)
 
-  fun loadResource(resName:String) = {}::class.java.getResource(resName.trailingSlash())?.readText()
-  fun loadArvoResource(resName:String) = loadResource("/avro/$resName.avsc")
+  fun loadResource(resName:String): String = {}::class.java.getResource(resName.trailingSlash())?.readText() ?: throw IllegalStateException("resource not found: $resName")
+  fun loadArvoResource(avroFileName:String): String = loadResource("/avro/$avroFileName.avsc")
 
   private fun String.trailingSlash() = if (startsWith("/")) this else "/$this"
 

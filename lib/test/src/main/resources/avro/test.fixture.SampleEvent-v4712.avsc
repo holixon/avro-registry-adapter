@@ -9,14 +9,6 @@
         "type": "string",
         "avro.java.string": "String"
       }
-    },
-    {
-      "name": "anotherValue",
-      "type": {
-        "type": ["null", "string"],
-        "avro.java.string": "String"
-      },
-      "default": null
     }
   ],
   "__comment": "used for testing only!",

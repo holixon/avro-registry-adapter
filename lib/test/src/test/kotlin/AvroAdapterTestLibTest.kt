@@ -19,7 +19,7 @@ internal class AvroAdapterTestLibTest {
 
     val record4712: GenericRecord = GenericData.Record(schema4712).apply {
       put("value", "foo")
-      put("anotherValue", "bar")
+      //put("anotherValue", "bar")
     }
 
     val sd4712 = SpecificData.get().deepCopy(schema4712, record4712)
