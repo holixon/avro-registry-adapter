@@ -1,6 +1,5 @@
 package io.holixon.avro.adapter.apicurio
 
-import io.apicurio.registry.client.RegistryRestClientFactory
 import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.lib.test.AvroAdapterTestLib
@@ -13,29 +12,34 @@ import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+import io.apicurio.registry.rest.client.RegistryClientFactory
+import io.holixon.avro.adapter.apicurio.ApicurioRegistryTestContainer.Companion.EXPOSED_PORT
+import io.holixon.avro.lib.test.schema.SampleEventV4711
 
-class ApicurioRegistryTestContainer : GenericContainer<ApicurioRegistryTestContainer>("apicurio/apicurio-registry-mem:1.3.2.Final") {
-
-  // TODO url change with 2.0.0
-  fun registryApiUrl() = "http://${containerIpAddress}:${getMappedPort(8080)}/api"
-  fun restClient() = RegistryRestClientFactory.create(registryApiUrl())
-
+class ApicurioRegistryTestContainer : GenericContainer<ApicurioRegistryTestContainer>("apicurio/apicurio-registry-mem:2.0.0.Final") {
+  companion object {
+    const val EXPOSED_PORT = 8080
+  }
+  fun registryApiUrl() = AvroAdapterApicurioRest.registryApiUrl(containerIpAddress, getMappedPort(EXPOSED_PORT))
+  fun restClient() = RegistryClientFactory.create(registryApiUrl())
 }
 
 @Testcontainers
 internal class ApicurioAvroSchemaRegistryITest {
-  companion object : KLogging()
+  companion object : KLogging() {
 
-  @Container
-  val container = ApicurioRegistryTestContainer().apply {
-    withExposedPorts(8080)
-    withLogConsumer(Slf4jLogConsumer(logger))
-    setWaitStrategy(HostPortWaitStrategy())
+    @Container
+    @JvmStatic
+    val CONTAINER = ApicurioRegistryTestContainer().apply {
+      withExposedPorts(EXPOSED_PORT)
+      withLogConsumer(Slf4jLogConsumer(logger))
+      setWaitStrategy(HostPortWaitStrategy())
+    }
   }
 
   private val registryClient by lazy {
     ApicurioAvroSchemaRegistry(
-      container.restClient(),
+      CONTAINER.restClient(),
       AvroAdapterDefault.schemaIdSupplier,
       AvroAdapterDefault.schemaRevisionResolver
     )
@@ -48,8 +52,7 @@ internal class ApicurioAvroSchemaRegistryITest {
 
   @Test
   internal fun `find by id`() {
-
-    val schema: Schema = AvroAdapterTestLib.schemaSampleEvent4711
+    val schema: Schema = SampleEventV4711.schema
     val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
 
     val created = registryClient.register(schema)
@@ -60,7 +63,6 @@ internal class ApicurioAvroSchemaRegistryITest {
     assertThat(schemaId).isEqualTo(fingerprint)
     assertThat(foundSchema).isEqualTo(schema)
     assertThat(revision).isEqualTo("4711")
-
   }
 
   @Test
@@ -95,8 +97,8 @@ internal class ApicurioAvroSchemaRegistryITest {
 
   @Test
   internal fun `find by context and name`() {
-    val schema: Schema = AvroAdapterTestLib.schemaSampleEvent4711
-    val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
+    val schema = SampleEventV4711.schema
+    val fingerprint = SampleEventV4711.schemaData.fingerPrint.toString()
 
     val created = registryClient.register(schema)
     logger.info { "created: $created" }

@@ -12,7 +12,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>11.0</java.version>
-    <kotlin.version>1.5.0</kotlin.version>
+    <!--kotlin.version>1.5.0</kotlin.version-->
+    <kotlin.version>1.4.32</kotlin.version>
 
     <avro.version>1.10.2</avro.version>
 
@@ -435,11 +436,11 @@
           </execution>
         </executions>
         <dependencies>
-          <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
-            <version>${kotlin.version}</version>
-          </dependency>
+<!--          <dependency>-->
+<!--            <groupId>org.jetbrains.kotlin</groupId>-->
+<!--            <artifactId>kotlin-stdlib-jdk8</artifactId>-->
+<!--            <version>${kotlin.version}</version>-->
+<!--          </dependency>-->
         </dependencies>
         <configuration>
           <jvmTarget>1.8</jvmTarget>

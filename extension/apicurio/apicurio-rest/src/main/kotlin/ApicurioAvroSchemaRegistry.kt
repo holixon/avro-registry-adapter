@@ -1,9 +1,9 @@
 package io.holixon.avro.adapter.apicurio
 
-import io.apicurio.registry.client.RegistryRestClient
-import io.apicurio.registry.rest.beans.ArtifactMetaData
-import io.apicurio.registry.rest.beans.EditableMetaData
-import io.apicurio.registry.rest.beans.IfExistsType
+import io.apicurio.registry.rest.client.RegistryClient
+import io.apicurio.registry.rest.v2.beans.ArtifactMetaData
+import io.apicurio.registry.rest.v2.beans.EditableMetaData
+import io.apicurio.registry.rest.v2.beans.IfExists
 import io.apicurio.registry.types.ArtifactType
 import io.holixon.avro.adapter.api.*
 import io.holixon.avro.adapter.api.AvroAdapterApi.byteContent
@@ -15,14 +15,16 @@ import java.io.InputStream
 import java.util.*
 
 class ApicurioAvroSchemaRegistry(
-  private val client: RegistryRestClient,
+  private val client: RegistryClient,
   private val schemaIdSupplier: SchemaIdSupplier,
   private val schemaRevisionResolver: SchemaRevisionResolver
 ) : AvroSchemaRegistry {
   companion object {
+    const val KEY_NAME = "name"
+    const val KEY_NAMESPACE = "namespace"
+    const val KEY_CANONICAL_NAME = "canonicalName"
     const val KEY_REVISION = "revision"
-    const val KEY_CONTEXT = "context"
-
+    const val DEFAULT_GROUP = "default" // TODO: should this be configurable?
   }
 
   private val logger = LoggerFactory.getLogger(ApicurioAvroSchemaRegistry::class.java)
@@ -32,17 +34,20 @@ class ApicurioAvroSchemaRegistry(
     val schemaId = schemaIdSupplier.apply(schema)
     val revision = schemaRevisionResolver.apply(schema).orElse(null)
 
-    val metaData: ArtifactMetaData = client.createArtifact(schemaId, ArtifactType.AVRO, IfExistsType.RETURN_OR_UPDATE, content)
+    val metaData: ArtifactMetaData = client.createArtifact(DEFAULT_GROUP, schemaId, ArtifactType.AVRO, IfExists.RETURN_OR_UPDATE, content)
 
-    client.updateArtifactMetaData(schemaId, EditableMetaData().apply {
+    client.updateArtifactMetaData(DEFAULT_GROUP, schemaId, EditableMetaData().apply {
+      name = schema.name
       description = schema.description()
       properties = mapOf(
-        KEY_CONTEXT to schema.namespace,
+        KEY_NAME to schema.name,
+        KEY_NAMESPACE to schema.namespace,
+        KEY_CANONICAL_NAME to schema.fullName,
         KEY_REVISION to revision
       )
     })
 
-    logger.info("meta date: ${client.getArtifactMetaData(schemaId)}")
+    logger.info("meta date: ${client.getArtifactMetaData(DEFAULT_GROUP, schemaId)}")
 
     return AvroSchemaWithIdData(
       schemaId = schemaId,
@@ -53,24 +58,28 @@ class ApicurioAvroSchemaRegistry(
 
   override fun findById(schemaId: SchemaId): Optional<AvroSchemaWithId> {
 
-    val schema = client.getLatestArtifact(schemaId).schema()
-    return Optional.of(AvroSchemaWithIdData(
-      schemaId = schemaId,
-      schema = schema,
-      revision = schemaRevisionResolver.apply(schema).orElse(null)))
+    val schema = client.getLatestArtifact(DEFAULT_GROUP, schemaId).schema()
+    return Optional.of(
+      AvroSchemaWithIdData(
+        schemaId = schemaId,
+        schema = schema,
+        revision = schemaRevisionResolver.apply(schema).orElse(null)
+      )
+    )
   }
 
   override fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId> {
     return findByCanonicalName(info.namespace, info.name).singleOrNull { info.revision == it.revision }
       .let { Optional.ofNullable(it) }
-
   }
 
   override fun findByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> {
-    return client.listArtifacts()
+    val canonicalName = "$namespace.$name"
+    return client.listArtifactsInGroup(DEFAULT_GROUP).artifacts
       .asSequence()
-      .map { client.getArtifactMetaData(it) }
-      .filter { it.name == name && it.properties[KEY_CONTEXT] == namespace }
+      .filter { it.name == name }
+      .map { client.getArtifactMetaData(DEFAULT_GROUP, it.id) }
+      .filter { it.namespace().orElse("") == namespace }
       .map { findById(it.id) }
       .filter { it.isPresent }
       .map { it.get() }
@@ -78,8 +87,8 @@ class ApicurioAvroSchemaRegistry(
   }
 
   override fun findAll(): List<AvroSchemaWithId> {
-    val artifactIds = client.listArtifacts()
-    return artifactIds.map { findById(it) }.filter { it.isPresent }.map { it.get() }
+    val artifactIds = client.listArtifactsInGroup(DEFAULT_GROUP).artifacts
+    return artifactIds.map { findById(it.id) }.filter { it.isPresent }.map { it.get() }
   }
 
   private fun InputStream.schema(): Schema = this.bufferedReader(Charsets.UTF_8).use {
@@ -87,6 +96,6 @@ class ApicurioAvroSchemaRegistry(
     Schema.Parser().parse(text)
   }
 
-  private fun ArtifactMetaData.revision() : SchemaRevision? = this.properties[KEY_REVISION]
-  private fun ArtifactMetaData.context() : Optional<String> = Optional.ofNullable(this.properties[KEY_CONTEXT])
+  private fun ArtifactMetaData.revision(): SchemaRevision? = this.properties[KEY_REVISION]
+  private fun ArtifactMetaData.namespace(): Optional<String> = Optional.ofNullable(this.properties[KEY_NAMESPACE])
 }

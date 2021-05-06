@@ -22,6 +22,7 @@ _old/
 .meta-data/
 .java-version
 .DS_Store
+.vscode/
 
 **/.tmp/
 .repository
