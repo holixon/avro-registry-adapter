@@ -20,8 +20,6 @@ class ApicurioAvroSchemaRegistry(
   private val schemaRevisionResolver: SchemaRevisionResolver
 ) : AvroSchemaRegistry {
   companion object {
-    val UTF_8 = Charsets.UTF_8
-
     const val KEY_REVISION = "revision"
     const val KEY_CONTEXT = "context"
 
@@ -63,16 +61,16 @@ class ApicurioAvroSchemaRegistry(
   }
 
   override fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId> {
-    return findByContextAndName(info.context, info.name).singleOrNull { info.revision == it.revision }
+    return findByCanonicalName(info.namespace, info.name).singleOrNull { info.revision == it.revision }
       .let { Optional.ofNullable(it) }
 
   }
 
-  override fun findByContextAndName(context: String, name: String): List<AvroSchemaWithId> {
+  override fun findByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> {
     return client.listArtifacts()
       .asSequence()
       .map { client.getArtifactMetaData(it) }
-      .filter { it.name == name && it.properties[KEY_CONTEXT] == context }
+      .filter { it.name == name && it.properties[KEY_CONTEXT] == namespace }
       .map { findById(it.id) }
       .filter { it.isPresent }
       .map { it.get() }
@@ -84,7 +82,7 @@ class ApicurioAvroSchemaRegistry(
     return artifactIds.map { findById(it) }.filter { it.isPresent }.map { it.get() }
   }
 
-  private fun InputStream.schema(): Schema = this.bufferedReader(UTF_8).use {
+  private fun InputStream.schema(): Schema = this.bufferedReader(Charsets.UTF_8).use {
     val text = it.readText()
     Schema.Parser().parse(text)
   }

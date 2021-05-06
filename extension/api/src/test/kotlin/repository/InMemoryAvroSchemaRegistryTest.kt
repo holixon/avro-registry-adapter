@@ -37,10 +37,10 @@ internal class InMemoryAvroSchemaRegistryTest {
 
   @Test
   internal fun `find by context and name`() {
-    assertThat(registry.findByContextAndName("test.fixture", "SampleEvent")).isEmpty()
+    assertThat(registry.findByCanonicalName("test.fixture", "SampleEvent")).isEmpty()
     registry.register(schema)
 
-    assertThat(registry.findByContextAndName("test.fixture", "SampleEvent")).hasSize(1)
+    assertThat(registry.findByCanonicalName("test.fixture", "SampleEvent")).hasSize(1)
   }
 
   @Test

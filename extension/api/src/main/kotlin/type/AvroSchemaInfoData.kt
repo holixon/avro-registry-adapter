@@ -7,7 +7,7 @@ import io.holixon.avro.adapter.api.SchemaRevision
  * Data class implementing [AvroSchemaInfo].
  */
 data class AvroSchemaInfoData(
-  override val context: String,
+  override val namespace: String,
   override val name: String,
   override val revision: SchemaRevision?
 ) : AvroSchemaInfo

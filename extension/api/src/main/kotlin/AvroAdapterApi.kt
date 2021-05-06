@@ -1,11 +1,9 @@
 package io.holixon.avro.adapter.api
 
-import io.holixon.avro.adapter.api.type.*
+import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
 import org.apache.avro.Schema
-import org.apache.avro.message.SchemaStore
 import org.apache.avro.specific.SpecificData
 import org.apache.avro.specific.SpecificRecordBase
-import java.io.ByteArrayInputStream
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
 import java.util.*
@@ -67,7 +65,7 @@ object AvroAdapterApi {
 
   @JvmStatic
   fun Schema.extractSchemaInfo(schemaRevisionResolver: SchemaRevisionResolver) = AvroSchemaInfoData(
-    context = namespace,
+    namespace = namespace,
     name = name,
     revision = schemaRevisionResolver.apply(this).orElse(null)
   )

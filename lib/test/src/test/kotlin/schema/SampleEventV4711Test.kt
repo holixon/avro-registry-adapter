@@ -7,11 +7,10 @@ internal class SampleEventV4711Test {
 
   @Test
   internal fun `load from resource`() {
-    println(SampleEventV4711.schemaJson)
-
-    val schemaData = SampleEventV4711.schemaData()
+    val schemaData = SampleEventV4711.schemaData
 
     assertThat(schemaData.name).isEqualTo("SampleEvent")
     assertThat(schemaData.revision).isEqualTo("4711")
+    assertThat(schemaData.doc).isEqualTo("a sample event for testing")
   }
 }

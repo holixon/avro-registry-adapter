@@ -24,9 +24,9 @@ interface AvroSchemaRegistry {
   fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId>
 
   /**
-   * Finds all stored [Schema]s based on its context and name (e.g. FQN).
+   * Finds all stored [Schema]s based on its namespace and name (e.g. FQN).
    */
-  fun findByContextAndName(context: String, name: String): List<AvroSchemaWithId>
+  fun findByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId>
 
   /**
    * Simply lists all stored [Schema]s.

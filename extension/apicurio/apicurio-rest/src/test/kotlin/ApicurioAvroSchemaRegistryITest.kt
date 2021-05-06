@@ -73,7 +73,7 @@ internal class ApicurioAvroSchemaRegistryITest {
 
     val found = registryClient.findByInfo(
       AvroSchemaInfoData(
-        context = schema.namespace,
+        namespace = schema.namespace,
         name = schema.name,
         revision = "4711"
       )
@@ -85,7 +85,7 @@ internal class ApicurioAvroSchemaRegistryITest {
     assertThat(
       registryClient.findByInfo(
         AvroSchemaInfoData(
-          context = schema.namespace,
+          namespace = schema.namespace,
           name = schema.name,
           revision = "4712"
         )
@@ -101,8 +101,8 @@ internal class ApicurioAvroSchemaRegistryITest {
     val created = registryClient.register(schema)
     logger.info { "created: $created" }
 
-    val found = registryClient.findByContextAndName(
-      context = schema.namespace,
+    val found = registryClient.findByCanonicalName(
+      namespace = schema.namespace,
       name = schema.name
     )
 

@@ -9,6 +9,6 @@ import org.apache.avro.Schema
  */
 object AvroAdapterApicurioRest {
 
-  fun Schema.description() = this.getObjectProp("__comment") as String?
+  fun Schema.description() : String? = this.doc
 
 }

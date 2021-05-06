@@ -11,8 +11,15 @@ import org.apache.avro.Schema
 data class AvroSchemaWithIdData(
   override val schemaId: SchemaId,
   override val schema: Schema,
-  override val revision: SchemaRevision? = null
+  override val revision: SchemaRevision?,
+  override val namespace: String,
+  override val name: String
 ) : AvroSchemaWithId {
-  override val context: String = schema.namespace
-  override val name: String = schema.name
+  constructor(schemaId: SchemaId, schema: Schema, revision: SchemaRevision? = null) : this(
+    schemaId = schemaId,
+    schema = schema,
+    revision = revision,
+    namespace = schema.namespace,
+    name = schema.name
+  )
 }

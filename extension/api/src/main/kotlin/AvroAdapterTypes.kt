@@ -54,12 +54,12 @@ interface AvroPayloadAndSchema {
  */
 interface AvroSchemaInfo {
 
-  val context: String
+  val namespace: String
   val name: String
   val revision: SchemaRevision?
 
-  val canonicalName : String
-    get() = "$context.$name"
+  val canonicalName: String
+    get() = "$namespace.$name"
 }
 
 /**
@@ -75,13 +75,13 @@ interface AvroSchemaWithId : AvroSchemaInfo {
 }
 
 interface AvroSchemaMeta {
-   val name: String?
+  val name: String?
 
-   val description: String?
+  val description: String?
 
-    val labels: List<String>?
+  val labels: List<String>?
 
-    // FIXME: implment meta
+  // FIXME: implment meta
 //
 //  @JsonProperty("createdBy")
 //  private val createdBy: String? = null

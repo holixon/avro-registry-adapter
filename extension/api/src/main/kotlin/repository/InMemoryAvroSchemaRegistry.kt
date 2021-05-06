@@ -37,9 +37,9 @@ class InMemoryAvroSchemaRegistry(
     .map { it.toSchemaData() }
     .firstOrNull())
 
-  override fun findByContextAndName(context: String, name: String): List<AvroSchemaWithId> = store
+  override fun findByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> = store
     .filter { it.value.first.name == name }
-    .filter { it.value.first.context == context }
+    .filter { it.value.first.namespace == namespace }
     .map { it.toSchemaData() }
 
   override fun findAll(): List<AvroSchemaWithId> = store.map { it.toSchemaData() }
