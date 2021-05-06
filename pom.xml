@@ -12,7 +12,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>11.0</java.version>
-    <kotlin.version>1.4.32</kotlin.version>
+    <kotlin.version>1.5.0</kotlin.version>
 
     <avro.version>1.10.2</avro.version>
 
@@ -63,7 +63,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.6</version>
+          <version>0.8.7</version>
           <executions>
             <execution>
               <id>pre-unit-test</id>
@@ -224,7 +224,7 @@
         <plugin>
           <groupId>org.jetbrains.dokka</groupId>
           <artifactId>dokka-maven-plugin</artifactId>
-          <version>1.4.30</version>
+          <version>1.4.32</version>
           <executions>
             <execution>
               <phase>package</phase>
