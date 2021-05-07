@@ -4,18 +4,18 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.toolisticon.avro._</groupId>
+    <groupId>io.holixon.avro._</groupId>
     <artifactId>extension</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
-  <groupId>io.toolisticon.avro</groupId>
+  <groupId>io.holixon.avro</groupId>
   <artifactId>avro-adapter-apicurio-rest</artifactId>
 
   <dependencies>
     <dependency>
-      <groupId>io.toolisticon.avro</groupId>
+      <groupId>io.holixon.avro</groupId>
       <artifactId>avro-adapter-default</artifactId>
     </dependency>
     <dependency>

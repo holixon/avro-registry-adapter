@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/holixon/avro-adapter/workflows/Development%20branches/badge.svg)](https://github.com/holixon/avro-adapter/actions)
 [![sponsored](https://img.shields.io/badge/sponsoredBy-Holisticon-RED.svg)](https://holisticon.de/)
 
-[comment]: <> ([![Maven Central]&#40;https://maven-badges.herokuapp.com/maven-central/io.toolisticon.avro/avro-adapter-bom/badge.svg&#41;]&#40;https://maven-badges.herokuapp.com/maven-central/io.toolisticon.avro/avro-adapter-bom&#41;)
+[comment]: <> ([![Maven Central]&#40;https://maven-badges.herokuapp.com/maven-central/io.holixon.avro/avro-adapter-bom/badge.svg&#41;]&#40;https://maven-badges.herokuapp.com/maven-central/io.holixon.avro/avro-adapter-bom&#41;)
 
 
 Convenient support for working with avro serialization on the JVM

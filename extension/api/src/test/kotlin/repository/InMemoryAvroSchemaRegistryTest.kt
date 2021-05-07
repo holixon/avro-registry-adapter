@@ -1,8 +1,8 @@
-package io.toolisticon.avro.adapter.api.repository
+package io.holixon.avro.adapter.api.repository
 
-import io.toolisticon.avro.lib.test.AvroAdapterTestLib
-import io.toolisticon.avro.adapter.api.AvroAdapterApiTestHelper.schemaIdSupplier
-import io.toolisticon.avro.adapter.api.AvroAdapterApiTestHelper.schemaRevisionResolver
+import io.holixon.avro.lib.test.AvroAdapterTestLib
+import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.schemaIdSupplier
+import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.schemaRevisionResolver
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach

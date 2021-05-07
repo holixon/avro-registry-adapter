@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.toolisticon.avro._</groupId>
+  <groupId>io.holixon.avro._</groupId>
   <artifactId>avro-adapter</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <url>https://github.com/holixon/avro-adapter/</url>
@@ -16,7 +16,7 @@
 
     <avro.version>1.10.2</avro.version>
 
-    <spring-boot.version>2.4.4</spring-boot.version>
+    <spring-boot.version>2.4.5</spring-boot.version>
     <kotlin-logging.version>2.0.6</kotlin-logging.version>
     <jgiven.version>1.0.0</jgiven.version>
 

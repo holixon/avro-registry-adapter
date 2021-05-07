@@ -1,4 +1,4 @@
-package io.toolisticon.avro.adapter.apicurio
+package io.holixon.avro.adapter.apicurio
 
 import org.apache.avro.Schema
 

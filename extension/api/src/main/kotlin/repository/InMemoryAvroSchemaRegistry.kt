@@ -1,8 +1,8 @@
-package io.toolisticon.avro.adapter.api.repository
+package io.holixon.avro.adapter.api.repository
 
-import io.toolisticon.avro.adapter.api.*
-import io.toolisticon.avro.adapter.api.AvroAdapterApi.extractSchemaInfo
-import io.toolisticon.avro.adapter.api.type.AvroSchemaWithIdData
+import io.holixon.avro.adapter.api.*
+import io.holixon.avro.adapter.api.AvroAdapterApi.extractSchemaInfo
+import io.holixon.avro.adapter.api.type.AvroSchemaWithIdData
 import org.apache.avro.Schema
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap

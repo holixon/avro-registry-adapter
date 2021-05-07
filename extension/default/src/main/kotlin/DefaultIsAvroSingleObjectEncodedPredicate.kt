@@ -1,7 +1,7 @@
-package io.toolisticon.avro.adapter.common
+package io.holixon.avro.adapter.common
 
-import io.toolisticon.avro.adapter.api.AvroSingleObjectEncoded
-import io.toolisticon.avro.adapter.api.IsAvroSingleObjectEncodedPredicate
+import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
+import io.holixon.avro.adapter.api.IsAvroSingleObjectEncodedPredicate
 import java.nio.ByteBuffer
 
 class DefaultIsAvroSingleObjectEncodedPredicate : IsAvroSingleObjectEncodedPredicate {

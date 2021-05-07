@@ -1,7 +1,7 @@
-package io.toolisticon.avro.lib.test
+package io.holixon.avro.lib.test
 
-import io.toolisticon.avro.lib.test.schema.SampleEventV4711
-import io.toolisticon.avro.lib.test.schema.SampleEventV4712
+import io.holixon.avro.lib.test.schema.SampleEventV4711
+import io.holixon.avro.lib.test.schema.SampleEventV4712
 import org.apache.avro.generic.GenericData
 import org.apache.avro.generic.GenericRecord
 import org.apache.avro.specific.SpecificData

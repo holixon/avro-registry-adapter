@@ -1,14 +1,14 @@
-package io.toolisticon.avro.adapter.common
+package io.holixon.avro.adapter.common
 
-import io.toolisticon.avro.adapter.api.AvroPayloadAndSchemaId
-import io.toolisticon.avro.adapter.api.AvroSingleObjectEncoded
-import io.toolisticon.avro.adapter.api.SchemaIdSupplier
-import io.toolisticon.avro.adapter.api.ext.ByteArrayExt.buffer
-import io.toolisticon.avro.adapter.api.ext.ByteArrayExt.extract
-import io.toolisticon.avro.adapter.api.ext.ByteArrayExt.split
-import io.toolisticon.avro.adapter.api.ext.ByteArrayExt.toHexString
-import io.toolisticon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry
-import io.toolisticon.avro.adapter.api.type.AvroPayloadAndSchemaIdData
+import io.holixon.avro.adapter.api.AvroPayloadAndSchemaId
+import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
+import io.holixon.avro.adapter.api.SchemaIdSupplier
+import io.holixon.avro.adapter.api.ext.ByteArrayExt.buffer
+import io.holixon.avro.adapter.api.ext.ByteArrayExt.extract
+import io.holixon.avro.adapter.api.ext.ByteArrayExt.split
+import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
+import io.holixon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry
+import io.holixon.avro.adapter.api.type.AvroPayloadAndSchemaIdData
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 

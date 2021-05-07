@@ -1,9 +1,9 @@
-package io.toolisticon.avro.adapter.common.converter
+package io.holixon.avro.adapter.common.converter
 
-import io.toolisticon.avro.adapter.api.AvroSingleObjectEncoded
-import io.toolisticon.avro.adapter.api.SchemaResolver
-import io.toolisticon.avro.adapter.common.AvroAdapterDefault
-import io.toolisticon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
+import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
+import io.holixon.avro.adapter.api.SchemaResolver
+import io.holixon.avro.adapter.common.AvroAdapterDefault
+import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
 import org.apache.avro.Schema
 import org.apache.avro.generic.GenericDatumReader
 import org.apache.avro.generic.GenericDatumWriter
