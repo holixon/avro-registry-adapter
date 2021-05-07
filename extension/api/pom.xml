@@ -4,12 +4,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.holixon.avro._</groupId>
+    <groupId>io.toolisticon.avro._</groupId>
     <artifactId>extension</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>io.holixon.avro</groupId>
+  <groupId>io.toolisticon.avro</groupId>
   <artifactId>avro-adapter-api</artifactId>
 
 </project>

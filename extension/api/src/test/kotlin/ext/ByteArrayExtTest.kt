@@ -1,9 +1,9 @@
-package io.holixon.avro.adapter.api.ext
+package io.toolisticon.avro.adapter.api.ext
 
-import io.holixon.avro.adapter.api.ext.ByteArrayExt.extract
-import io.holixon.avro.adapter.api.ext.ByteArrayExt.split
-import io.holixon.avro.adapter.api.ext.ByteArrayExt.buffer
-import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
+import io.toolisticon.avro.adapter.api.ext.ByteArrayExt.extract
+import io.toolisticon.avro.adapter.api.ext.ByteArrayExt.split
+import io.toolisticon.avro.adapter.api.ext.ByteArrayExt.buffer
+import io.toolisticon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import mu.KLogging
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy

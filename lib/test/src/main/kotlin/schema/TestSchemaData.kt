@@ -1,4 +1,4 @@
-package io.holixon.avro.lib.test.schema
+package io.toolisticon.avro.lib.test.schema
 
 import org.apache.avro.Schema
 import org.apache.avro.SchemaNormalization

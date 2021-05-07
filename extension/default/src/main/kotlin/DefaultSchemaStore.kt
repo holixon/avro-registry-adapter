@@ -1,6 +1,6 @@
-package io.holixon.avro.adapter.common
+package io.toolisticon.avro.adapter.common
 
-import io.holixon.avro.adapter.api.SchemaResolver
+import io.toolisticon.avro.adapter.api.SchemaResolver
 import org.apache.avro.Schema
 import org.apache.avro.message.SchemaStore
 

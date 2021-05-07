@@ -1,6 +1,6 @@
-package io.holixon.avro.lib.test
+package io.toolisticon.avro.lib.test
 
-import io.holixon.avro.lib.test.schema.SampleEventV4711
+import io.toolisticon.avro.lib.test.schema.SampleEventV4711
 import org.apache.avro.Schema
 import test.fixture.SampleEvent
 

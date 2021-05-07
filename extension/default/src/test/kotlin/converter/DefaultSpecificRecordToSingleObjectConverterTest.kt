@@ -1,8 +1,8 @@
-package io.holixon.avro.adapter.common.converter
+package io.toolisticon.avro.adapter.common.converter
 
-import io.holixon.avro.lib.test.AvroAdapterTestLib
-import io.holixon.avro.adapter.api.AvroAdapterApi.schemaResolver
-import io.holixon.avro.adapter.common.AvroAdapterDefault
+import io.toolisticon.avro.lib.test.AvroAdapterTestLib
+import io.toolisticon.avro.adapter.api.AvroAdapterApi.schemaResolver
+import io.toolisticon.avro.adapter.common.AvroAdapterDefault
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

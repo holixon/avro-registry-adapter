@@ -1,8 +1,8 @@
-package io.holixon.avro.adapter.common
+package io.toolisticon.avro.adapter.common
 
-import io.holixon.avro.adapter.api.SchemaId
-import io.holixon.avro.adapter.api.SchemaIdSupplier
-import io.holixon.avro.adapter.common.ext.SchemaExt.fingerprint
+import io.toolisticon.avro.adapter.api.SchemaId
+import io.toolisticon.avro.adapter.api.SchemaIdSupplier
+import io.toolisticon.avro.adapter.common.ext.SchemaExt.fingerprint
 import org.apache.avro.Schema
 
 class DefaultSchemaIdSupplier : SchemaIdSupplier {

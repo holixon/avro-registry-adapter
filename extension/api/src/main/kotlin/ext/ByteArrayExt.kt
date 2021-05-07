@@ -1,4 +1,4 @@
-package io.holixon.avro.adapter.api.ext
+package io.toolisticon.avro.adapter.api.ext
 
 import java.nio.ByteBuffer
 

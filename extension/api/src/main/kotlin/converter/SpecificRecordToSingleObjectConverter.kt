@@ -1,6 +1,6 @@
-package io.holixon.avro.adapter.api.converter
+package io.toolisticon.avro.adapter.api.converter
 
-import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
+import io.toolisticon.avro.adapter.api.AvroSingleObjectEncoded
 import org.apache.avro.specific.SpecificRecordBase
 
 /**

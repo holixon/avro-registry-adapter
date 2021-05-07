@@ -1,14 +1,14 @@
-package io.holixon.avro.adapter.apicurio
+package io.toolisticon.avro.adapter.apicurio
 
 import io.apicurio.registry.rest.client.RegistryClient
 import io.apicurio.registry.rest.v2.beans.ArtifactMetaData
 import io.apicurio.registry.rest.v2.beans.EditableMetaData
 import io.apicurio.registry.rest.v2.beans.IfExists
 import io.apicurio.registry.types.ArtifactType
-import io.holixon.avro.adapter.api.*
-import io.holixon.avro.adapter.api.AvroAdapterApi.byteContent
-import io.holixon.avro.adapter.api.type.AvroSchemaWithIdData
-import io.holixon.avro.adapter.apicurio.AvroAdapterApicurioRest.description
+import io.toolisticon.avro.adapter.api.*
+import io.toolisticon.avro.adapter.api.AvroAdapterApi.byteContent
+import io.toolisticon.avro.adapter.api.type.AvroSchemaWithIdData
+import io.toolisticon.avro.adapter.apicurio.AvroAdapterApicurioRest.description
 import org.apache.avro.Schema
 import org.slf4j.LoggerFactory
 import java.io.InputStream

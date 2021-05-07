@@ -1,6 +1,6 @@
-package io.holixon.avro.lib.test.schema
+package io.toolisticon.avro.lib.test.schema
 
-import io.holixon.avro.lib.test.AvroAdapterTestLib
+import io.toolisticon.avro.lib.test.AvroAdapterTestLib
 import org.apache.avro.generic.GenericData
 import org.apache.avro.generic.GenericRecord
 

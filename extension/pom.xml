@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>io.holixon.avro._</groupId>
+    <groupId>io.toolisticon.avro._</groupId>
     <artifactId>avro-adapter-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../parent/pom.xml</relativePath>
@@ -34,7 +34,7 @@
     </dependency>
 
     <dependency>
-      <groupId>io.holixon.avro._</groupId>
+      <groupId>io.toolisticon.avro._</groupId>
       <artifactId>avro-adapter-lib-test</artifactId>
       <scope>test</scope>
     </dependency>

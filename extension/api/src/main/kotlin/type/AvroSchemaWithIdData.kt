@@ -1,8 +1,8 @@
-package io.holixon.avro.adapter.api.type
+package io.toolisticon.avro.adapter.api.type
 
-import io.holixon.avro.adapter.api.AvroSchemaWithId
-import io.holixon.avro.adapter.api.SchemaId
-import io.holixon.avro.adapter.api.SchemaRevision
+import io.toolisticon.avro.adapter.api.AvroSchemaWithId
+import io.toolisticon.avro.adapter.api.SchemaId
+import io.toolisticon.avro.adapter.api.SchemaRevision
 import org.apache.avro.Schema
 
 /**
