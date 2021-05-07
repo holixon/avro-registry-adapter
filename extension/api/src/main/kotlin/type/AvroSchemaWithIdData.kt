@@ -15,7 +15,11 @@ data class AvroSchemaWithIdData(
   override val namespace: String,
   override val name: String
 ) : AvroSchemaWithId {
-  constructor(schemaId: SchemaId, schema: Schema, revision: SchemaRevision? = null) : this(
+  constructor(
+    schemaId: SchemaId,
+    schema: Schema,
+    revision: SchemaRevision? = null
+  ) : this(
     schemaId = schemaId,
     schema = schema,
     revision = revision,
