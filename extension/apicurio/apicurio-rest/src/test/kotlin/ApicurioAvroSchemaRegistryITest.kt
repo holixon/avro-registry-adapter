@@ -1,8 +1,10 @@
 package io.holixon.avro.adapter.apicurio
 
 import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
+import io.holixon.avro.adapter.apicurio.ApicurioRegistryTestContainer.Companion.EXPOSED_PORT
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.lib.test.AvroAdapterTestLib
+import io.holixon.avro.lib.test.schema.SampleEventV4711
 import mu.KLogging
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
@@ -12,16 +14,13 @@ import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
-import io.apicurio.registry.rest.client.RegistryClientFactory
-import io.holixon.avro.adapter.apicurio.ApicurioRegistryTestContainer.Companion.EXPOSED_PORT
-import io.holixon.avro.lib.test.schema.SampleEventV4711
 
 class ApicurioRegistryTestContainer : GenericContainer<ApicurioRegistryTestContainer>("apicurio/apicurio-registry-mem:2.0.0.Final") {
   companion object {
     const val EXPOSED_PORT = 8080
   }
-  fun registryApiUrl() = AvroAdapterApicurioRest.registryApiUrl(containerIpAddress, getMappedPort(EXPOSED_PORT))
-  fun restClient() = RegistryClientFactory.create(registryApiUrl())
+
+  fun restClient() = AvroAdapterApicurioRest.registryRestClient(containerIpAddress, getMappedPort(EXPOSED_PORT))
 }
 
 @Testcontainers
