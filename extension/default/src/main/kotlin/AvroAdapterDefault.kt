@@ -15,7 +15,7 @@ import java.nio.ByteOrder
 object AvroAdapterDefault {
 
   const val PROPERTY_REVISION = "revision"
-  val V1_HEADER = byteArrayOf(-61, 1)
+  val V1_HEADER = byteArrayOf(-61, 1) // [C3 01]
   private val HEADER_LENGTH = V1_HEADER.size + Long.SIZE_BYTES
 
   fun AvroSingleObjectEncoded.readPayloadAndSchemaId(): AvroPayloadAndSchemaId {
