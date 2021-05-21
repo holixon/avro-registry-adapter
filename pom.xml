@@ -44,6 +44,16 @@
   <build>
     <defaultGoal>clean jacoco:prepare-agent package</defaultGoal>
 
+    <resources>
+      <!-- ignore gitkeep marker files -->
+      <resource>
+        <directory>src/main/resources</directory>
+        <excludes>
+          <exclude>.gitkeep</exclude>
+        </excludes>
+      </resource>
+    </resources>
+
     <pluginManagement>
       <plugins>
         <plugin>
