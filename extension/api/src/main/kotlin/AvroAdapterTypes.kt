@@ -13,7 +13,7 @@ typealias SchemaId = String
 typealias SchemaRevision = String
 
 /**
- * Message encoded as ByteArray.
+ * Message encoded as [Single Object](https://avro.apache.org/docs/current/spec.html#single_object_encoding) ByteArray.
  */
 typealias AvroSingleObjectEncoded = ByteArray
 

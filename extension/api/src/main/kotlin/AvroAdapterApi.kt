@@ -15,32 +15,32 @@ import kotlin.reflect.KClass
 /**
  * Returns a unique id for the given schema that is used to load the schema from a repository.
  */
-interface SchemaIdSupplier : Function<Schema, SchemaId>
+fun interface SchemaIdSupplier : Function<Schema, SchemaId>
 
 /**
  * Search schema based on schemaId.
  */
-interface SchemaResolver : Function<SchemaId, Optional<AvroSchemaWithId>>
+fun interface SchemaResolver : Function<SchemaId, Optional<AvroSchemaWithId>>
 
 /**
  * Takes encoded avro bytes (containing schema reference) and return decoded payload and the resolved schema.
  */
-interface SingleObjectDecoder : Function<AvroSingleObjectEncoded, AvroPayloadAndSchema>
+fun interface SingleObjectDecoder : Function<AvroSingleObjectEncoded, AvroPayloadAndSchema>
 
 /**
  * Use given Schema information and bytecode paylod to return decoded bytes.
  */
-interface SingleObjectEncoder : BiFunction<AvroSchemaWithId, ByteArray, AvroSingleObjectEncoded>
+fun interface SingleObjectEncoder : BiFunction<AvroSchemaWithId, ByteArray, AvroSingleObjectEncoded>
 
 /**
  * Returns the revision for a given schema.
  */
-interface SchemaRevisionResolver : Function<Schema, Optional<SchemaRevision>>
+fun interface SchemaRevisionResolver : Function<Schema, Optional<SchemaRevision>>
 
 /**
  * Returns `true` if the [ByteBuffer] conforms to the singleObject encoding specification.
  */
-interface IsAvroSingleObjectEncodedPredicate : Predicate<ByteBuffer>
+fun interface IsAvroSingleObjectEncodedPredicate : Predicate<ByteBuffer>
 
 /**
  * Global utility methods.
@@ -52,10 +52,10 @@ object AvroAdapterApi {
   /**
    * Determines the revision of a given schema by reading the String value of the given object-property.
    */
+  @JvmStatic
   fun propertyBasedSchemaRevisionResolver(propertyKey: String): SchemaRevisionResolver = object : SchemaRevisionResolver {
     override fun apply(schema: Schema): Optional<SchemaRevision> = Optional.ofNullable(schema.getObjectProp(propertyKey) as String?)
   }
-
 
   @JvmStatic
   fun schemaForClass(recordClass: Class<*>): Schema = SpecificData(recordClass.classLoader).getSchema(recordClass)

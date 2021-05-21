@@ -166,6 +166,7 @@
               <configuration>
                 <sourceDirs>
                   <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                  <sourceDir>${project.basedir}/src/test/java</sourceDir>
                 </sourceDirs>
               </configuration>
             </execution>
@@ -245,11 +246,13 @@
             </execution>
           </executions>
           <configuration>
-            <jdkVersion>8</jdkVersion>
-            <includes>
+            <jdkVersion>1.8</jdkVersion>
+            <!--includes>
               <include>packages.md</include>
               <include>extra.md</include>
-            </includes>
+            </includes-->
+            <reportUndocumented>false</reportUndocumented>
+            <skipEmptyPackages>true</skipEmptyPackages>
           </configuration>
         </plugin>
         <plugin>
@@ -455,6 +458,10 @@
           <jvmTarget>1.8</jvmTarget>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.jetbrains.dokka</groupId>
+        <artifactId>dokka-maven-plugin</artifactId>
+      </plugin>
     </plugins>
 
   </build>
@@ -583,18 +590,6 @@
       <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
     </repository>
   </distributionManagement>
-
-  <pluginRepositories>
-    <!-- required for Dokka (Kotlin javadoc), Orchid (Docs) -->
-    <pluginRepository>
-      <id>jcenter</id>
-      <name>JCenter</name>
-      <url>https://jcenter.bintray.com/</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
 
   <developers>
     <developer>

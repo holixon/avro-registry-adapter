@@ -12,10 +12,15 @@ import java.util.concurrent.ConcurrentHashMap
  * Obviously, this is primarily meant for testing and should not be used for real life projects.
  */
 class InMemoryAvroSchemaRegistry(
-  private val store: ConcurrentHashMap<String, Pair<AvroSchemaInfo, Schema>> = ConcurrentHashMap(),
+  private val store: ConcurrentHashMap<String, Pair<AvroSchemaInfo, Schema>>,
   val schemaIdSupplier: SchemaIdSupplier,
   val schemaRevisionResolver: SchemaRevisionResolver
 ) : AvroSchemaRegistry, AutoCloseable {
+
+  /**
+   * Create instance with default empty [ConcurrentHashMap] as store.
+   */
+  constructor(schemaIdSupplier: SchemaIdSupplier, schemaRevisionResolver: SchemaRevisionResolver) : this(ConcurrentHashMap(), schemaIdSupplier, schemaRevisionResolver)
 
   override fun register(schema: Schema): AvroSchemaWithId {
     val info = schema.extractSchemaInfo(schemaRevisionResolver)

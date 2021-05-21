@@ -6,9 +6,7 @@ import org.apache.avro.SchemaNormalization
 
 object AvroAdapterApiTestHelper {
 
-  val schemaIdSupplier = object : SchemaIdSupplier {
-    override fun apply(schema: Schema): SchemaId = SchemaNormalization.parsingFingerprint64(schema).toString()
-  }
+  val schemaIdSupplier = SchemaIdSupplier { schema -> SchemaNormalization.parsingFingerprint64(schema).toString() }
 
   val schemaRevisionResolver = AvroAdapterApi.propertyBasedSchemaRevisionResolver("revision")
 
