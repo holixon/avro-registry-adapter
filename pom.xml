@@ -246,7 +246,7 @@
             </execution>
           </executions>
           <configuration>
-            <jdkVersion>1.8</jdkVersion>
+            <jdkVersion>8</jdkVersion>
             <!--includes>
               <include>packages.md</include>
               <include>extra.md</include>
