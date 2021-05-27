@@ -5,11 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import io.holixon.avro.adapter.api.AvroAdapterApi;
 import io.holixon.avro.adapter.api.AvroSchemaRegistry;
 import io.holixon.avro.adapter.api.SchemaIdSupplier;
-import io.holixon.avro.adapter.api.SchemaResolver;
 import io.holixon.avro.adapter.api.SchemaRevisionResolver;
 import io.holixon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry;
 import io.holixon.avro.lib.test.schema.SampleEventV4711;
-import io.holixon.avro.lib.test.schema.SampleEventsKt;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaNormalization;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,4 +34,6 @@ public class AvroAdapterApiTest {
     assertThat(schemaRegistry.findAll()).hasSize(1);
     assertThat(registered.getSchemaId()).isEqualTo(String.valueOf(SampleEventV4711.INSTANCE.getSchemaData().getFingerPrint()));
   }
+
+
 }
