@@ -6,6 +6,9 @@ import io.holixon.avro.adapter.api.SchemaRevisionResolver
 import org.apache.avro.Schema
 import java.util.*
 
+/**
+ * Default schema revision resolver based on a class property.
+ */
 class DefaultSchemaRevisionResolver : SchemaRevisionResolver {
   private val propertyBasedResolver = AvroAdapterApi.propertyBasedSchemaRevisionResolver(AvroAdapterDefault.PROPERTY_REVISION)
 

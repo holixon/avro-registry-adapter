@@ -6,6 +6,9 @@ import org.apache.avro.Schema
 import test.fixture.SampleEvent
 import test.fixture.SampleEventWithAdditionalFieldWithDefault
 
+/**
+ * Test support helper.
+ */
 object AvroAdapterTestLib {
 
   val schemaSampleEvent4711 = SampleEventV4711.schema

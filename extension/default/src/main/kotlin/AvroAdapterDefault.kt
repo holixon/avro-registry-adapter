@@ -20,6 +20,9 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.function.Function
 
+/**
+ * Collection of default adapter helper functions.
+ */
 object AvroAdapterDefault {
 
   const val PROPERTY_REVISION = "revision"

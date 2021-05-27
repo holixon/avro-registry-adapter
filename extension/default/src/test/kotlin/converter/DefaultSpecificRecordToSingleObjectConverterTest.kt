@@ -14,6 +14,9 @@ import org.junit.jupiter.api.Test
 import test.fixture.SampleEvent
 import test.fixture.SampleEventWithAdditionalFieldWithDefault
 
+/**
+ * Test for converter.
+ */
 internal class DefaultSpecificRecordToSingleObjectConverterTest {
   private val registry = AvroAdapterDefault.inMemorySchemaRepository();
 

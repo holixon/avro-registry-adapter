@@ -7,12 +7,18 @@ import org.apache.avro.generic.GenericRecord
 const val SCHEMA_CONTEXT = "test.fixture"
 const val SCHEMA_NAME = "SampleEvent"
 
+/**
+ * Test schema provider.
+ */
 object SampleEventV4711 : TestSchemaDataProvider {
   const val REVISION = "4711"
 
   override val schemaJson by lazy { AvroAdapterTestLib.loadArvoResource("$SCHEMA_CONTEXT.$SCHEMA_NAME-v$REVISION") }
 }
 
+/**
+ * Test schema provider.
+ */
 object SampleEventV4712 : TestSchemaDataProvider {
   const val REVISION = "4712"
   override val schemaJson: String = """{
@@ -52,6 +58,9 @@ object SampleEventV4712 : TestSchemaDataProvider {
   }
 }
 
+/**
+ * Test provider.
+ */
 object SampleEventV4713 : TestSchemaDataProvider {
   const val REVISION = "4713"
 

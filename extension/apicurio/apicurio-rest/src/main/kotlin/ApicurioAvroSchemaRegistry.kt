@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory
 import java.io.InputStream
 import java.util.*
 
+/**
+ * Implementation of the registry using Apicurio.
+ */
 class ApicurioAvroSchemaRegistry(
   private val client: RegistryClient,
   private val schemaIdSupplier: SchemaIdSupplier,
