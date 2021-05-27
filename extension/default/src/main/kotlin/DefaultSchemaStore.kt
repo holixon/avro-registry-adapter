@@ -4,6 +4,9 @@ import io.holixon.avro.adapter.api.SchemaResolver
 import org.apache.avro.Schema
 import org.apache.avro.message.SchemaStore
 
+/**
+ * Schema store using the schema resolver.
+ */
 class DefaultSchemaStore(private val schemaResolver: SchemaResolver) : SchemaStore {
 
   override fun findByFingerprint(fingerprint: Long): Schema? = schemaResolver

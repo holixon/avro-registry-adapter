@@ -7,6 +7,9 @@ import org.apache.avro.Schema
 import org.apache.avro.SchemaCompatibility
 import org.apache.avro.SchemaCompatibility.SchemaCompatibilityType.*
 
+/**
+ * Detects and possibly resolves schema incompatibilities.
+ */
 class DefaultSchemaCompatibilityResolver @JvmOverloads constructor(
   val ignoredIncompatibilityTypes: Set<SchemaCompatibility.SchemaIncompatibilityType> = setOf()
 ) : AvroSchemaIncompatibilityResolver {
@@ -35,6 +38,9 @@ class DefaultSchemaCompatibilityResolver @JvmOverloads constructor(
 
   private val Schema.schemaId get() = schemaIdSupplier(this)
 
+  /**
+   * Filters found incompatibilities by ignoring the types provided in [ignoredIncompatibilityTypes].
+   */
   fun filterIgnored(incompatibilities: List<SchemaCompatibility.SchemaIncompatibilityType>) = (incompatibilities - ignoredIncompatibilityTypes)
 
 }
