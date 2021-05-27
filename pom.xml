@@ -12,40 +12,30 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>11.0</java.version>
+
     <kotlin.version>1.5.10</kotlin.version>
 
-    <avro.version>1.10.2</avro.version>
-
-    <spring-boot.version>2.4.5</spring-boot.version>
-    <kotlin-logging.version>2.0.6</kotlin-logging.version>
     <jgiven.version>1.0.0</jgiven.version>
-
-    <jgiven-kotlin.version>1.0.0</jgiven-kotlin.version>
 
     <pattern.class.itest>**/*ITest.*</pattern.class.itest>
     <pattern.package.itest>**/itest/**/*.*</pattern.package.itest>
 
-    <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
-    <!-- disable javadoc linter for JDK8 to not fail on incomplete javadoc -->
-    <additionalparam>-Xdoclint:none</additionalparam>
     <!-- Skip instrumentalization by default -->
     <jacoco.skip>true</jacoco.skip>
-    <!-- holixon GPG key -->
-    <!-- <gpg.keyname>86F8C6FC</gpg.keyname> -->
   </properties>
 
   <modules>
     <module>parent</module>
-    <module>bom</module>
     <module>lib</module>
     <module>extension</module>
+    <module>bom</module>
+    <!-- More modules in profile examples  -->
   </modules>
 
   <build>
     <defaultGoal>clean jacoco:prepare-agent package</defaultGoal>
-
     <resources>
-      <!-- ignore gitkeep marker files -->
+      <!-- ignore .gitkeep marker files -->
       <resource>
         <directory>src/main/resources</directory>
         <excludes>
@@ -133,10 +123,9 @@
           <artifactId>kotlin-maven-plugin</artifactId>
           <version>${kotlin.version}</version>
           <configuration>
-            <jvmTarget>${java.version}</jvmTarget>
+            <jvmTarget>11</jvmTarget>
             <compilerPlugins>
               <plugin>spring</plugin>
-              <!--plugin>jpa</plugin-->
               <plugin>no-arg</plugin>
               <plugin>all-open</plugin>
             </compilerPlugins>
@@ -149,6 +138,7 @@
           <executions>
             <execution>
               <id>compile</id>
+              <phase>compile</phase>
               <goals>
                 <goal>compile</goal>
               </goals>
@@ -160,6 +150,7 @@
             </execution>
             <execution>
               <id>test-compile</id>
+              <phase>test-compile</phase>
               <goals>
                 <goal>test-compile</goal>
               </goals>
@@ -199,7 +190,7 @@
         <!-- Unit Tests -->
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.2</version>
+          <version>3.0.0-M5</version>
           <configuration>
             <useSystemClassLoader>false</useSystemClassLoader>
             <shutdown>kill</shutdown>
@@ -210,8 +201,8 @@
             </excludes>
             <!-- Sets the VM argument line used when unit tests are run. -->
             <!-- prevent the annoying ForkedBooter process from stealing window focus on Mac OS -->
-            <!--suppress UnresolvedMavenProperty -->
-            <argLine>--illegal-access=permit -Djava.awt.headless=true ${argLine} -XX:+StartAttachListener -Xmx1024m -XX:MaxPermSize=256m
+            <!-- suppress UnresolvedMavenProperty -->
+            <argLine>--illegal-access=permit -Djava.awt.headless=true ${argLine} -XX:+StartAttachListener -Xmx1024m
             </argLine>
             <systemPropertyVariables>
               <jgiven.report.dir>${project.build.directory}/jgiven-reports</jgiven.report.dir>
@@ -223,11 +214,31 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
-          <version>2.22.2</version>
+          <version>3.0.0-M5</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>verify results</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
           <configuration>
-            <argLine>
-              --illegal-access=permit
-            </argLine>
+            <includes>
+              <include>${pattern.class.itest}</include>
+              <include>${pattern.package.itest}</include>
+            </includes>
+            <!-- Sets the VM argument line used when unit tests are run. -->
+            <!-- prevent the annoying ForkedBooter process from stealing window focus on Mac OS -->
+            <!-- suppress UnresolvedMavenProperty -->
+            <argLine>-Djava.awt.headless=true --illegal-access=permit ${argLine} -XX:+StartAttachListener</argLine>
+            <runOrder>random</runOrder>
           </configuration>
         </plugin>
 
@@ -246,11 +257,7 @@
             </execution>
           </executions>
           <configuration>
-            <jdkVersion>8</jdkVersion>
-            <!--includes>
-              <include>packages.md</include>
-              <include>extra.md</include>
-            </includes-->
+            <jdkVersion>11</jdkVersion>
             <reportUndocumented>false</reportUndocumented>
             <skipEmptyPackages>true</skipEmptyPackages>
           </configuration>
@@ -259,6 +266,10 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.3.0</version>
+          <configuration>
+            <failOnError>false</failOnError>
+            <doclint>none</doclint>
+          </configuration>
           <executions>
             <execution>
               <id>attach-javadocs</id>
@@ -337,7 +348,6 @@
           <artifactId>maven-gpg-plugin</artifactId>
           <version>3.0.1</version>
           <configuration>
-            <keyname>${gpg.keyname}</keyname>
             <gpgArguments>
               <arg>--batch</arg>
               <arg>--yes</arg>
@@ -406,6 +416,9 @@
                   <requireMavenVersion>
                     <version>3.6.0</version>
                   </requireMavenVersion>
+                  <requireJavaVersion>
+                    <version>11</version>
+                  </requireJavaVersion>
                 </rules>
               </configuration>
             </execution>
@@ -427,40 +440,10 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
       </plugin>
+
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
-        <version>${kotlin.version}</version>
-        <executions>
-          <execution>
-            <id>compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>test-compile</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>test-compile</goal>
-            </goals>
-          </execution>
-        </executions>
-        <dependencies>
-<!--          <dependency>-->
-<!--            <groupId>org.jetbrains.kotlin</groupId>-->
-<!--            <artifactId>kotlin-stdlib-jdk8</artifactId>-->
-<!--            <version>${kotlin.version}</version>-->
-<!--          </dependency>-->
-        </dependencies>
-        <configuration>
-          <jvmTarget>1.8</jvmTarget>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.jetbrains.dokka</groupId>
-        <artifactId>dokka-maven-plugin</artifactId>
       </plugin>
     </plugins>
 
@@ -472,11 +455,8 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
-      <properties>
-        <skipFrontend>true</skipFrontend>
-      </properties>
       <build>
-        <defaultGoal>integration-test failsafe:verify</defaultGoal>
+        <defaultGoal>verify</defaultGoal>
         <plugins>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -489,26 +469,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-failsafe-plugin</artifactId>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>integration-test</goal>
-                </goals>
-              </execution>
-            </executions>
-            <configuration>
-              <includes>
-                <include>${pattern.class.itest}</include>
-                <include>${pattern.package.itest}</include>
-              </includes>
-              <!-- Sets the VM argument line used when unit tests are run. -->
-              <!-- prevent the annoying ForkedBooter process from stealing window focus on Mac OS -->
-              <!--suppress UnresolvedMavenProperty -->
-              <argLine>-Djava.awt.headless=true ${argLine} -XX:+StartAttachListener</argLine>
-              <runOrder>random</runOrder>
-            </configuration>
           </plugin>
-
         </plugins>
       </build>
     </profile>
@@ -525,6 +486,10 @@
       </activation>
       <build>
         <plugins>
+          <plugin>
+            <groupId>org.jetbrains.dokka</groupId>
+            <artifactId>dokka-maven-plugin</artifactId>
+          </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
@@ -559,13 +524,12 @@
         <module>examples</module>
       </modules>
     </profile>
-
   </profiles>
 
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
 
@@ -602,6 +566,17 @@
       <organization>Holisticon AG</organization>
       <organizationUrl>https://holisticon.de</organizationUrl>
     </developer>
+    <developer>
+      <id>zambrovski</id>
+      <name>Simon Zambrovski</name>
+      <roles>
+        <role>Product Owner</role>
+        <role>Developer</role>
+      </roles>
+      <organization>Holisticon AG</organization>
+      <organizationUrl>https://holisticon.de</organizationUrl>
+    </developer>
+
   </developers>
 
 </project>

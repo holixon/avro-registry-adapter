@@ -13,6 +13,10 @@
   <groupId>io.holixon.avro</groupId>
   <artifactId>avro-registry-adapter-apicurio-rest</artifactId>
 
+  <properties>
+    <jacoco.skip>false</jacoco.skip>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>io.holixon.avro</groupId>

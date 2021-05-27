@@ -13,6 +13,7 @@
 
   <properties>
     <testcontainers.version>1.15.3</testcontainers.version>
+    <jacoco.skip>false</jacoco.skip>
   </properties>
 
   <dependencies>
@@ -25,7 +26,6 @@
       <artifactId>spring-boot-test</artifactId>
       <scope>compile</scope>
     </dependency>
-
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>

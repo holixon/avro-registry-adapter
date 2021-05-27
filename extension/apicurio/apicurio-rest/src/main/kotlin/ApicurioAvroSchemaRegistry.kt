@@ -37,7 +37,9 @@ class ApicurioAvroSchemaRegistry(
     val schemaId = schemaIdSupplier.apply(schema)
     val revision = schemaRevisionResolver.apply(schema).orElse(null)
 
+
     val metaData: ArtifactMetaData = client.createArtifact(DEFAULT_GROUP, schemaId, ArtifactType.AVRO, IfExists.RETURN_OR_UPDATE, content)
+    logger.trace("Registered schema and received the following metadata: $metaData")
 
     client.updateArtifactMetaData(DEFAULT_GROUP, schemaId, EditableMetaData().apply {
       name = schema.name
@@ -77,7 +79,6 @@ class ApicurioAvroSchemaRegistry(
   }
 
   override fun findAllByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> {
-    val canonicalName = "$namespace.$name"
     return client.listArtifactsInGroup(DEFAULT_GROUP).artifacts
       .asSequence()
       .filter { it.name == name }

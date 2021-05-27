@@ -4,6 +4,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1f099f2971ed401ea1d8d55a7183a00c)](https://www.codacy.com/gh/holixon/avro-registry-adapter/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=holixon/avro-registry-adapter&amp;utm_campaign=Badge_Grade)
 [![sponsored](https://img.shields.io/badge/sponsoredBy-Holisticon-RED.svg)](https://holisticon.de/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.holixon.avro/avro-registry-adapter-bom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.holixon.avro/avro-registry-adapter-bom)
+[![codecov](https://codecov.io/gh/holixon/avro-registry-adapter/branch/main/graph/badge.svg?token=bjT1hlfnH4)](https://codecov.io/gh/holixon/avro-registry-adapter)
 
 Convenient support for working with avro serialization on the JVM
 

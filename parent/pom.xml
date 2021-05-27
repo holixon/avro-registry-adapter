@@ -14,27 +14,20 @@
 
   <properties>
     <spring-boot.version>2.4.5</spring-boot.version>
+    <avro.version>1.10.2</avro.version>
     <kotlin-logging.version>2.0.6</kotlin-logging.version>
-    <jgiven.version>1.0.0</jgiven.version>
-
-    <jgiven-kotlin.version>1.0.0</jgiven-kotlin.version>
-
-    <darwin.version>1.2.1</darwin.version>
-
-    <pattern.class.itest>**/*ITest.*</pattern.class.itest>
-    <pattern.package.itest>**/itest/**/*.*</pattern.package.itest>
-
-    <jacoco.skip>true</jacoco.skip>
+    <jgiven-kotlin.version>1.0.1</jgiven-kotlin.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <!-- KOTLIN (note: this has to be defined AFTER spring boot or the version is overwritten)-->
       <dependency>
-        <groupId>io.holixon.avro</groupId>
-        <artifactId>avro-registry-adapter-bom</artifactId>
-        <version>${project.version}</version>
-        <type>pom</type>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-bom</artifactId>
+        <version>${kotlin.version}</version>
         <scope>import</scope>
+        <type>pom</type>
       </dependency>
 
       <!-- SPRING -->
@@ -46,13 +39,12 @@
         <scope>import</scope>
       </dependency>
 
-      <!-- KOTLIN (note: this has to be defined AFTER spring boot or the version is overwritten)-->
       <dependency>
-        <groupId>org.jetbrains.kotlin</groupId>
-        <artifactId>kotlin-bom</artifactId>
-        <version>${kotlin.version}</version>
-        <scope>import</scope>
+        <groupId>io.holixon.avro</groupId>
+        <artifactId>avro-registry-adapter-bom</artifactId>
+        <version>${project.version}</version>
         <type>pom</type>
+        <scope>import</scope>
       </dependency>
 
       <dependency>
@@ -64,37 +56,4 @@
     </dependencies>
   </dependencyManagement>
 
-  <build>
-    <plugins>
-      <!-- JGiven Reports -->
-      <plugin>
-        <groupId>com.tngtech.jgiven</groupId>
-        <artifactId>jgiven-maven-plugin</artifactId>
-        <version>${jgiven.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <format>html</format>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>report-aggregate</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>report-aggregate</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 </project>

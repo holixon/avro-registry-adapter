@@ -29,7 +29,6 @@ internal class AvroAdapterTestLibTest {
 
   @Test
   internal fun `generic record from schema 4712`() {
-    val schema4712 = SampleEventV4712.schema
 
     println(SampleEventV4712.create("foo"))
     println(SampleEventV4712.create(value = "foo", anotherValue = "bar"))

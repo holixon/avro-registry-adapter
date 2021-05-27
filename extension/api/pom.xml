@@ -12,4 +12,7 @@
   <groupId>io.holixon.avro</groupId>
   <artifactId>avro-registry-adapter-api</artifactId>
 
+  <properties>
+    <jacoco.skip>false</jacoco.skip>
+  </properties>
 </project>
