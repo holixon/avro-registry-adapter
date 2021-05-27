@@ -1,6 +1,7 @@
 # avro-registry-adapter
 
 [![Build Status](https://github.com/holixon/avro-registry-adapter/workflows/Development%20branches/badge.svg)](https://github.com/holixon/avro-registry-adapter/actions)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1f099f2971ed401ea1d8d55a7183a00c)](https://www.codacy.com/gh/holixon/avro-registry-adapter/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=holixon/avro-registry-adapter&amp;utm_campaign=Badge_Grade)
 [![sponsored](https://img.shields.io/badge/sponsoredBy-Holisticon-RED.svg)](https://holisticon.de/)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.holixon.avro/avro-registry-adapter-bom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.holixon.avro/avro-registry-adapter-bom)
 
