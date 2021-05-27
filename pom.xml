@@ -15,8 +15,6 @@
 
     <kotlin.version>1.5.10</kotlin.version>
 
-    <jgiven.version>1.0.0</jgiven.version>
-
     <pattern.class.itest>**/*ITest.*</pattern.class.itest>
     <pattern.package.itest>**/itest/**/*.*</pattern.package.itest>
 
@@ -486,6 +484,7 @@
       </activation>
       <build>
         <plugins>
+          <!-- Kdoc / JavaDoc -->
           <plugin>
             <groupId>org.jetbrains.dokka</groupId>
             <artifactId>dokka-maven-plugin</artifactId>
@@ -494,14 +493,21 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
           </plugin>
+          <!-- Sources for Java and Kotlin -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
           </plugin>
           <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+          </plugin>
+          <!-- Sing it all -->
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
           </plugin>
+          <!-- Deploy it all -->
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -525,6 +531,10 @@
       </modules>
     </profile>
   </profiles>
+
+  <!-- Defaults to make OSS Sonatype happy -->
+  <name>${project.artifactId}</name>
+  <description>Avro Registry Adapter</description>
 
   <licenses>
     <license>
