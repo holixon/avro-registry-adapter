@@ -11,12 +11,12 @@
   </parent>
 
   <groupId>io.holixon.avro</groupId>
-  <artifactId>avro-adapter-apicurio-rest</artifactId>
+  <artifactId>avro-registry-adapter-apicurio-rest</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>io.holixon.avro</groupId>
-      <artifactId>avro-adapter-default</artifactId>
+      <artifactId>avro-registry-adapter-default</artifactId>
     </dependency>
     <dependency>
       <groupId>io.apicurio</groupId>

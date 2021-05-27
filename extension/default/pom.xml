@@ -10,12 +10,12 @@
   </parent>
 
   <groupId>io.holixon.avro</groupId>
-  <artifactId>avro-adapter-default</artifactId>
+  <artifactId>avro-registry-adapter-default</artifactId>
 
   <dependencies>
     <dependency>
       <groupId>io.holixon.avro</groupId>
-      <artifactId>avro-adapter-api</artifactId>
+      <artifactId>avro-registry-adapter-api</artifactId>
     </dependency>
   </dependencies>
 

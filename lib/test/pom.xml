@@ -9,7 +9,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>avro-adapter-lib-test</artifactId>
+  <artifactId>avro-registry-adapter-lib-test</artifactId>
 
   <properties>
     <testcontainers.version>1.15.3</testcontainers.version>

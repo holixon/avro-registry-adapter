@@ -10,6 +10,6 @@
   </parent>
 
   <groupId>io.holixon.avro</groupId>
-  <artifactId>avro-adapter-api</artifactId>
+  <artifactId>avro-registry-adapter-api</artifactId>
 
 </project>
