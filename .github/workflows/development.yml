@@ -43,7 +43,7 @@ jobs:
         run: ./mvnw clean verify -U -B -T4
 
       # I-Test
-      - name: Run itest
+      - name: Run I-Test
         run: ./mvnw verify -Pitest -U -B -T4
 
       # Code analysis
@@ -52,3 +52,10 @@ jobs:
         uses: codecov/codecov-action@v1.0.2
         with:
           token: ${{secrets.CODECOV_TOKEN}}
+
+      - name: Upload coverage to Codacy
+        if: github.event_name == 'push' && github.actor != 'dependabot[bot]'
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: lib/coverage-aggregate/target/site/jacoco-aggregate/jacoco.xml
