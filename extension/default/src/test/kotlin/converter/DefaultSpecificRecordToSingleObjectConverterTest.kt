@@ -5,6 +5,7 @@ import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.adapter.common.AvroAdapterDefault.DecoderSpecificRecordClassResolver
 import io.holixon.avro.adapter.common.AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver
 import io.holixon.avro.lib.test.AvroAdapterTestLib
+import io.holixon.avro.lib.test.schema.SampleEventV4713
 import org.apache.avro.SchemaCompatibility
 import org.apache.avro.SchemaCompatibility.SchemaIncompatibilityType.NAME_MISMATCH
 import org.apache.avro.specific.SpecificRecordBase
@@ -18,8 +19,8 @@ import test.fixture.SampleEventWithAdditionalFieldWithDefault
  * Test for converter.
  */
 internal class DefaultSpecificRecordToSingleObjectConverterTest {
-  private val registry = AvroAdapterDefault.inMemorySchemaRepository();
 
+  private val registry = AvroAdapterDefault.inMemorySchemaRepository()
 
   @Test
   internal fun `encode and decode same writer and reader schema`() {
@@ -43,7 +44,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
 
     @Suppress("UNCHECKED_CAST")
     val converter = createConverter(decoderSpecificRecordClassResolver = {
-      Class.forName(it.canonicalName + "WithAdditionalFieldWithDefault") as Class<SpecificRecordBase>
+      Class.forName(SampleEventV4713.addSuffix(it.canonicalName)) as Class<SpecificRecordBase>
     })
 
     val data = AvroAdapterTestLib.sampleFoo
@@ -64,7 +65,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
 
     @Suppress("UNCHECKED_CAST")
     val converter = createConverter(decoderSpecificRecordClassResolver = {
-      Class.forName(it.canonicalName + "WithAdditionalFieldWithDefault") as Class<SpecificRecordBase>
+      Class.forName(SampleEventV4713.addSuffix(it.canonicalName)) as Class<SpecificRecordBase>
     }, ignoredIncompatibilities = setOf(NAME_MISMATCH))
 
     val data = AvroAdapterTestLib.sampleFoo
@@ -84,7 +85,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
 
     @Suppress("UNCHECKED_CAST")
     val converter = createConverter(decoderSpecificRecordClassResolver = {
-      Class.forName(it.canonicalName.removeSuffix("WithAdditionalFieldWithDefault")) as Class<SpecificRecordBase>
+      Class.forName(SampleEventV4713.removeSuffix(it.canonicalName)) as Class<SpecificRecordBase>
     }, ignoredIncompatibilities = setOf(NAME_MISMATCH))
 
     val data = AvroAdapterTestLib.sampleFooWithAdditionalFieldWithDefault
@@ -93,9 +94,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
     val decoded: SampleEvent = converter.decode(encoded)
 
     assertThat(decoded).isEqualTo(AvroAdapterTestLib.sampleFoo)
-
   }
-
 
   private fun createConverter(
     decoderSpecificRecordClassResolver: DecoderSpecificRecordClassResolver = reflectionBasedDecoderSpecificRecordClassResolver,

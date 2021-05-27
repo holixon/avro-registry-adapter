@@ -21,6 +21,7 @@ object SampleEventV4711 : TestSchemaDataProvider {
  */
 object SampleEventV4712 : TestSchemaDataProvider {
   const val REVISION = "4712"
+
   override val schemaJson: String = """{
       "type": "record",
       "namespace": "$SCHEMA_CONTEXT",
@@ -63,6 +64,10 @@ object SampleEventV4712 : TestSchemaDataProvider {
  */
 object SampleEventV4713 : TestSchemaDataProvider {
   const val REVISION = "4713"
+  const val SUFFIX = "WithAdditionalFieldWithDefault"
+
+  fun addSuffix(fqn: String) = fqn + SUFFIX
+  fun removeSuffix(fqn:String) = fqn.removeSuffix(SUFFIX)
 
   override val schemaJson by lazy { AvroAdapterTestLib.loadArvoResource("$SCHEMA_CONTEXT.$SCHEMA_NAME-v$REVISION") }
 }
