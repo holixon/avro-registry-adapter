@@ -51,11 +51,6 @@ internal class ApicurioAvroSchemaRegistryITest {
   }
 
   @Test
-  internal fun `get empty`() {
-    assertThat(registryClient.findAll()).isEmpty()
-  }
-
-  @Test
   internal fun `find by id`() {
     val schema: Schema = SampleEventV4711.schema
     val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
