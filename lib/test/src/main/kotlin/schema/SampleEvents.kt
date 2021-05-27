@@ -51,3 +51,9 @@ object SampleEventV4712 : TestSchemaDataProvider {
     anotherValue?.also { put("anotherValue", anotherValue) }
   }
 }
+
+object SampleEventV4713 : TestSchemaDataProvider {
+  const val REVISION = "4713"
+
+  override val schemaJson by lazy { AvroAdapterTestLib.loadArvoResource("$SCHEMA_CONTEXT.$SCHEMA_NAME-v$REVISION") }
+}

@@ -133,9 +133,6 @@
               <goal>schema</goal>
             </goals>
             <configuration>
-<!--              <excludes>-->
-<!--                <exclude>**/*-v4712.avsc</exclude>-->
-<!--              </excludes>-->
               <sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
               <outputDirectory>${project.build.directory}/generated-sources/avro/</outputDirectory>
               <stringType>String</stringType>

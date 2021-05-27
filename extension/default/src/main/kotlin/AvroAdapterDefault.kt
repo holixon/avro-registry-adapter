@@ -11,6 +11,8 @@ import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import io.holixon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry
 import io.holixon.avro.adapter.api.type.AvroPayloadAndSchemaIdData
 import io.holixon.avro.adapter.common.AvroAdapterDefault.DecoderSpecificRecordClassResolver
+import io.holixon.avro.adapter.common.converter.DefaultSchemaCompatibilityResolver
+import org.apache.avro.Schema
 import org.apache.avro.SchemaNormalization
 import org.apache.avro.specific.SpecificRecordBase
 import org.apache.avro.util.ClassUtils
@@ -93,6 +95,12 @@ object AvroAdapterDefault {
     .invoke(null, ByteBuffer.wrap(bytes)) as SpecificRecordBase
 
   /**
+   * Retrieves the schema from generated class extending specific record class.
+   */
+  @JvmStatic
+  fun Class<SpecificRecordBase>.getSchema() = this.getDeclaredField("SCHEMA$").get(null) as Schema
+
+  /**
    * Resolver for a concrete class used by decoding of Avro single object into Avro specific record.
    */
   fun interface DecoderSpecificRecordClassResolver : Function<AvroSchemaWithId, Class<SpecificRecordBase>>
@@ -104,4 +112,10 @@ object AvroAdapterDefault {
   val reflectionBasedDecoderSpecificRecordClassResolver = DecoderSpecificRecordClassResolver {
     ClassUtils.forName(it.canonicalName) as Class<SpecificRecordBase>
   }
+
+  /**
+   * Default schema compatibility resolver throwing exception on any incompatibility.
+   */
+  @JvmField
+  val defaultSchemaCompatibilityResolver = DefaultSchemaCompatibilityResolver()
 }
