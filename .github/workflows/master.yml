@@ -48,7 +48,12 @@ jobs:
 
       # Publish release
       - name: Deploy a new release version to Maven Central
-        run: ./mvnw clean deploy -B -DskipTests -DskipExamples -Prelease -Dgpg.keyname=${{ secrets.GPG_KEYNAME }} -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }}
+        run: ./mvnw clean deploy -B -DskipTests -DskipExamples -Prelease -Dgpg.keyname="${{ secrets.GPG_KEYNAME }}" -Dgpg.passphrase="${{ secrets.GPG_PASSPHRASE }}"
         env:
           OSS_CENTRAL_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           OSS_CENTRAL_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+
+      - name: Upolad coverage information
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
