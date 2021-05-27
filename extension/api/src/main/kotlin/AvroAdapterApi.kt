@@ -3,7 +3,6 @@ package io.holixon.avro.adapter.api
 import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
 import org.apache.avro.Schema
 import org.apache.avro.specific.SpecificData
-import org.apache.avro.specific.SpecificRecordBase
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
 import java.util.*
@@ -15,12 +14,12 @@ import kotlin.reflect.KClass
 /**
  * Returns a unique id for the given schema that is used to load the schema from a repository.
  */
-fun interface SchemaIdSupplier : Function<Schema, SchemaId>
+fun interface SchemaIdSupplier : Function<Schema, AvroSchemaId>
 
 /**
  * Search schema based on schemaId.
  */
-fun interface SchemaResolver : Function<SchemaId, Optional<AvroSchemaWithId>>
+fun interface SchemaResolver : Function<AvroSchemaId, Optional<AvroSchemaWithId>>
 
 /**
  * Takes encoded avro bytes (containing schema reference) and return decoded payload and the resolved schema.
@@ -28,14 +27,14 @@ fun interface SchemaResolver : Function<SchemaId, Optional<AvroSchemaWithId>>
 fun interface SingleObjectDecoder : Function<AvroSingleObjectEncoded, AvroPayloadAndSchema>
 
 /**
- * Use given Schema information and bytecode paylod to return decoded bytes.
+ * Use given Schema information and bytecode payload to return decoded bytes.
  */
 fun interface SingleObjectEncoder : BiFunction<AvroSchemaWithId, ByteArray, AvroSingleObjectEncoded>
 
 /**
  * Returns the revision for a given schema.
  */
-fun interface SchemaRevisionResolver : Function<Schema, Optional<SchemaRevision>>
+fun interface SchemaRevisionResolver : Function<Schema, Optional<AvroSchemaRevision>>
 
 /**
  * Returns `true` if the [ByteBuffer] conforms to the singleObject encoding specification.
@@ -53,9 +52,8 @@ object AvroAdapterApi {
    * Determines the revision of a given schema by reading the String value of the given object-property.
    */
   @JvmStatic
-  fun propertyBasedSchemaRevisionResolver(propertyKey: String): SchemaRevisionResolver = object : SchemaRevisionResolver {
-    override fun apply(schema: Schema): Optional<SchemaRevision> = Optional.ofNullable(schema.getObjectProp(propertyKey) as String?)
-  }
+  fun propertyBasedSchemaRevisionResolver(propertyKey: String): SchemaRevisionResolver =
+    SchemaRevisionResolver { schema -> Optional.ofNullable(schema.getObjectProp(propertyKey) as String?) }
 
   @JvmStatic
   fun schemaForClass(recordClass: Class<*>): Schema = SpecificData(recordClass.classLoader).getSchema(recordClass)
@@ -73,14 +71,7 @@ object AvroAdapterApi {
   /**
    * @return [SchemaResolver] derived from registry
    */
-  fun AvroSchemaRegistry.schemaResolver() = object : SchemaResolver {
-    override fun apply(schemaId: SchemaId): Optional<AvroSchemaWithId> = this@schemaResolver.findById(schemaId)
-  }
+  fun AvroSchemaRegistry.schemaResolver() = SchemaResolver { schemaId -> this@schemaResolver.findById(schemaId) }
 
-  fun SpecificRecordBase.toByteBuffer() = this.javaClass.getDeclaredMethod("toByteBuffer").invoke(this) as ByteBuffer
-  fun SpecificRecordBase.toByteArray() = this.toByteBuffer().array()
-
-  fun Class<SpecificRecordBase>.fromByteArray(bytes: ByteArray) = this.getDeclaredMethod("fromByteBuffer", ByteBuffer::class.java)
-    .invoke(null, ByteBuffer.wrap(bytes)) as SpecificRecordBase
 }
 

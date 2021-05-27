@@ -1,9 +1,9 @@
 package io.holixon.avro.adapter.common
 
-import io.holixon.avro.adapter.api.AvroAdapterApi.toByteArray
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import io.holixon.avro.adapter.common.AvroAdapterDefault.isAvroSingleObjectEncoded
 import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
+import io.holixon.avro.adapter.common.AvroAdapterDefault.toByteArray
 import io.holixon.avro.adapter.common.ext.SchemaExt.fingerprint
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import mu.KLogging
@@ -16,20 +16,19 @@ internal class AvroAdapterDefaultTest {
 
   private val bytes = AvroAdapterTestLib.sampleFoo.toByteArray()
 
-
   @Test
   internal fun `read payload and schemaId from encoded bytes`() {
     logger.info { bytes.toHexString() }
 
     // too short
     assertThatThrownBy { "foo".encodeToByteArray().readPayloadAndSchemaId() }.isInstanceOf(IllegalArgumentException::class.java)
-      .hasMessage("single object encoded bytes must have at least length > 10, was: 3")
+      .hasMessage("Single object encoded bytes must have at least length > 10, was: 3.")
 
     // long enough, but does not start with V1_Header
     assertThatThrownBy {
       "hello my precious world".encodeToByteArray().readPayloadAndSchemaId()
     }.isInstanceOf(IllegalArgumentException::class.java)
-      .hasMessage("single object encoded bytes need to start with [C3 01]")
+      .hasMessage("Single object encoded bytes need to start with [C3 01].")
 
     val payloadAndSchemaId = bytes.readPayloadAndSchemaId()
     assertThat(payloadAndSchemaId.schemaId).isEqualTo(AvroAdapterTestLib.sampleFoo.schema.fingerprint.toString())

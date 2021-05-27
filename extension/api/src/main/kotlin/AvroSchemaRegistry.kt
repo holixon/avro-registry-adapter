@@ -14,9 +14,9 @@ interface AvroSchemaRegistry {
   fun register(schema: Schema): AvroSchemaWithId
 
   /**
-   * Finds a stored [Schema] based on its unique [SchemaId] (e.g. its fingerprint).
+   * Finds a stored [Schema] based on its unique [AvroSchemaId] (e.g. its fingerprint).
    */
-  fun findById(schemaId: SchemaId): Optional<AvroSchemaWithId>
+  fun findById(schemaId: AvroSchemaId): Optional<AvroSchemaWithId>
 
   /**
    * Finds a stored [Schema] based on its derived info.
@@ -24,9 +24,9 @@ interface AvroSchemaRegistry {
   fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId>
 
   /**
-   * Finds all stored [Schema]s based on its namespace and name (e.g. FQN).
+   * Finds all stored [Schema]s based on their namespaces and names (e.g. FQN).
    */
-  fun findByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId>
+  fun findAllByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId>
 
   /**
    * Simply lists all stored [Schema]s.

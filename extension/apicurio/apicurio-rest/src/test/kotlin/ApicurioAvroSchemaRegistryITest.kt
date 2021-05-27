@@ -102,7 +102,7 @@ internal class ApicurioAvroSchemaRegistryITest {
     val created = registryClient.register(schema)
     logger.info { "created: $created" }
 
-    val found = registryClient.findByCanonicalName(
+    val found = registryClient.findAllByCanonicalName(
       namespace = schema.namespace,
       name = schema.name
     )

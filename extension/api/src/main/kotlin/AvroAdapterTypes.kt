@@ -5,12 +5,12 @@ import org.apache.avro.Schema
 /**
  * The unique id of a schema artifact, published to a repo.
  */
-typealias SchemaId = String
+typealias AvroSchemaId = String
 
 /**
  * The version of a schema.
  */
-typealias SchemaRevision = String
+typealias AvroSchemaRevision = String
 
 /**
  * Message encoded as [Single Object](https://avro.apache.org/docs/current/spec.html#single_object_encoding) ByteArray.
@@ -21,25 +21,25 @@ typealias AvroSingleObjectEncoded = ByteArray
  * The encoded message. This is only the payload data,
  * so no marker header and encoded schemaId are present.
  */
-typealias Payload = ByteArray
+typealias AvroSingleObjectPayload = ByteArray
 
 /**
- * Wrapper type for [SchemaId] and the encoded message [Payload].
+ * Wrapper type for [AvroSchemaId] and the encoded message [AvroSingleObjectPayload].
  */
 interface AvroPayloadAndSchemaId {
-  val schemaId: SchemaId
-  val payload: Payload
+  val schemaId: AvroSchemaId
+  val payload: AvroSingleObjectPayload
 
   operator fun component1() = schemaId
   operator fun component2() = payload
 }
 
 /**
- * Wrapper type containing the [Payload], the [Schema] and the artifacts [SchemaId].
+ * Wrapper type containing the [AvroSingleObjectPayload], the [Schema] and the artifacts [AvroSchemaId].
  */
 interface AvroPayloadAndSchema {
   val schema: AvroSchemaWithId
-  val payload: Payload
+  val payload: AvroSingleObjectPayload
 
   operator fun component1() = schema
   operator fun component2() = payload
@@ -51,22 +51,51 @@ interface AvroPayloadAndSchema {
  * * context (aka namespace)
  * * name
  * * revision
+ *
  */
 interface AvroSchemaInfo {
 
-  val namespace: String
-  val name: String
-  val revision: SchemaRevision?
+  companion object {
+    /**
+     * Default separator used in canonical name.
+     */
+    const val NAME_SEPARATOR = "."
+  }
 
+  /**
+   * Schema namespace.
+   */
+  val namespace: String
+
+  /**
+   * Schema name.
+   */
+  val name: String
+
+  /**
+   * Optional revision.
+   */
+  val revision: AvroSchemaRevision?
+
+  /**
+   * Canonical schema revision.
+   */
   val canonicalName: String
-    get() = "$namespace.$name"
+    get() = "$namespace$NAME_SEPARATOR$name"
 }
 
 /**
  * Tuple wrapping the schema and its id.
  */
 interface AvroSchemaWithId : AvroSchemaInfo {
-  val schemaId: SchemaId
+  /**
+   * Id of the schema.
+   */
+  val schemaId: AvroSchemaId
+
+  /**
+   * Avro schema.
+   */
   val schema: Schema
 
   operator fun component1() = schemaId
@@ -74,14 +103,13 @@ interface AvroSchemaWithId : AvroSchemaInfo {
   operator fun component3() = revision
 }
 
-interface AvroSchemaMeta {
-  val name: String?
-
-  val description: String?
-
-  val labels: List<String>?
-
-  // FIXME: implment meta
+// FIXME: implement meta
+// interface AvroSchemaMeta {
+//  val name: String?
+//
+//  val description: String?
+//
+//  val labels: List<String>?
 //
 //  @JsonProperty("createdBy")
 //  private val createdBy: String? = null
@@ -118,5 +146,4 @@ interface AvroSchemaMeta {
 //  @JsonProperty("properties")
 //  @JsonPropertyDescription("A set of name-value properties for an artifact or artifact version.")
 //  private val properties: Map<String, String>? = null
-
-}
+// }

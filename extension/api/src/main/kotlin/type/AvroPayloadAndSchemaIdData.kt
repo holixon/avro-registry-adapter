@@ -1,12 +1,12 @@
 package io.holixon.avro.adapter.api.type
 
 import io.holixon.avro.adapter.api.AvroPayloadAndSchemaId
-import io.holixon.avro.adapter.api.Payload
-import io.holixon.avro.adapter.api.SchemaId
+import io.holixon.avro.adapter.api.AvroSingleObjectPayload
+import io.holixon.avro.adapter.api.AvroSchemaId
 
 data class AvroPayloadAndSchemaIdData(
-  override val schemaId : SchemaId,
-  override val payload : Payload
+  override val schemaId : AvroSchemaId,
+  override val payload : AvroSingleObjectPayload
 ) : AvroPayloadAndSchemaId {
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

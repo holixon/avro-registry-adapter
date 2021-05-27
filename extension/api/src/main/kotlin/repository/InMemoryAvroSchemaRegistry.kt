@@ -33,7 +33,7 @@ class InMemoryAvroSchemaRegistry(
       }
   }
 
-  override fun findById(schemaId: SchemaId): Optional<AvroSchemaWithId> = Optional.ofNullable(
+  override fun findById(schemaId: AvroSchemaId): Optional<AvroSchemaWithId> = Optional.ofNullable(
     store[schemaId]
   ).map { AvroSchemaWithIdData(schemaId, it.second, it.first.revision) }
 
@@ -42,7 +42,7 @@ class InMemoryAvroSchemaRegistry(
     .map { it.toSchemaData() }
     .firstOrNull())
 
-  override fun findByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> = store
+  override fun findAllByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> = store
     .filter { it.value.first.name == name }
     .filter { it.value.first.namespace == namespace }
     .map { it.toSchemaData() }
@@ -53,6 +53,6 @@ class InMemoryAvroSchemaRegistry(
     store.clear()
   }
 
-  private fun Map.Entry<SchemaId, Pair<AvroSchemaInfo, Schema>>.toSchemaData() = AvroSchemaWithIdData(key, value.second)
+  private fun Map.Entry<AvroSchemaId, Pair<AvroSchemaInfo, Schema>>.toSchemaData() = AvroSchemaWithIdData(key, value.second)
 
 }

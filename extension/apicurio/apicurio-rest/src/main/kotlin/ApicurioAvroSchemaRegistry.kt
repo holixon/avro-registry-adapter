@@ -56,7 +56,7 @@ class ApicurioAvroSchemaRegistry(
     )
   }
 
-  override fun findById(schemaId: SchemaId): Optional<AvroSchemaWithId> {
+  override fun findById(schemaId: AvroSchemaId): Optional<AvroSchemaWithId> {
 
     val schema = client.getLatestArtifact(DEFAULT_GROUP, schemaId).schema()
     return Optional.of(
@@ -69,11 +69,11 @@ class ApicurioAvroSchemaRegistry(
   }
 
   override fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId> {
-    return findByCanonicalName(info.namespace, info.name).singleOrNull { info.revision == it.revision }
+    return findAllByCanonicalName(info.namespace, info.name).singleOrNull { info.revision == it.revision }
       .let { Optional.ofNullable(it) }
   }
 
-  override fun findByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> {
+  override fun findAllByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> {
     val canonicalName = "$namespace.$name"
     return client.listArtifactsInGroup(DEFAULT_GROUP).artifacts
       .asSequence()
@@ -96,6 +96,6 @@ class ApicurioAvroSchemaRegistry(
     Schema.Parser().parse(text)
   }
 
-  private fun ArtifactMetaData.revision(): SchemaRevision? = this.properties[KEY_REVISION]
+  private fun ArtifactMetaData.revision(): AvroSchemaRevision? = this.properties[KEY_REVISION]
   private fun ArtifactMetaData.namespace(): Optional<String> = Optional.ofNullable(this.properties[KEY_NAMESPACE])
 }

@@ -1,7 +1,7 @@
 package io.holixon.avro.adapter.api.type
 
 import io.holixon.avro.adapter.api.AvroSchemaInfo
-import io.holixon.avro.adapter.api.SchemaRevision
+import io.holixon.avro.adapter.api.AvroSchemaRevision
 
 /**
  * Data class implementing [AvroSchemaInfo].
@@ -9,5 +9,5 @@ import io.holixon.avro.adapter.api.SchemaRevision
 data class AvroSchemaInfoData(
   override val namespace: String,
   override val name: String,
-  override val revision: SchemaRevision?
+  override val revision: AvroSchemaRevision?
 ) : AvroSchemaInfo
