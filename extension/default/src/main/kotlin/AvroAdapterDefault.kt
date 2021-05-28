@@ -72,7 +72,7 @@ object AvroAdapterDefault {
   /**
    * Create a in-memory schema registry using [SchemaNormalization.parsingFingerprint64] and [DefaultSchemaRevisionResolver].
    */
-  fun inMemorySchemaRepository() = InMemoryAvroSchemaRegistry(
+  fun inMemorySchemaRegistry() = InMemoryAvroSchemaRegistry(
     schemaIdSupplier = schemaIdSupplier,
     schemaRevisionResolver = schemaRevisionResolver
   )

@@ -20,7 +20,7 @@ import test.fixture.SampleEventWithAdditionalFieldWithDefault
  */
 internal class DefaultSpecificRecordToSingleObjectConverterTest {
 
-  private val registry = AvroAdapterDefault.inMemorySchemaRepository()
+  private val registry = AvroAdapterDefault.inMemorySchemaRegistry()
 
   @Test
   internal fun `encode and decode same writer and reader schema`() {

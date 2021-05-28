@@ -12,14 +12,14 @@ internal class SingleObjectToJsonTest {
 
   private val sample = AvroAdapterTestLib.sampleFoo
 
-  private val repository = AvroAdapterDefault.inMemorySchemaRepository().apply {
+  private val registry = AvroAdapterDefault.inMemorySchemaRegistry().apply {
     register(sample.schema)
   }
 
   private val bytes = sample.toByteArray()
   private val expectedJson = sample.toString().replace("\\s".toRegex(), "")
 
-  private val fn = SingleObjectToJson(repository.schemaResolver())
+  private val fn = SingleObjectToJson(registry.schemaResolver())
 
   @Test
   internal fun `convert bytes to json`() {

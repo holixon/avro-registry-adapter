@@ -6,13 +6,19 @@ import java.util.*
 /**
  * The Schema Registry is responsible for storing and retrieving arvo schema files.
  */
-interface AvroSchemaRegistry {
+interface AvroSchemaRegistry : AvroSchemaReadOnlyRegistry {
 
   /**
    * Stores a new [Schema] (version) in the repository.
    */
   fun register(schema: Schema): AvroSchemaWithId
 
+}
+
+/**
+ * The Schema Registry is responsible for retrieving arvo schema files.
+ */
+interface AvroSchemaReadOnlyRegistry {
   /**
    * Finds a stored [Schema] based on its unique [AvroSchemaId] (e.g. its fingerprint).
    */
@@ -32,4 +38,5 @@ interface AvroSchemaRegistry {
    * Simply lists all stored [Schema]s.
    */
   fun findAll(): List<AvroSchemaWithId>
+
 }
