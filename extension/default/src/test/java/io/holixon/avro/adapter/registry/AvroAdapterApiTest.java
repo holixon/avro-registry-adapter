@@ -1,4 +1,4 @@
-package io.holixon.avro.adapter.api.java;
+package io.holixon.avro.adapter.registry;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -6,7 +6,7 @@ import io.holixon.avro.adapter.api.AvroAdapterApi;
 import io.holixon.avro.adapter.api.AvroSchemaRegistry;
 import io.holixon.avro.adapter.api.SchemaIdSupplier;
 import io.holixon.avro.adapter.api.SchemaRevisionResolver;
-import io.holixon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry;
+import io.holixon.avro.adapter.common.registry.InMemoryAvroSchemaRegistry;
 import io.holixon.avro.lib.test.schema.SampleEventV4711;
 import org.apache.avro.Schema;
 import org.apache.avro.SchemaNormalization;

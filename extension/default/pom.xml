@@ -7,10 +7,12 @@
     <groupId>io.holixon.avro._</groupId>
     <artifactId>extension</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <groupId>io.holixon.avro</groupId>
   <artifactId>avro-registry-adapter-default</artifactId>
+  <description>Implementation of serialization using Avro library defaults and useful defaults for the adapter API.</description>
 
   <properties>
     <jacoco.skip>false</jacoco.skip>

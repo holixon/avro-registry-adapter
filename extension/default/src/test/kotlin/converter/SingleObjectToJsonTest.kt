@@ -1,9 +1,9 @@
 package io.holixon.avro.adapter.common.converter
 
-import io.holixon.avro.lib.test.AvroAdapterTestLib
 import io.holixon.avro.adapter.api.AvroAdapterApi.schemaResolver
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.adapter.common.AvroAdapterDefault.toByteArray
+import io.holixon.avro.lib.test.AvroAdapterTestLib
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

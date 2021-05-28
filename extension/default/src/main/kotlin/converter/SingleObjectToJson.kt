@@ -2,7 +2,6 @@ package io.holixon.avro.adapter.common.converter
 
 import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 import io.holixon.avro.adapter.api.SchemaResolver
-import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
 import org.apache.avro.Schema
 import org.apache.avro.generic.GenericDatumReader

@@ -1,4 +1,4 @@
-package io.holixon.avro.adapter.api.repository
+package io.holixon.avro.adapter.common.registry
 
 import io.holixon.avro.adapter.api.*
 import io.holixon.avro.adapter.api.AvroAdapterApi.extractSchemaInfo

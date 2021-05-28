@@ -1,8 +1,8 @@
-package io.holixon.avro.adapter.apicurio
+package io.holixon.avro.adapter.registry.apicurio
 
 import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
-import io.holixon.avro.adapter.apicurio.ApicurioRegistryTestContainer.Companion.EXPOSED_PORT
 import io.holixon.avro.adapter.common.AvroAdapterDefault
+import io.holixon.avro.adapter.registry.apicurio.ApicurioRegistryTestContainer.Companion.EXPOSED_PORT
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import io.holixon.avro.lib.test.schema.SampleEventV4711
 import mu.KLogging

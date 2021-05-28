@@ -15,7 +15,6 @@
 
   <properties>
     <avro-registry-adapter.version>${project.version}</avro-registry-adapter.version>
-    <apicurio.version>2.0.0.Final</apicurio.version>
     <avro.version>1.10.2</avro.version>
   </properties>
 
@@ -34,7 +33,7 @@
       </dependency>
 
       <dependency>
-        <artifactId>avro-registry-adapter-apicurio-rest</artifactId>
+        <artifactId>avro-registry-adapter-apicurio</artifactId>
         <groupId>${project.groupId}</groupId>
         <version>${avro-registry-adapter.version}</version>
       </dependency>
@@ -47,11 +46,6 @@
         <scope>provided</scope>
       </dependency>
 
-      <dependency>
-        <groupId>io.apicurio</groupId>
-        <artifactId>apicurio-registry-client</artifactId>
-        <version>${apicurio.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 

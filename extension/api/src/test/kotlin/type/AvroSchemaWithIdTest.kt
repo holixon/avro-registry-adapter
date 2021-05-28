@@ -1,6 +1,6 @@
 package io.holixon.avro.adapter.api.type
 
-import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper
+import io.holixon.avro.adapter.api.AvroAdapterApi
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 internal class AvroSchemaWithIdTest {
 
   private val sampleEventSchema = AvroAdapterTestLib.loadArvoResource("test.fixture.SampleEvent-v4711")
+  private val schemaRevisionResolver = AvroAdapterApi.propertyBasedSchemaRevisionResolver("revision")
 
   @Test
   internal fun `read schema and derive values`() {
@@ -17,7 +18,7 @@ internal class AvroSchemaWithIdTest {
     val avroSchema = AvroSchemaWithIdData(
       schemaId = "1",
       schema = schema,
-      revision = AvroAdapterApiTestHelper.schemaRevisionResolver.apply(schema).orElse(null)
+      revision = schemaRevisionResolver.apply(schema).orElse(null)
     )
 
     assertThat(avroSchema.schemaId).isEqualTo("1")

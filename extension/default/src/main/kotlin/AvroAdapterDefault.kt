@@ -8,10 +8,10 @@ import io.holixon.avro.adapter.api.ext.ByteArrayExt.buffer
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.extract
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.split
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
-import io.holixon.avro.adapter.api.repository.InMemoryAvroSchemaRegistry
 import io.holixon.avro.adapter.api.type.AvroPayloadAndSchemaIdData
 import io.holixon.avro.adapter.common.AvroAdapterDefault.DecoderSpecificRecordClassResolver
 import io.holixon.avro.adapter.common.converter.DefaultSchemaCompatibilityResolver
+import io.holixon.avro.adapter.common.registry.InMemoryAvroSchemaRegistry
 import org.apache.avro.Schema
 import org.apache.avro.SchemaNormalization
 import org.apache.avro.specific.SpecificRecordBase
