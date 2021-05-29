@@ -7,7 +7,7 @@ import java.util.*
  * Composite Avro registry allowing registry composition.
  */
 class CompositeAvroSchemaReadOnlyRegistry(
-  private val registries: Collection<AvroSchemaReadOnlyRegistry>
+  private val registries: List<AvroSchemaReadOnlyRegistry>
 ) : AvroSchemaReadOnlyRegistry {
 
   /**
