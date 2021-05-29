@@ -69,9 +69,10 @@ object AvroAdapterApi {
   )
 
   /**
-   * @return [SchemaResolver] derived from registry
+   * Creates a schema resolver out of a read-only registry.
+   * @return [SchemaResolver] derived from registry.
    */
-  fun AvroSchemaRegistry.schemaResolver() = SchemaResolver { schemaId -> this@schemaResolver.findById(schemaId) }
+  fun AvroSchemaReadOnlyRegistry.schemaResolver() = SchemaResolver { schemaId -> this@schemaResolver.findById(schemaId) }
 
 }
 
