@@ -64,4 +64,3 @@ class CompositeAvroSchemaReadOnlyRegistry(
     return listOf()
   }
 }
-
