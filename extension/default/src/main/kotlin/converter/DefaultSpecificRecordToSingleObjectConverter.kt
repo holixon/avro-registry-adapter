@@ -10,7 +10,6 @@ import io.holixon.avro.adapter.common.AvroAdapterDefault.getSchema
 import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
 import io.holixon.avro.adapter.common.AvroAdapterDefault.toByteArray
 import io.holixon.avro.adapter.common.DefaultSchemaStore
-import org.apache.avro.SchemaCompatibility
 import org.apache.avro.message.BinaryMessageDecoder
 import org.apache.avro.specific.SpecificData
 import org.apache.avro.specific.SpecificRecordBase

@@ -1,4 +1,4 @@
-package io.holixon.avro.adapter.apicurio
+package io.holixon.avro.adapter.registry.apicurio
 
 import io.apicurio.registry.rest.client.RegistryClient
 import io.apicurio.registry.rest.client.RegistryClientFactory

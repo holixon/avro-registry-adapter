@@ -12,11 +12,12 @@
 
   <artifactId>extension</artifactId>
   <packaging>pom</packaging>
+  <description>Parent pom for the extension.</description>
 
   <modules>
     <module>api</module>
     <module>default</module>
-    <module>apicurio/apicurio-rest</module>
+    <module>registry/apicurio-rest</module>
   </modules>
 
   <dependencies>
@@ -40,26 +41,4 @@
     </dependency>
   </dependencies>
 
-  <build>
-    <plugins>
-      <!-- JGiven Reports -->
-      <!-- no jgiven tests => no Jgiven reports => Skip execution, save some time
-      <plugin>
-        <groupId>com.tngtech.jgiven</groupId>
-        <artifactId>jgiven-maven-plugin</artifactId>
-        <version>${jgiven.version}</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>report</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <format>html</format>
-        </configuration>
-      </plugin>
-      -->
-    </plugins>
-  </build>
 </project>

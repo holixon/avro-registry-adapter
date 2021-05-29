@@ -10,24 +10,26 @@
   </parent>
 
   <artifactId>avro-registry-adapter-lib-coverage-aggregator</artifactId>
+  <description>Aggregates coverage reports from JUnit test an I-Tests.</description>
 
   <properties>
     <jacoco.skip>false</jacoco.skip>
+    <deploy.skip>true</deploy.skip>
   </properties>
 
   <!-- Coverage aggregates works based on dependencies defined here -->
   <dependencies>
     <dependency>
       <groupId>io.holixon.avro</groupId>
+      <artifactId>avro-registry-adapter-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.holixon.avro</groupId>
       <artifactId>avro-registry-adapter-default</artifactId>
     </dependency>
     <dependency>
       <groupId>io.holixon.avro</groupId>
-      <artifactId>avro-registry-adapter-apicurio-rest</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.holixon.avro</groupId>
-      <artifactId>avro-registry-adapter-api</artifactId>
+      <artifactId>avro-registry-adapter-apicurio</artifactId>
     </dependency>
     <dependency>
       <groupId>io.holixon.avro._</groupId>
