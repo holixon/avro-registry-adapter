@@ -4,7 +4,7 @@
 
   <groupId>io.holixon.avro._</groupId>
   <artifactId>avro-registry-adapter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <url>https://github.com/holixon/avro-registry-adapter/</url>
   <packaging>pom</packaging>
 
