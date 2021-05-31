@@ -50,13 +50,7 @@
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
-
-        <plugin>
-          <groupId>org.apache.avro</groupId>
-          <artifactId>avro-maven-plugin</artifactId>
-          <version>${avro.version}</version>
-        </plugin>
-
+        
         <!-- Coverage metering -->
         <plugin>
           <groupId>org.jacoco</groupId>
