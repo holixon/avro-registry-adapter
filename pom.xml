@@ -50,7 +50,7 @@
           <artifactId>maven-clean-plugin</artifactId>
           <version>3.1.0</version>
         </plugin>
-        
+
         <!-- Coverage metering -->
         <plugin>
           <groupId>org.jacoco</groupId>
@@ -319,7 +319,7 @@
           <version>1.16.0</version>
           <configuration>
             <gitFlowConfig>
-              <productionBranch>main</productionBranch>
+              <productionBranch>master</productionBranch>
               <developmentBranch>develop</developmentBranch>
               <featureBranchPrefix>feature/</featureBranchPrefix>
               <releaseBranchPrefix>release/</releaseBranchPrefix>
