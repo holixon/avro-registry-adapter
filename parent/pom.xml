@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.holixon.avro._</groupId>
+    <artifactId>avro-registry-adapter</artifactId>
+    <version>0.0.1</version>
+  </parent>
+
+  <artifactId>avro-registry-adapter-parent</artifactId>
+  <packaging>pom</packaging>
+
+  <properties>
+    <avro.version>1.10.2</avro.version>
+    <kotlin-logging.version>2.0.6</kotlin-logging.version>
+    <apicurio.version>2.0.0.Final</apicurio.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- KOTLIN -->
+      <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-bom</artifactId>
+        <version>${kotlin.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
+      <dependency>
+        <groupId>io.holixon.avro</groupId>
+        <artifactId>avro-registry-adapter-bom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.holixon.avro._</groupId>
+        <artifactId>avro-registry-adapter-lib-test</artifactId>
+        <version>${project.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

@@ -1,0 +1,25 @@
+{
+  "type": "record",
+  "namespace": "test.fixture",
+  "name": "SampleEventWithAdditionalFieldWithDefault",
+  "doc": "a sample event for testing",
+  "revision": "4713",
+  "fields": [
+    {
+      "name": "value",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "otherValue",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      },
+      "default": "default value"
+    }
+  ],
+  "__comment": "additional comment"
+}

@@ -1,0 +1,6 @@
+version: '3.1'
+services:
+  registry:
+    image: apicurio/apicurio-registry-mem:2.0.0.Final
+    ports:
+      - "7777:8080"

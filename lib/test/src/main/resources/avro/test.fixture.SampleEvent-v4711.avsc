@@ -1,0 +1,17 @@
+{
+  "type": "record",
+  "namespace": "test.fixture",
+  "name": "SampleEvent",
+  "doc": "a sample event for testing",
+  "revision": "4711",
+  "fields": [
+    {
+      "name": "value",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    }
+  ],
+  "__comment": "additional comment"
+}
