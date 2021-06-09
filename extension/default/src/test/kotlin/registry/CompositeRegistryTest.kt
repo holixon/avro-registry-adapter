@@ -4,9 +4,9 @@ import io.holixon.avro.adapter.api.AvroSchemaReadOnlyRegistry
 import io.holixon.avro.adapter.api.AvroSchemaRegistry
 import io.holixon.avro.adapter.api.AvroSchemaWithId
 import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
-import io.holixon.avro.adapter.api.type.AvroSchemaWithIdData
-import io.holixon.avro.adapter.common.AvroAdapterApiTestHelper
+import io.holixon.avro.adapter.common.AvroAdapterDefault.toAvroSchemaWithId
 import io.holixon.avro.lib.test.schema.SampleEventV4711
+import io.holixon.avro.lib.test.schema.SampleEventV4712
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
@@ -14,9 +14,8 @@ import java.util.*
 
 internal class CompositeRegistryTest {
 
-
-  private val schema4711 =
-    AvroSchemaWithIdData(AvroAdapterApiTestHelper.schemaIdSupplier.apply(SampleEventV4711.schema), SampleEventV4711.schema)
+  private val schema4711 = SampleEventV4711.schema.toAvroSchemaWithId()
+  private val schema4712 = SampleEventV4712.schema.toAvroSchemaWithId()
 
   private val fastRoRegistry: AvroSchemaReadOnlyRegistry = mock()
   private val mediumRwRegistry: AvroSchemaRegistry = mock()
@@ -64,6 +63,15 @@ internal class CompositeRegistryTest {
   }
 
   @Test
+  internal fun `findAllByCanonicalName returns schemas with different revisions from different registries`() {
+    mockRegistryFindMethods(mediumRwRegistry, schema4711)
+    mockRegistryFindMethods(slowRwRegistry, schema4712)
+
+    val allFQN = registry.findAllByCanonicalName(schema4711.namespace, schema4711.name)
+    assertThat(allFQN).hasSize(2)
+  }
+
+  @Test
   fun `should ask all registries if not found`() {
     mockRegistryFindMethods(fastRoRegistry, null)
     mockRegistryFindMethods(mediumRwRegistry, null)
@@ -84,6 +92,17 @@ internal class CompositeRegistryTest {
 
     verify(slowRwRegistry).register(schema4711.schema)
     verifyZeroInteractions(mediumRwRegistry)
+  }
+
+  @Test
+  internal fun `findAll returns combined list`() {
+    mockRegistryFindMethods(fastRoRegistry, schema4711)
+    mockRegistryFindMethods(mediumRwRegistry, schema4712)
+    mockRegistryFindMethods(slowRwRegistry, null)
+
+    val all = registry.findAll()
+    assertThat(all).hasSize(2)
+    assertThat(all.map { it.schemaId }).containsExactlyInAnyOrder(schema4711.schemaId, schema4712.schemaId)
   }
 
   /**
@@ -108,8 +127,6 @@ internal class CompositeRegistryTest {
    */
   private fun verifyCallsExecuted(registry: AvroSchemaReadOnlyRegistry, executed: Boolean) {
     if (executed) {
-      verify(registry).findAll()
-      verify(registry).findAllByCanonicalName(schema4711.namespace, schema4711.name)
       verify(registry).findById(schema4711.schemaId)
       verify(registry).findByInfo(AvroSchemaInfoData(schema4711.namespace, schema4711.name, null))
     } else {
@@ -121,8 +138,6 @@ internal class CompositeRegistryTest {
    * Actual call of the registry methods.
    */
   private fun callRegistryFindMethodsAndFindResult() {
-    assertThat(registry.findAll()).isNotEmpty.containsExactly(schema4711)
-    assertThat(registry.findAllByCanonicalName(schema4711.namespace, schema4711.name)).isNotEmpty.containsExactly(schema4711)
     assertThat(registry.findById(schema4711.schemaId)).isPresent.get().isEqualTo(schema4711)
     assertThat(registry.findByInfo(AvroSchemaInfoData(schema4711.namespace, schema4711.name, null))).isPresent.get().isEqualTo(schema4711)
   }

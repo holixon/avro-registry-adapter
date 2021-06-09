@@ -44,23 +44,10 @@ class CompositeAvroSchemaReadOnlyRegistry(
     return Optional.empty()
   }
 
-  override fun findAllByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> {
-    for (registry in registries) {
-      val result = registry.findAllByCanonicalName(namespace, name)
-      if (result.isNotEmpty()) {
-        return result
-      }
-    }
-    return listOf()
-  }
+  override fun findAllByCanonicalName(namespace: String, name: String): List<AvroSchemaWithId> = registries.flatMap {
+    it.findAllByCanonicalName(namespace, name)
+  }.distinct()
 
-  override fun findAll(): List<AvroSchemaWithId> {
-    for (registry in registries) {
-      val result = registry.findAll()
-      if (result.isNotEmpty()) {
-        return result
-      }
-    }
-    return listOf()
-  }
+  override fun findAll(): List<AvroSchemaWithId> = registries.flatMap { it.findAll() }.distinct()
+
 }
