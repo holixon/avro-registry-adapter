@@ -37,7 +37,7 @@ internal class AvroAdapterDefaultTest {
 
   @Test
   internal fun `extract schemaId and payload`() {
-    val (schemaId, payload) = bytes.readPayloadAndSchemaId()
+    val (schemaId, payload) = bytes.readPayloadAndSchemaId().let { it.schemaId to it.payload }
 
     assertThat(schemaId).isEqualTo(AvroAdapterTestLib.sampleEventFingerprint.toString())
     assertThat(payload.toHexString()).isEqualTo("[06 66 6F 6F]")

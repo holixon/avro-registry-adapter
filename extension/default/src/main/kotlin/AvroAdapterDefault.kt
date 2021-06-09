@@ -9,6 +9,7 @@ import io.holixon.avro.adapter.api.ext.ByteArrayExt.extract
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.split
 import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import io.holixon.avro.adapter.api.type.AvroPayloadAndSchemaIdData
+import io.holixon.avro.adapter.api.type.AvroSchemaWithIdData
 import io.holixon.avro.adapter.common.AvroAdapterDefault.DecoderSpecificRecordClassResolver
 import io.holixon.avro.adapter.common.converter.DefaultSchemaCompatibilityResolver
 import io.holixon.avro.adapter.common.registry.InMemoryAvroSchemaRegistry
@@ -76,6 +77,16 @@ object AvroAdapterDefault {
     schemaIdSupplier = schemaIdSupplier,
     schemaRevisionResolver = schemaRevisionResolver
   )
+
+  /**
+   * Helper to create [AvroSchemaWithId] from given [Schema], using [DefaultSchemaIdSupplier] and [DefaultSchemaRevisionResolver].
+   */
+  fun Schema.toAvroSchemaWithId() = AvroSchemaWithIdData(
+    schemaId = schemaIdSupplier.apply(this),
+    schema = this,
+    revision = schemaRevisionResolver.apply(this).orElse(null)
+  )
+
 
   /**
    * Reflective access using the method of generated specific record to access byte buffer representation.
