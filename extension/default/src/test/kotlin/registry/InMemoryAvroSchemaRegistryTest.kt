@@ -1,8 +1,8 @@
 package io.holixon.avro.adapter.common.registry
 
-import io.holixon.avro.lib.test.AvroAdapterTestLib
 import io.holixon.avro.adapter.common.AvroAdapterApiTestHelper.schemaIdSupplier
 import io.holixon.avro.adapter.common.AvroAdapterApiTestHelper.schemaRevisionResolver
+import io.holixon.avro.lib.test.AvroAdapterTestLib
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
@@ -55,4 +55,11 @@ internal class InMemoryAvroSchemaRegistryTest {
     assertThat(found.revision).isEqualTo("4711")
   }
 
+  @Test
+  internal fun `can transform to read only registry`() {
+    registry.register(schema)
+    val readOnly = registry.toReadOnly()
+
+    assertThat(readOnly.findById(schemaId).orElseThrow().schemaId).isEqualTo(schemaId)
+  }
 }
