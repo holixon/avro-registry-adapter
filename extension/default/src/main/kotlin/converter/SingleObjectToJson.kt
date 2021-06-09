@@ -17,7 +17,7 @@ import java.util.function.Function
 class SingleObjectToJson(private val schemaResolver: SchemaResolver) : Function<ByteArray, String> {
 
   override fun apply(avroSingleObject: AvroSingleObjectEncoded): String {
-    val (schemaId, payload) = avroSingleObject.readPayloadAndSchemaId()
+    val (schemaId, payload) = avroSingleObject.readPayloadAndSchemaId().let { it.schemaId to it.payload }
     val writerSchema = schemaResolver.apply(schemaId).orElseThrow().schema
 
     val genericDatum = readGenericDatum(writerSchema, payload)

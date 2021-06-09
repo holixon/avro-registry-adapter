@@ -58,11 +58,11 @@ internal class ApicurioAvroSchemaRegistryITest {
     val created = registryClient.register(schema)
     logger.info { "created: $created" }
 
-    val (schemaId, foundSchema, revision) = registryClient.findById(fingerprint).orElseThrow()
+    val found = registryClient.findById(fingerprint).orElseThrow()
 
-    assertThat(schemaId).isEqualTo(fingerprint)
-    assertThat(foundSchema).isEqualTo(schema)
-    assertThat(revision).isEqualTo("4711")
+    assertThat(found.schemaId).isEqualTo(fingerprint)
+    assertThat(found.schema).isEqualTo(schema)
+    assertThat(found.revision).isEqualTo("4711")
   }
 
   @Test

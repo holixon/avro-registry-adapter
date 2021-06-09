@@ -29,9 +29,6 @@ typealias AvroSingleObjectPayload = ByteArray
 interface AvroPayloadAndSchemaId {
   val schemaId: AvroSchemaId
   val payload: AvroSingleObjectPayload
-
-  operator fun component1() = schemaId
-  operator fun component2() = payload
 }
 
 /**
@@ -40,9 +37,6 @@ interface AvroPayloadAndSchemaId {
 interface AvroPayloadAndSchema {
   val schema: AvroSchemaWithId
   val payload: AvroSingleObjectPayload
-
-  operator fun component1() = schema
-  operator fun component2() = payload
 }
 
 /**
@@ -97,10 +91,6 @@ interface AvroSchemaWithId : AvroSchemaInfo {
    * Avro schema.
    */
   val schema: Schema
-
-  operator fun component1() = schemaId
-  operator fun component2() = schema
-  operator fun component3() = revision
 }
 
 // FIXME: implement meta
