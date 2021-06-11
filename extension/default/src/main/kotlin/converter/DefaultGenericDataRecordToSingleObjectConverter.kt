@@ -3,33 +3,34 @@ package io.holixon.avro.adapter.common.converter
 import io.holixon.avro.adapter.api.AvroSchemaIncompatibilityResolver
 import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 import io.holixon.avro.adapter.api.SchemaResolver
-import io.holixon.avro.adapter.api.converter.GenericRecordToSingleObjectConverter
+import io.holixon.avro.adapter.api.converter.GenericDataRecordToSingleObjectConverter
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import org.apache.avro.generic.GenericData
-import org.apache.avro.generic.GenericRecord
 import org.apache.avro.message.BinaryMessageDecoder
 import org.apache.avro.message.BinaryMessageEncoder
-import org.apache.avro.specific.SpecificRecordBase
 import java.io.ByteArrayOutputStream
 
-class DefaultGenericRecordToSingleObjectConverter(
+/**
+ * Default converter implementation between single object bytes and [GenericData.Record].
+ */
+class DefaultGenericDataRecordToSingleObjectConverter(
   schemaResolver: SchemaResolver,
   decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver,
   schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver,
-) : GenericRecordToSingleObjectConverter {
+) : GenericDataRecordToSingleObjectConverter {
 
   private val readerSchemaResolver: DefaultReaderSchemaResolver =
     DefaultReaderSchemaResolver(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver)
 
-  override fun <T : SpecificRecordBase> encode(data: T): AvroSingleObjectEncoded {
+  override fun encode(data: GenericData.Record): AvroSingleObjectEncoded {
     val byteStream = ByteArrayOutputStream()
-    BinaryMessageEncoder<T>(GenericData.get(), data.schema).encode(data, byteStream)
+    BinaryMessageEncoder<GenericData.Record>(GenericData.get(), data.schema).encode(data, byteStream)
     return byteStream.toByteArray()
   }
 
-  override fun decode(bytes: AvroSingleObjectEncoded): GenericRecord {
+  override fun decode(bytes: AvroSingleObjectEncoded): GenericData.Record {
     // resolve reader schema
     val resolvedReaderSchema = readerSchemaResolver.resolveReaderSchema(bytes)
-    return BinaryMessageDecoder<GenericRecord>(GenericData.get(), resolvedReaderSchema).decode(bytes)
+    return BinaryMessageDecoder<GenericData.Record>(GenericData.get(), resolvedReaderSchema.schema).decode(bytes)
   }
 }

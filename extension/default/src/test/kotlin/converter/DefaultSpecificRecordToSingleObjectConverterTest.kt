@@ -69,6 +69,9 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
     }, ignoredIncompatibilities = setOf(NAME_MISMATCH))
 
     val data = AvroAdapterTestLib.sampleFoo
+
+    (SampleEvent.newBuilder(data))
+
     val encoded = converter.encode(data)
 
     val decoded: SampleEventWithAdditionalFieldWithDefault = converter.decode(encoded)
