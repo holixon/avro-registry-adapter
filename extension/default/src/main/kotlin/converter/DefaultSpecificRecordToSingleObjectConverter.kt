@@ -20,19 +20,19 @@ class DefaultSpecificRecordToSingleObjectConverter @JvmOverloads constructor(
   schemaResolver: SchemaResolver,
   decoderSpecificRecordClassResolver: DecoderSpecificRecordClassResolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver,
   schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver
-) : DefaultReaderSchemaResolver(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver),
-  SpecificRecordToSingleObjectConverter {
+) : SpecificRecordToSingleObjectConverter {
 
   private val schemaStore = DefaultSchemaStore(schemaResolver)
+  private val defaultReaderSchemaResolver: DefaultReaderSchemaResolver =
+    DefaultReaderSchemaResolver(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver)
 
   override fun <T : SpecificRecordBase> encode(data: T): AvroSingleObjectEncoded = data.toByteArray()
 
   override fun <T : SpecificRecordBase> decode(bytes: AvroSingleObjectEncoded): T {
     // resolve reader schema
-    val resolvedReaderSchema = resolveReaderSchema(bytes)
+    val resolvedReaderSchema = defaultReaderSchemaResolver.resolveReaderSchema(bytes)
     // construct decoder and decode
     return BinaryMessageDecoder<T>(SpecificData(), resolvedReaderSchema, schemaStore).decode(bytes)
   }
-
 }
 

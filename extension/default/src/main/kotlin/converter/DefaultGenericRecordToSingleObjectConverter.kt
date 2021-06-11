@@ -15,9 +15,11 @@ import java.io.ByteArrayOutputStream
 class DefaultGenericRecordToSingleObjectConverter(
   schemaResolver: SchemaResolver,
   decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver,
-  schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver
-) : DefaultReaderSchemaResolver(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver),
-  GenericRecordToSingleObjectConverter {
+  schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver,
+) : GenericRecordToSingleObjectConverter {
+
+  private val readerSchemaResolver: DefaultReaderSchemaResolver =
+    DefaultReaderSchemaResolver(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver)
 
   override fun <T : SpecificRecordBase> encode(data: T): AvroSingleObjectEncoded {
     val byteStream = ByteArrayOutputStream()
@@ -27,7 +29,7 @@ class DefaultGenericRecordToSingleObjectConverter(
 
   override fun decode(bytes: AvroSingleObjectEncoded): GenericRecord {
     // resolve reader schema
-    val resolvedReaderSchema = resolveReaderSchema(bytes)
+    val resolvedReaderSchema = readerSchemaResolver.resolveReaderSchema(bytes)
     return BinaryMessageDecoder<GenericRecord>(GenericData.get(), resolvedReaderSchema).decode(bytes)
   }
 }

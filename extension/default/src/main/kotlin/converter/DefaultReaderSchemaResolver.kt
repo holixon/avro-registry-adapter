@@ -9,7 +9,10 @@ import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
 import org.apache.avro.Schema
 import org.apache.avro.specific.SpecificRecordBase
 
-abstract class DefaultReaderSchemaResolver(
+/**
+ * Default reader schema resolver.
+ */
+class DefaultReaderSchemaResolver(
   val schemaResolver: SchemaResolver,
   val decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver,
   val schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver
