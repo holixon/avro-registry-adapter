@@ -18,7 +18,7 @@ internal class DefaultConvertersTests {
     val resolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver
 
     val gdr2srConverter =
-      DefaultSpecificRecordToGenericDataRecordConverter(registry.schemaResolver(), resolver, DefaultSchemaCompatibilityResolver(setOf()))
+      DefaultSpecificRecordToGenericDataRecordChangingSchemaConverter(registry.schemaResolver(), resolver, DefaultSchemaCompatibilityResolver(setOf()))
     val b2gdrConverter =
       DefaultGenericDataRecordToSingleObjectConverter(registry.schemaResolver(), resolver, DefaultSchemaCompatibilityResolver(setOf()))
 

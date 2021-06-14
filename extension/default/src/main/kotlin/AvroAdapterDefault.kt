@@ -15,11 +15,10 @@ import io.holixon.avro.adapter.common.converter.DefaultSchemaCompatibilityResolv
 import io.holixon.avro.adapter.common.registry.InMemoryAvroSchemaRegistry
 import org.apache.avro.Schema
 import org.apache.avro.SchemaNormalization
-import org.apache.avro.data.RecordBuilderBase
 import org.apache.avro.generic.GenericData
+import org.apache.avro.specific.SpecificData
 import org.apache.avro.specific.SpecificRecordBase
 import org.apache.avro.util.ClassUtils
-import java.lang.reflect.Method
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.util.function.Function
@@ -96,78 +95,22 @@ object AvroAdapterDefault {
   @JvmStatic
   fun SpecificRecordBase.toByteBuffer(): ByteBuffer = this.javaClass.getDeclaredMethod("toByteBuffer").invoke(this) as ByteBuffer
 
-  /**
-   * Retrieves the embedded builder from the specific record base type.
-   */
-  @Suppress("UNCHECKED_CAST")
-  fun <T : SpecificRecordBase> Class<T>.getDefaultBuilder(): RecordBuilderBase<T> =
-    this.getDeclaredMethod("newBuilder").invoke(null) as RecordBuilderBase<T>
-
-  /**
-   * Retrieves the embedded builder from the specific record base type.
-   */
-  @Suppress("UNCHECKED_CAST")
-  fun SpecificRecordBase.getCopyingBuilder(): RecordBuilderBase<*> =
-    this.javaClass.getDeclaredMethod("newBuilder", this.javaClass).invoke(null, this) as RecordBuilderBase<*>
-
-  /**
-   * Retrieves fields from the builder.
-   */
-  @Suppress("UNCHECKED_CAST")
-  fun RecordBuilderBase<*>.getFields(): Array<Schema.Field> =
-    RecordBuilderBase::class.java.getDeclaredMethod("fields").apply { trySetAccessible() }.invoke(this) as Array<Schema.Field>
-
-  /**
-   * Retrieves fields from the builder.
-   */
-  @Suppress("UNCHECKED_CAST")
-  fun RecordBuilderBase<*>.getFieldFlags(): BooleanArray =
-    RecordBuilderBase::class.java.getDeclaredMethod("fieldSetFlags").apply { trySetAccessible() }.invoke(this) as BooleanArray
-
-  /**
-   * Retrieves the validate method from the builder.
-   */
-  fun RecordBuilderBase<*>.validateMethod(): Method =
-    RecordBuilderBase::class.java
-      .getDeclaredMethod("validate", Schema.Field::class.java, Object::class.java)
-      .apply {
-        trySetAccessible()
-      }
 
   /**
    * Reflective access using the method of generated specific record to access data fields.
    */
   @JvmStatic
   fun <T : SpecificRecordBase> T.toGenericDataRecord(): GenericData.Record {
-
-    val builder = this.getCopyingBuilder()
-    val fields = builder.getFields()
-    val record = GenericData.Record(this.schema)
-    fields.forEach {
-      record.put(it.name(), this[it.name()])
-    }
-    return record
+    return GenericData.get().deepCopy(this.schema, this) as GenericData.Record
   }
 
   /**
    * Reflective calling the builder and building the specific record.
    */
   @JvmStatic
-  fun <T : SpecificRecordBase> GenericData.Record.toSpecificDataRecord(clazz: Class<T>): T {
-
-    val builder = clazz.getDefaultBuilder()
-    val fields = builder.getFields()
-    val fieldFlags: BooleanArray = builder.getFieldFlags()
-    val validateMethod = builder.validateMethod()
-
-    val specificRecord: T = clazz.getConstructor().newInstance()
-
-    fields.forEach {
-      validateMethod.invoke(builder, it, this[it.name()])
-      fieldFlags[it.pos()] = true
-      specificRecord.put(it.pos(), this[it.name()])
-    }
-    return specificRecord
+  fun <T : SpecificRecordBase> GenericData.Record.toSpecificDataRecord(schema: Schema): T {
+    @Suppress("UNCHECKED_CAST")
+    return SpecificData.get().deepCopy(schema, this) as T
   }
 
   /**

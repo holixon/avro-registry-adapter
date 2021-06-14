@@ -12,6 +12,7 @@ import java.io.ByteArrayOutputStream
 
 /**
  * Default converter implementation between single object bytes and [GenericData.Record].
+ * The [GenericData.Record] will have the same schema as the bytes.
  */
 class DefaultGenericDataRecordToSingleObjectConverter(
   schemaResolver: SchemaResolver,
@@ -19,8 +20,8 @@ class DefaultGenericDataRecordToSingleObjectConverter(
   schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver,
 ) : GenericDataRecordToSingleObjectConverter {
 
-  private val readerSchemaResolver: DefaultReaderSchemaResolver =
-    DefaultReaderSchemaResolver(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver)
+  private val schemaResolutionSupport: SchemaResolutionSupport =
+    SchemaResolutionSupport(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver)
 
   override fun encode(data: GenericData.Record): AvroSingleObjectEncoded {
     val byteStream = ByteArrayOutputStream()
@@ -29,8 +30,8 @@ class DefaultGenericDataRecordToSingleObjectConverter(
   }
 
   override fun decode(bytes: AvroSingleObjectEncoded): GenericData.Record {
-    // resolve reader schema
-    val resolvedReaderSchema = readerSchemaResolver.resolveReaderSchema(bytes)
-    return BinaryMessageDecoder<GenericData.Record>(GenericData.get(), resolvedReaderSchema.schema).decode(bytes)
+    // resolve writer schema
+    val avroSchemaWithId = schemaResolutionSupport.resolveWriterSchema(bytes)
+    return BinaryMessageDecoder<GenericData.Record>(GenericData.get(), avroSchemaWithId.schema).decode(bytes)
   }
 }

@@ -103,7 +103,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
     decoderSpecificRecordClassResolver: DecoderSpecificRecordClassResolver = reflectionBasedDecoderSpecificRecordClassResolver,
     ignoredIncompatibilities: Set<SchemaCompatibility.SchemaIncompatibilityType> = setOf()
   ) =
-    DefaultSpecificRecordToSingleObjectConverter(
+    DefaultSpecificRecordToSingleObjectSchemaChangingConverter(
       registry.schemaResolver(),
       decoderSpecificRecordClassResolver,
       DefaultSchemaCompatibilityResolver(ignoredIncompatibilities)

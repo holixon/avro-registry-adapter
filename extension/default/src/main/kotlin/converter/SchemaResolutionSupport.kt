@@ -11,7 +11,7 @@ import org.apache.avro.specific.SpecificRecordBase
 /**
  * Default reader schema resolver.
  */
-class DefaultReaderSchemaResolver(
+class SchemaResolutionSupport(
   private val schemaResolver: SchemaResolver,
   private val decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver,
   private val schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver
@@ -33,6 +33,16 @@ class DefaultReaderSchemaResolver(
   }
 
   /**
+   * Resolves the writer schema for incoming schema.
+   */
+  fun resolveWriterSchema(bytes: AvroSingleObjectEncoded): AvroSchemaWithId {
+    // load writer schema info from schema resolver
+    val schemaId = bytes.readPayloadAndSchemaId().schemaId
+    return schemaResolver.apply(schemaId).orElseThrow { IllegalArgumentException("Can not resolve writer schema for id=$schemaId.") }
+  }
+
+
+  /**
    * Resolves the class for given schema id.
    * @param avroSchemaWithId schema with id.
    * @return class for given schema.
@@ -40,7 +50,7 @@ class DefaultReaderSchemaResolver(
   @Suppress("UNCHECKED_CAST")
   fun <T : SpecificRecordBase> getClassForSchema(avroSchemaWithId: AvroSchemaWithId): Class<T> =
     decoderSpecificRecordClassResolver.apply(avroSchemaWithId) as Class<T>
-  
+
   /**
    * Resolve reader schema for a given writer schema.
    */
