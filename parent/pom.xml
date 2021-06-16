@@ -15,7 +15,7 @@
   <properties>
     <avro.version>1.10.2</avro.version>
     <kotlin-logging.version>2.0.8</kotlin-logging.version>
-    <apicurio.version>2.0.0.Final</apicurio.version>
+    <apicurio.version>2.0.1.Final</apicurio.version>
   </properties>
 
   <dependencyManagement>
