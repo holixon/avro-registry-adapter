@@ -59,10 +59,10 @@ object AvroAdapterApi {
   fun schemaForClass(recordClass: Class<*>): Schema = SpecificData(recordClass.classLoader).getSchema(recordClass)
 
   @JvmStatic
-  fun schemaForClass(recordClass: KClass<*>) = schemaForClass(recordClass.java)
+  fun schemaForClass(recordClass: KClass<*>): Schema = schemaForClass(recordClass.java)
 
   @JvmStatic
-  fun Schema.extractSchemaInfo(schemaRevisionResolver: SchemaRevisionResolver) = AvroSchemaInfoData(
+  fun Schema.extractSchemaInfo(schemaRevisionResolver: SchemaRevisionResolver): AvroSchemaInfoData = AvroSchemaInfoData(
     namespace = namespace,
     name = name,
     revision = schemaRevisionResolver.apply(this).orElse(null)
@@ -72,7 +72,7 @@ object AvroAdapterApi {
    * Creates a schema resolver out of a read-only registry.
    * @return [SchemaResolver] derived from registry.
    */
-  fun AvroSchemaReadOnlyRegistry.schemaResolver() = SchemaResolver { schemaId -> this@schemaResolver.findById(schemaId) }
+  fun AvroSchemaReadOnlyRegistry.schemaResolver(): SchemaResolver = SchemaResolver { schemaId -> this@schemaResolver.findById(schemaId) }
 
 }
 
