@@ -23,15 +23,16 @@ class DefaultSpecificRecordToGenericDataRecordChangingSchemaConverter @JvmOverlo
   private val schemaResolutionSupport: SchemaResolutionSupport =
     SchemaResolutionSupport(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver)
 
-  override fun <T : SpecificRecordBase> encode(data: T): GenericData.Record {
-    return data.toGenericDataRecord()
+  override fun <T : Any> encode(data: T): GenericData.Record {
+    require(data is SpecificRecordBase) { "Currently only encoding of specific data records is supported." }
+    return (data as SpecificRecordBase).toGenericDataRecord()
   }
 
   /**
    * Decodes the generic record into specific record.
    * Will change the schema from writer schema to reader schema.
    */
-  override fun <T : SpecificRecordBase> decode(record: GenericData.Record): T {
+  override fun <T : Any> decode(record: GenericData.Record): T {
     val readerSchema = schemaResolutionSupport.resolveReaderSchema(record)
     return record.toSpecificDataRecord(readerSchema.schema)
   }
