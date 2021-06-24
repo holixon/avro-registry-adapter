@@ -11,11 +11,14 @@ import org.apache.avro.specific.SpecificRecordBase
 /**
  * Default reader schema resolver.
  */
-class SchemaResolutionSupport(
+class SchemaResolutionSupport
+@JvmOverloads
+constructor(
   private val schemaResolver: SchemaResolver,
-  private val decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver,
-  private val schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver
+  private val decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver,
+  private val schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver
 ) {
+
   /**
    * Resolves reader schema for incoming SingleObjectEncoded.
    */

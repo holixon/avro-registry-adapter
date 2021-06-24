@@ -4,7 +4,7 @@ import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 import org.apache.avro.generic.GenericData
 
 /**
- * Decodes a[org.apache.avro.generic.GenericData.Record] from given [AvroSingleObjectEncoded] bytes.
+ * Decodes a [org.apache.avro.generic.GenericData.Record] from given [AvroSingleObjectEncoded] bytes.
  */
 fun interface SingleObjectToGenericDataRecordDecoder {
 
