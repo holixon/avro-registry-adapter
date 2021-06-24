@@ -4,6 +4,7 @@ import io.holixon.avro.adapter.api.ext.ByteArrayExt.toHexString
 import io.holixon.avro.adapter.common.AvroAdapterDefault.isAvroSingleObjectEncoded
 import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
 import io.holixon.avro.adapter.common.AvroAdapterDefault.toByteArray
+import io.holixon.avro.adapter.common.AvroAdapterDefault.toGenericDataRecord
 import io.holixon.avro.adapter.common.ext.SchemaExt.fingerprint
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import mu.KLogging
@@ -50,4 +51,10 @@ internal class AvroAdapterDefaultTest {
     assertThat("foo".encodeToByteArray().isAvroSingleObjectEncoded()).isFalse
   }
 
+
+  @Test
+  internal fun `get generic data from specific record`() {
+    val genericRecord = AvroAdapterTestLib.sampleFoo.toGenericDataRecord()
+    assertThat(genericRecord.get("value")).isEqualTo("foo")
+  }
 }

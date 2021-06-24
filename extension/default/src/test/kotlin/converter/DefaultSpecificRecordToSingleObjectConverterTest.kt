@@ -69,6 +69,9 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
     }, ignoredIncompatibilities = setOf(NAME_MISMATCH))
 
     val data = AvroAdapterTestLib.sampleFoo
+
+    (SampleEvent.newBuilder(data))
+
     val encoded = converter.encode(data)
 
     val decoded: SampleEventWithAdditionalFieldWithDefault = converter.decode(encoded)
@@ -100,7 +103,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
     decoderSpecificRecordClassResolver: DecoderSpecificRecordClassResolver = reflectionBasedDecoderSpecificRecordClassResolver,
     ignoredIncompatibilities: Set<SchemaCompatibility.SchemaIncompatibilityType> = setOf()
   ) =
-    DefaultSpecificRecordToSingleObjectConverter(
+    DefaultSpecificRecordToSingleObjectSchemaChangingConverter(
       registry.schemaResolver(),
       decoderSpecificRecordClassResolver,
       DefaultSchemaCompatibilityResolver(ignoredIncompatibilities)

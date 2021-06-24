@@ -14,7 +14,7 @@ import java.util.function.Function
 /**
  * Uses the schema encoded in the single object bytes to create a generic datum and convert it to json.
  */
-class SingleObjectToJson(private val schemaResolver: SchemaResolver) : Function<ByteArray, String> {
+class SingleObjectToJson(private val schemaResolver: SchemaResolver) : Function<AvroSingleObjectEncoded, String> {
 
   override fun apply(avroSingleObject: AvroSingleObjectEncoded): String {
     val (schemaId, payload) = avroSingleObject.readPayloadAndSchemaId().let { it.schemaId to it.payload }
