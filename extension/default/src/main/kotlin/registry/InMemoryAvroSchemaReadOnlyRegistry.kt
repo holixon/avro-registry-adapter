@@ -2,6 +2,7 @@ package io.holixon.avro.adapter.common.registry
 
 import io.holixon.avro.adapter.api.*
 import io.holixon.avro.adapter.api.type.AvroSchemaWithIdData
+import io.holixon.avro.adapter.common.AvroAdapterDefault
 import org.apache.avro.Schema
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -13,6 +14,18 @@ import java.util.concurrent.ConcurrentHashMap
 open class InMemoryAvroSchemaReadOnlyRegistry(
   protected val store: ConcurrentHashMap<String, Pair<AvroSchemaInfo, Schema>>
 ) : AvroSchemaReadOnlyRegistry, AutoCloseable {
+  companion object {
+
+    /**
+     * Registers given schemas and returns read only representation.
+     *
+     * @param schemas - the schemas to register.
+     * @return read only registry
+     */
+    fun createWithSchemas(vararg schemas: Schema) = AvroAdapterDefault.inMemorySchemaRegistry().apply {
+      schemas.forEach { register(it) }
+    }.toReadOnly()
+  }
 
   /**
    * Create instance with default empty [ConcurrentHashMap] as store.

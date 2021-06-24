@@ -3,6 +3,7 @@ package io.holixon.avro.lib.test.schema
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import org.apache.avro.generic.GenericData
 import org.apache.avro.generic.GenericRecord
+import test.fixture.SampleEvent
 
 const val SCHEMA_CONTEXT = "test.fixture"
 const val SCHEMA_NAME = "SampleEvent"
@@ -14,6 +15,13 @@ object SampleEventV4711 : TestSchemaDataProvider {
   const val REVISION = "4711"
 
   override val schemaJson by lazy { AvroAdapterTestLib.loadArvoResource("$SCHEMA_CONTEXT.$SCHEMA_NAME-v$REVISION") }
+
+
+  fun createGenericRecord(value: String) = GenericData.Record(schema).apply {
+    put("value", value)
+  }
+
+  fun createSpecificRecord(value: String) = SampleEvent(value)
 }
 
 /**
