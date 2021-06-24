@@ -14,7 +14,8 @@ import org.apache.avro.specific.SpecificRecordBase
  * Converts any instance derived from [SpecificRecordBase] (generated from avsc) to a [GenericData.Record].
  * On decoding, the schema change from Writer to Reader takes place.
  */
-class DefaultSpecificRecordToGenericDataRecordChangingSchemaConverter @JvmOverloads constructor(
+class DefaultSpecificRecordToGenericDataRecordChangingSchemaConverter
+@JvmOverloads constructor(
   schemaResolver: SchemaResolver,
   decoderSpecificRecordClassResolver: DecoderSpecificRecordClassResolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver,
   schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver
@@ -23,16 +24,15 @@ class DefaultSpecificRecordToGenericDataRecordChangingSchemaConverter @JvmOverlo
   private val schemaResolutionSupport: SchemaResolutionSupport =
     SchemaResolutionSupport(schemaResolver, decoderSpecificRecordClassResolver, schemaIncompatibilityResolver)
 
-  override fun <T : Any> encode(data: T): GenericData.Record {
-    require(data is SpecificRecordBase) { "Currently only encoding of specific data records is supported." }
-    return (data as SpecificRecordBase).toGenericDataRecord()
+  override fun <T : SpecificRecordBase> encode(data: T): GenericData.Record {
+    return data.toGenericDataRecord()
   }
 
   /**
    * Decodes the generic record into specific record.
    * Will change the schema from writer schema to reader schema.
    */
-  override fun <T : Any> decode(record: GenericData.Record): T {
+  override fun <T : SpecificRecordBase> decode(record: GenericData.Record): T {
     val readerSchema = schemaResolutionSupport.resolveReaderSchema(record)
     return record.toSpecificDataRecord(readerSchema.schema)
   }
