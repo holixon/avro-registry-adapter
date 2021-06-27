@@ -1,8 +1,8 @@
 package io.holixon.avro.adapter.api.type
 
 import io.holixon.avro.adapter.api.AvroPayloadAndSchemaId
-import io.holixon.avro.adapter.api.AvroSingleObjectPayload
 import io.holixon.avro.adapter.api.AvroSchemaId
+import io.holixon.avro.adapter.api.AvroSingleObjectPayload
 
 /**
  * Data class implementation of the [AvroPayloadAndSchemaId].

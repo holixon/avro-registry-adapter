@@ -24,6 +24,11 @@ typealias AvroSingleObjectEncoded = ByteArray
 typealias AvroSingleObjectPayload = ByteArray
 
 /**
+ * For Json conversion, just to mark a string as json.
+ */
+typealias JsonString = String
+
+/**
  * Wrapper type for [AvroSchemaId] and the encoded message [AvroSingleObjectPayload].
  */
 interface AvroPayloadAndSchemaId {

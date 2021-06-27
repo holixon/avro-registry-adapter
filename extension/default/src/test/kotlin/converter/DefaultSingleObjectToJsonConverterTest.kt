@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 
-internal class SingleObjectToJsonTest {
+internal class DefaultSingleObjectToJsonConverterTest {
 
   private val sample = AvroAdapterTestLib.sampleFoo
 
@@ -19,10 +19,10 @@ internal class SingleObjectToJsonTest {
   private val bytes = sample.toByteArray()
   private val expectedJson = sample.toString().replace("\\s".toRegex(), "")
 
-  private val fn = SingleObjectToJson(registry.schemaResolver())
+  private val fn = DefaultSingleObjectToJsonConverter(registry.schemaResolver())
 
   @Test
   internal fun `convert bytes to json`() {
-    assertThat(fn.apply(bytes)).isEqualTo(expectedJson)
+    assertThat(fn.convert(bytes)).isEqualTo(expectedJson)
   }
 }

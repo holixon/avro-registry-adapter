@@ -22,16 +22,6 @@ fun interface SchemaIdSupplier : Function<Schema, AvroSchemaId>
 fun interface SchemaResolver : Function<AvroSchemaId, Optional<AvroSchemaWithId>>
 
 /**
- * Takes encoded avro bytes (containing schema reference) and return decoded payload and the resolved schema.
- */
-fun interface SingleObjectDecoder : Function<AvroSingleObjectEncoded, AvroPayloadAndSchema>
-
-/**
- * Use given Schema information and bytecode payload to return decoded bytes.
- */
-fun interface SingleObjectEncoder : BiFunction<AvroSchemaWithId, ByteArray, AvroSingleObjectEncoded>
-
-/**
  * Returns the revision for a given schema.
  */
 fun interface SchemaRevisionResolver : Function<Schema, Optional<AvroSchemaRevision>>

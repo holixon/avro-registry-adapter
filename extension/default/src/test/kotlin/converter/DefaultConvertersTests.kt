@@ -2,6 +2,9 @@ package io.holixon.avro.adapter.common.converter
 
 import io.holixon.avro.adapter.api.AvroAdapterApi.schemaResolver
 import io.holixon.avro.adapter.common.AvroAdapterDefault
+import io.holixon.avro.adapter.common.decoder.DefaultSingleObjectToGenericDataRecordDecoder
+import io.holixon.avro.adapter.common.encoder.DefaultGenericDataRecordToSingleObjectEncoder
+import io.holixon.avro.adapter.common.encoder.DefaultSpecificRecordToSingleObjectEncoder
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import io.holixon.avro.lib.test.schema.SampleEventV4713
 import org.apache.avro.SchemaCompatibility
@@ -10,6 +13,7 @@ import org.apache.avro.specific.SpecificRecordBase
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import test.fixture.SampleEvent
+import test.fixture.SampleEventWithAdditionalFieldWithDefault
 
 internal class DefaultConvertersTests {
   private val registry = AvroAdapterDefault.inMemorySchemaRegistry()
@@ -22,30 +26,36 @@ internal class DefaultConvertersTests {
 
     val resolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver
 
-    val b2gdrConverter =
-      DefaultGenericDataRecordToSingleObjectConverter(registry.schemaResolver())
-    val gdr2srConverter =
-      DefaultSpecificRecordToGenericDataRecordChangingSchemaConverter(registry.schemaResolver(), decoderSpecificRecordClassResolver = {
+    val genericRecordEncoder = DefaultGenericDataRecordToSingleObjectEncoder()
+    val genericRecordDecoder = DefaultSingleObjectToGenericDataRecordDecoder(registry.schemaResolver())
+    val specificRecordEncoder = DefaultSpecificRecordToSingleObjectEncoder()
+
+    val specificRecordToGenericRecordConverter = DefaultSpecificRecordToGenericDataRecordConverter()
+
+    @Suppress("UNCHECKED_CAST")
+    val genericRecordToSpecificRecordConverter = DefaultGenericDataRecordToSpecificRecordChangingSchemaConverter(
+      schemaResolver = registry.schemaResolver(),
+      decoderSpecificRecordClassResolver = {
         Class.forName(SampleEventV4713.removeSuffix(it.canonicalName)) as Class<SpecificRecordBase>
-      }, DefaultSchemaCompatibilityResolver(setOf(SchemaCompatibility.SchemaIncompatibilityType.NAME_MISMATCH)))
-
-
+      },
+      schemaIncompatibilityResolver = DefaultSchemaCompatibilityResolver(setOf(SchemaCompatibility.SchemaIncompatibilityType.NAME_MISMATCH))
+    )
 
     // specific event
-    val data = AvroAdapterTestLib.sampleFooWithAdditionalFieldWithDefault
+    val data: SampleEventWithAdditionalFieldWithDefault = AvroAdapterTestLib.sampleFooWithAdditionalFieldWithDefault
     assertThat(data.schema).isEqualTo(AvroAdapterTestLib.schemaSampleEvent4713)
 
-    // generic record
-    val genericDataRecord: GenericData.Record = gdr2srConverter.encode(data)
+    // convert to generic record
+    val genericDataRecord: GenericData.Record = specificRecordToGenericRecordConverter.convert(data)
     assertThat(genericDataRecord.get("value")).isEqualTo(data.value)
     assertThat(genericDataRecord.get("otherValue")).isEqualTo(data.otherValue)
     assertThat(genericDataRecord.schema).isEqualTo(AvroAdapterTestLib.schemaSampleEvent4713)
 
     // bytes
-    val bytes = b2gdrConverter.encode(genericDataRecord)
+    val bytes = genericRecordEncoder.encode(genericDataRecord)
 
     // generic record
-    val decodedGenericDataRecord = b2gdrConverter.decode(bytes)
+    val decodedGenericDataRecord: GenericData.Record = genericRecordDecoder.decode(bytes)
     assertThat(decodedGenericDataRecord).isEqualTo(genericDataRecord)
     assertThat(decodedGenericDataRecord.get("value")).isEqualTo(data.value)
     assertThat(decodedGenericDataRecord.get("otherValue")).isEqualTo(data.otherValue)
@@ -53,7 +63,7 @@ internal class DefaultConvertersTests {
     assertThat(decodedGenericDataRecord.schema).isEqualTo(AvroAdapterTestLib.schemaSampleEvent4713)
 
     // specific event (read with a compatible but different schema)
-    val decodedEvent: SampleEvent = gdr2srConverter.decode(decodedGenericDataRecord)
+    val decodedEvent: SampleEvent = genericRecordToSpecificRecordConverter.convert(decodedGenericDataRecord)
 
     // the transformation removed one property defined in 4713
     assertThat(decodedEvent).isEqualTo(SampleEvent(data.value))

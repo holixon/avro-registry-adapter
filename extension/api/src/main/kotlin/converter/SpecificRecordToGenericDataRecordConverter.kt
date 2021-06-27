@@ -6,18 +6,18 @@ import org.apache.avro.specific.SpecificRecordBase
 
 /**
  * Converts a typed [SpecificRecordBase] to [GenericRecord].
+ *
+ * The generic record will have the same schema as the specific record.
  */
 interface SpecificRecordToGenericDataRecordConverter {
 
   /**
    * Converts instance of GenericRecord to bytes containing the SchemaId.
+   *
+   * @param T type of data
+   * @param data the specific record instance
+   * @return generic record
    */
-  fun <T : SpecificRecordBase> encode(data: T): GenericData.Record
-
-  /**
-   * Extracts SchemaId from given bytes amd converts the contents of the bytes payload
-   * to a GenericRecord instance of that writer schema.
-   */
-  fun <T : SpecificRecordBase> decode(record: GenericData.Record): T
+  fun <T : SpecificRecordBase> convert(data: T): GenericData.Record
 
 }
