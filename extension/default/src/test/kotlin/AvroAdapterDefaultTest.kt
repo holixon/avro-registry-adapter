@@ -5,7 +5,7 @@ import io.holixon.avro.adapter.common.AvroAdapterDefault.isAvroSingleObjectEncod
 import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
 import io.holixon.avro.adapter.common.AvroAdapterDefault.toByteArray
 import io.holixon.avro.adapter.common.AvroAdapterDefault.toGenericDataRecord
-import io.holixon.avro.adapter.common.ext.SchemaExt.fingerprint
+import io.holixon.avro.adapter.common.ext.DefaultSchemaExt.fingerprint
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import mu.KLogging
 import org.assertj.core.api.Assertions.assertThat

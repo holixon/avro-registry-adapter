@@ -80,14 +80,7 @@ object AvroAdapterDefault {
     schemaRevisionResolver = schemaRevisionResolver
   )
 
-  /**
-   * Helper to create [AvroSchemaWithId] from given [Schema], using [DefaultSchemaIdSupplier] and [DefaultSchemaRevisionResolver].
-   */
-  fun Schema.toAvroSchemaWithId() = AvroSchemaWithIdData(
-    schemaId = schemaIdSupplier.apply(this),
-    schema = this,
-    revision = schemaRevisionResolver.apply(this).orElse(null)
-  )
+
 
   /**
    * Reflective access using the method of generated specific record to access byte buffer representation.

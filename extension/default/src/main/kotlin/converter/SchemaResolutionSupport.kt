@@ -4,7 +4,7 @@ import io.holixon.avro.adapter.api.*
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.adapter.common.AvroAdapterDefault.getSchema
 import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
-import io.holixon.avro.adapter.common.AvroAdapterDefault.toAvroSchemaWithId
+import io.holixon.avro.adapter.common.ext.DefaultSchemaExt.avroSchemaWithId
 import org.apache.avro.generic.GenericData
 import org.apache.avro.specific.SpecificRecordBase
 
@@ -32,7 +32,7 @@ constructor(
    * Resolves reader schema for incoming record.
    */
   fun resolveReaderSchema(record: GenericData.Record): AvroSchemaWithId {
-    return resolveReaderSchema(record.schema.toAvroSchemaWithId().schemaId)
+    return resolveReaderSchema(record.schema.avroSchemaWithId.schemaId)
   }
 
   /**
@@ -67,6 +67,6 @@ constructor(
     // get reader schema from the class
     val readerSchema = targetClass.getSchema()
     // resolve incompatibilities if any and return the resulting reader schema
-    return schemaIncompatibilityResolver.resolve(readerSchema, writerSchemaWithId.schema).toAvroSchemaWithId()
+    return schemaIncompatibilityResolver.resolve(readerSchema, writerSchemaWithId.schema).avroSchemaWithId
   }
 }

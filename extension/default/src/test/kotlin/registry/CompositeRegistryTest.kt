@@ -4,7 +4,7 @@ import io.holixon.avro.adapter.api.AvroSchemaReadOnlyRegistry
 import io.holixon.avro.adapter.api.AvroSchemaRegistry
 import io.holixon.avro.adapter.api.AvroSchemaWithId
 import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
-import io.holixon.avro.adapter.common.AvroAdapterDefault.toAvroSchemaWithId
+import io.holixon.avro.adapter.common.ext.DefaultSchemaExt.avroSchemaWithId
 import io.holixon.avro.lib.test.schema.SampleEventV4711
 import io.holixon.avro.lib.test.schema.SampleEventV4712
 import org.assertj.core.api.Assertions.assertThat
@@ -14,8 +14,8 @@ import java.util.*
 
 internal class CompositeRegistryTest {
 
-  private val schema4711 = SampleEventV4711.schema.toAvroSchemaWithId()
-  private val schema4712 = SampleEventV4712.schema.toAvroSchemaWithId()
+  private val schema4711 = SampleEventV4711.schema.avroSchemaWithId
+  private val schema4712 = SampleEventV4712.schema.avroSchemaWithId
 
   private val fastRoRegistry: AvroSchemaReadOnlyRegistry = mock()
   private val mediumRwRegistry: AvroSchemaRegistry = mock()

@@ -21,6 +21,8 @@ data class TestSchemaData(
   )
 
   constructor(schemaJson: String) : this(Schema.Parser().parse(schemaJson))
+
+  val schemaId = "$fingerPrint"
 }
 
 interface TestSchemaDataProvider {

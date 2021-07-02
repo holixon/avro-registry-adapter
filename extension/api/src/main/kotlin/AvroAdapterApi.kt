@@ -65,4 +65,3 @@ object AvroAdapterApi {
   fun AvroSchemaReadOnlyRegistry.schemaResolver(): SchemaResolver = SchemaResolver { schemaId -> this@schemaResolver.findById(schemaId) }
 
 }
-

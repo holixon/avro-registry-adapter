@@ -59,6 +59,11 @@ interface AvroSchemaInfo {
      * Default separator used in canonical name.
      */
     const val NAME_SEPARATOR = "."
+
+    /**
+     * Compare field by field, instance equals does not work when comparing [AvroSchemaInfo] with [AvroSchemaWithId].
+     */
+    fun AvroSchemaInfo.equalsByFields(other: AvroSchemaInfo) = this.namespace == other.namespace && this.name == other.name && this.revision == other.revision
   }
 
   /**
