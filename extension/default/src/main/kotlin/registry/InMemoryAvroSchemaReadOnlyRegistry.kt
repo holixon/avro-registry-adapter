@@ -1,7 +1,9 @@
 package io.holixon.avro.adapter.common.registry
 
 import io.holixon.avro.adapter.api.*
+import io.holixon.avro.adapter.api.AvroSchemaInfo.Companion.equalsByFields
 import io.holixon.avro.adapter.api.type.AvroSchemaWithIdData
+import io.holixon.avro.adapter.common.AvroAdapterDefault
 import org.apache.avro.Schema
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -13,6 +15,18 @@ import java.util.concurrent.ConcurrentHashMap
 open class InMemoryAvroSchemaReadOnlyRegistry(
   protected val store: ConcurrentHashMap<String, Pair<AvroSchemaInfo, Schema>>
 ) : AvroSchemaReadOnlyRegistry, AutoCloseable {
+  companion object {
+
+    /**
+     * Registers given schemas and returns read only representation.
+     *
+     * @param schemas - the schemas to register.
+     * @return read only registry
+     */
+    fun createWithSchemas(vararg schemas: Schema) = AvroAdapterDefault.inMemorySchemaRegistry().apply {
+      schemas.forEach { register(it) }
+    }.toReadOnly()
+  }
 
   /**
    * Create instance with default empty [ConcurrentHashMap] as store.
@@ -21,10 +35,16 @@ open class InMemoryAvroSchemaReadOnlyRegistry(
 
   override fun findById(schemaId: AvroSchemaId): Optional<AvroSchemaWithId> = Optional.ofNullable(
     store[schemaId]
-  ).map { AvroSchemaWithIdData(schemaId, it.second, it.first.revision) }
+  ).map {
+    schemaData(
+      schemaId = schemaId,
+      schema = it.second,
+      schemaRevision = it.first.revision
+    )
+  }
 
   override fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId> = Optional.ofNullable(store.entries
-    .filter { it.value.first == info }
+    .filter { it.value.first.equalsByFields(info) }
     .map { it.toSchemaData() }
     .firstOrNull())
 
@@ -39,5 +59,15 @@ open class InMemoryAvroSchemaReadOnlyRegistry(
     store.clear()
   }
 
-  private fun Map.Entry<AvroSchemaId, Pair<AvroSchemaInfo, Schema>>.toSchemaData() = AvroSchemaWithIdData(key, value.second)
+  private fun Map.Entry<AvroSchemaId, Pair<AvroSchemaInfo, Schema>>.toSchemaData() = schemaData(
+    schemaId = key,
+    schema = value.second,
+    schemaRevision = value.first.revision
+  )
+
+  private fun schemaData(schemaId: AvroSchemaId, schema: Schema, schemaRevision: AvroSchemaRevision?) = AvroSchemaWithIdData(
+    schemaId = schemaId,
+    schema = schema,
+    revision = schemaRevision
+  )
 }

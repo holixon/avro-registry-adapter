@@ -24,6 +24,11 @@ typealias AvroSingleObjectEncoded = ByteArray
 typealias AvroSingleObjectPayload = ByteArray
 
 /**
+ * For Json conversion, just to mark a string as json.
+ */
+typealias JsonString = String
+
+/**
  * Wrapper type for [AvroSchemaId] and the encoded message [AvroSingleObjectPayload].
  */
 interface AvroPayloadAndSchemaId {
@@ -54,6 +59,11 @@ interface AvroSchemaInfo {
      * Default separator used in canonical name.
      */
     const val NAME_SEPARATOR = "."
+
+    /**
+     * Compare field by field, instance equals does not work when comparing [AvroSchemaInfo] with [AvroSchemaWithId].
+     */
+    fun AvroSchemaInfo.equalsByFields(other: AvroSchemaInfo) = this.namespace == other.namespace && this.name == other.name && this.revision == other.revision
   }
 
   /**

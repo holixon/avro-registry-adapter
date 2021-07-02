@@ -15,6 +15,8 @@ import io.holixon.avro.adapter.common.converter.DefaultSchemaCompatibilityResolv
 import io.holixon.avro.adapter.common.registry.InMemoryAvroSchemaRegistry
 import org.apache.avro.Schema
 import org.apache.avro.SchemaNormalization
+import org.apache.avro.generic.GenericData
+import org.apache.avro.specific.SpecificData
 import org.apache.avro.specific.SpecificRecordBase
 import org.apache.avro.util.ClassUtils
 import java.nio.ByteBuffer
@@ -78,14 +80,6 @@ object AvroAdapterDefault {
     schemaRevisionResolver = schemaRevisionResolver
   )
 
-  /**
-   * Helper to create [AvroSchemaWithId] from given [Schema], using [DefaultSchemaIdSupplier] and [DefaultSchemaRevisionResolver].
-   */
-  fun Schema.toAvroSchemaWithId() = AvroSchemaWithIdData(
-    schemaId = schemaIdSupplier.apply(this),
-    schema = this,
-    revision = schemaRevisionResolver.apply(this).orElse(null)
-  )
 
 
   /**
@@ -93,6 +87,24 @@ object AvroAdapterDefault {
    */
   @JvmStatic
   fun SpecificRecordBase.toByteBuffer(): ByteBuffer = this.javaClass.getDeclaredMethod("toByteBuffer").invoke(this) as ByteBuffer
+
+
+  /**
+   * Reflective access using the method of generated specific record to access data fields.
+   */
+  @JvmStatic
+  fun <T : SpecificRecordBase> T.toGenericDataRecord(): GenericData.Record {
+    return GenericData.get().deepCopy(this.schema, this) as GenericData.Record
+  }
+
+  /**
+   * Reflective calling the builder and building the specific record.
+   */
+  @JvmStatic
+  fun <T : SpecificRecordBase> GenericData.Record.toSpecificDataRecord(schema: Schema): T {
+    @Suppress("UNCHECKED_CAST")
+    return SpecificData.get().deepCopy(schema, this) as T
+  }
 
   /**
    * Reflective access using the method of generated specific record to access byte array representation.
