@@ -6,7 +6,7 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>avro-registry-adapter</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
   </parent>
 
   <groupId>io.holixon.avro</groupId>
@@ -16,6 +16,7 @@
   <properties>
     <avro-registry-adapter.version>${project.version}</avro-registry-adapter.version>
     <avro.version>1.10.2</avro.version>
+    <jcache.version>1.1.1</jcache.version>
   </properties>
 
   <dependencyManagement>
@@ -46,6 +47,12 @@
         <scope>provided</scope>
       </dependency>
 
+      <dependency>
+        <groupId>javax.cache</groupId>
+        <artifactId>cache-api</artifactId>
+        <version>${jcache.version}</version>
+        <scope>provided</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

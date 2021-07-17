@@ -6,7 +6,7 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>extension</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
@@ -33,6 +33,7 @@
       <groupId>io.holixon.avro</groupId>
       <artifactId>avro-registry-adapter-default</artifactId>
       <scope>test</scope>
+
     </dependency>
 
   </dependencies>

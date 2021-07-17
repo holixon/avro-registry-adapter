@@ -6,7 +6,7 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>lib</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.4</version>
   </parent>
 
   <artifactId>avro-registry-adapter-lib-test</artifactId>
@@ -85,6 +85,13 @@
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility-kotlin</artifactId>
       <version>4.1.0</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <version>3.8.1</version>
       <scope>compile</scope>
     </dependency>
 

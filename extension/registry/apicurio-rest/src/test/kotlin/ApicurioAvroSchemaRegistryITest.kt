@@ -9,25 +9,10 @@ import mu.KLogging
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
-
-/**
- * Test container for apicurio tests.
- */
-class ApicurioRegistryTestContainer : GenericContainer<ApicurioRegistryTestContainer>("apicurio/apicurio-registry-mem:2.0.0.Final") {
-  companion object {
-    const val EXPOSED_PORT = 8080
-  }
-
-  /**
-   * Delivers the REST client for Apicurio access.
-   */
-  fun restClient() = AvroAdapterApicurioRest.registryRestClient(containerIpAddress, getMappedPort(EXPOSED_PORT))
-}
 
 @Testcontainers
 internal class ApicurioAvroSchemaRegistryITest {
