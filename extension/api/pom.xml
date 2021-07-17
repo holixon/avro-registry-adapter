@@ -16,4 +16,11 @@
   <properties>
     <jacoco.skip>false</jacoco.skip>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.cache</groupId>
+      <artifactId>cache-api</artifactId>
+    </dependency>
+  </dependencies>
 </project>

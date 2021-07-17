@@ -33,6 +33,7 @@
       <groupId>io.holixon.avro</groupId>
       <artifactId>avro-registry-adapter-default</artifactId>
       <scope>test</scope>
+
     </dependency>
 
   </dependencies>
