@@ -3,6 +3,7 @@ package io.holixon.avro.adapter.api.type
 import io.holixon.avro.adapter.api.AvroPayloadAndSchema
 import io.holixon.avro.adapter.api.AvroSchemaWithId
 import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
+import java.io.Serializable
 
 /**
  * Data class implementing [AvroPayloadAndSchema].
@@ -10,7 +11,7 @@ import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 data class AvroPayloadAndSchemaData(
   override val schema: AvroSchemaWithId,
   override val payload: AvroSingleObjectEncoded
-) : AvroPayloadAndSchema {
+) : AvroPayloadAndSchema, Serializable {
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true

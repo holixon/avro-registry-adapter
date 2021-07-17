@@ -4,6 +4,7 @@ import io.holixon.avro.adapter.api.AvroSchemaWithId
 import io.holixon.avro.adapter.api.AvroSchemaId
 import io.holixon.avro.adapter.api.AvroSchemaRevision
 import org.apache.avro.Schema
+import java.io.Serializable
 
 /**
  * Data class implementing [AvroSchemaWithId].
@@ -14,7 +15,7 @@ data class AvroSchemaWithIdData(
   override val revision: AvroSchemaRevision?,
   override val namespace: String,
   override val name: String
-) : AvroSchemaWithId {
+) : AvroSchemaWithId, Serializable {
   constructor(
     schemaId: AvroSchemaId,
     schema: Schema,
