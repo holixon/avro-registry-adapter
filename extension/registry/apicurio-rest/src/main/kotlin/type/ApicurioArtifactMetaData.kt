@@ -42,6 +42,9 @@ data class ApicurioArtifactMetaData(
   val contentId: Long? = null
 ) {
   companion object {
+    /**
+     * Create data class from [ArtifactMetaData].
+     */
     operator fun invoke(metaData: ArtifactMetaData): ApicurioArtifactMetaData = with(metaData) {
       ApicurioArtifactMetaData(
         globalId = this@with.globalId,
