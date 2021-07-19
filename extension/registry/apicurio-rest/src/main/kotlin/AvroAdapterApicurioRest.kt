@@ -12,6 +12,8 @@ import org.apache.avro.Schema
  */
 object AvroAdapterApicurioRest {
 
+  const val DEFAULT_GROUP = "default"
+
   @JvmOverloads
   @JvmStatic
   fun registryApiUrl(host: String, port: Int, https: Boolean = false) = "http${if (https) "s" else ""}://$host:$port/apis/registry/v2"

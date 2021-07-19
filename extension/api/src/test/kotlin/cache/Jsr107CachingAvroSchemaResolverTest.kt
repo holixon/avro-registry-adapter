@@ -5,6 +5,7 @@ import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.InMemoryAvroSchemaRe
 import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.avroSchemaWithId
 import io.holixon.avro.adapter.api.AvroSchemaId
 import io.holixon.avro.adapter.api.AvroSchemaWithId
+import io.holixon.avro.adapter.api.cache.Jsr107AvroAdapterCache.DEFAULT_CACHE_NAME
 import io.holixon.avro.adapter.api.cache.Jsr107AvroAdapterCache.Jsr107CachingAvroSchemaResolver
 import io.holixon.avro.lib.test.schema.SampleEventV4711
 import io.holixon.avro.lib.test.schema.SampleEventV4712
@@ -39,7 +40,7 @@ internal class Jsr107CachingAvroSchemaResolverTest {
     spyingSchemaResolver = spy(AvroAdapterApiTestHelper.sampleEventsSchemaResolver)
 
     cache = cacheManager.createCache(
-      Jsr107CachingAvroSchemaResolver.DEFAULT_CACHE_NAME,
+      DEFAULT_CACHE_NAME,
       Jsr107AvroAdapterCache.mutableConfiguration(spyingSchemaResolver)
     )
     cachingSchemaResolver = Jsr107CachingAvroSchemaResolver(cache)
@@ -47,7 +48,7 @@ internal class Jsr107CachingAvroSchemaResolverTest {
 
   @Test
   internal fun `cache is filled on first hit`() {
-    assertThat(cache.name).isEqualTo(Jsr107CachingAvroSchemaResolver.DEFAULT_CACHE_NAME)
+    assertThat(cache.name).isEqualTo(DEFAULT_CACHE_NAME)
     assertContainsKeys(
       sampleEvent4711.schemaId to false,
       sampleEvent4712.schemaId to false,

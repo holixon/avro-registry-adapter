@@ -10,7 +10,7 @@ import javax.cache.annotation.CacheResult
 /**
  * Marks an [AvroSchemaResolver] that uses a cache to resolve a schema by its id.
  */
-interface CachingAvroSchemaResolver : AvroSchemaResolver {
+fun interface CachingAvroSchemaResolver : AvroSchemaResolver {
 
   @CacheResult
   override fun apply(@CacheKey schemaId: AvroSchemaId): Optional<AvroSchemaWithId>

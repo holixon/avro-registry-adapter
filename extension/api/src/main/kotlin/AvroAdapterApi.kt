@@ -30,8 +30,6 @@ fun interface IsAvroSingleObjectEncodedPredicate : Predicate<ByteBuffer>
  */
 object AvroAdapterApi {
 
-  fun Schema.byteContent() = this.toString().byteInputStream(StandardCharsets.UTF_8)
-
   /**
    * Determines the revision of a given schema by reading the String value of the given object-property.
    */

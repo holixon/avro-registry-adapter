@@ -15,6 +15,8 @@ import javax.cache.integration.CacheLoader
  */
 object Jsr107AvroAdapterCache {
 
+  const val DEFAULT_CACHE_NAME = "cachingSchemaResolver"
+
   /**
    * Provides a [SingletonFactory] for the [AvroSchemaResolverCacheLoader] used in [MutableConfiguration].
    */
@@ -42,9 +44,6 @@ object Jsr107AvroAdapterCache {
   class Jsr107CachingAvroSchemaResolver(
     private val cache: Cache<AvroSchemaId, AvroSchemaWithId?>
   ) : CachingAvroSchemaResolver {
-    companion object {
-      const val DEFAULT_CACHE_NAME = "cachingSchemaResolver"
-    }
 
     override fun apply(schemaId: AvroSchemaId): Optional<AvroSchemaWithId> = Optional.ofNullable(cache.get(schemaId))
   }

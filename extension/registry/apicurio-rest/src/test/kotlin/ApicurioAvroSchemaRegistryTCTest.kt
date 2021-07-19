@@ -2,48 +2,75 @@ package io.holixon.avro.adapter.registry.apicurio
 
 import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
 import io.holixon.avro.adapter.common.AvroAdapterDefault
-import io.holixon.avro.adapter.registry.apicurio.ApicurioRegistryTestContainer.Companion.EXPOSED_PORT
+import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRestHelper.ApicurioRegistryTestContainer
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import io.holixon.avro.lib.test.schema.SampleEventV4711
 import mu.KLogging
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
+import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
-import org.testcontainers.containers.output.Slf4jLogConsumer
-import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
+import org.junit.jupiter.api.TestMethodOrder
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
-internal class ApicurioAvroSchemaRegistryITest {
+@TestMethodOrder(OrderAnnotation::class)
+internal class ApicurioAvroSchemaRegistryTCTest {
   companion object : KLogging() {
 
     @Container
     @JvmStatic
-    val CONTAINER = ApicurioRegistryTestContainer().apply {
-      withExposedPorts(EXPOSED_PORT)
-      withLogConsumer(Slf4jLogConsumer(logger))
-      setWaitStrategy(HostPortWaitStrategy())
-    }
+    val CONTAINER = ApicurioRegistryTestContainer()
   }
 
-  private val registryClient by lazy {
-    ApicurioAvroSchemaRegistry(
-      CONTAINER.restClient(),
-      AvroAdapterDefault.schemaIdSupplier,
-      AvroAdapterDefault.schemaRevisionResolver
-    )
+  private val schemaRegistry by lazy {
+    CONTAINER.schemaRegistry()
   }
+
+  @Test
+  @Order(1)
+  internal fun `findById is empty`() {
+    assertThat(schemaRegistry.findById("xxx")).isEmpty
+  }
+
+  @Test
+  @Order(2)
+  internal fun `findByInfo is empty`() {
+    assertThat(
+      schemaRegistry.findByInfo(
+        AvroSchemaInfoData(
+          namespace = "foo",
+          name = "bar",
+          revision = "1"
+        )
+      )
+    ).isEmpty
+  }
+
+  @Test
+  @Order(3)
+  internal fun `findAllByCanonicalName is empty`() {
+    assertThat(schemaRegistry.findAllByCanonicalName("bar", "foo")).isEmpty()
+  }
+
+  @Test
+  @Order(4)
+  internal fun `findAll is empty`() {
+    assertThat(schemaRegistry.findAll()).isEmpty()
+  }
+
 
   @Test
   internal fun `find by id`() {
     val schema: Schema = SampleEventV4711.schema
     val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
 
-    val created = registryClient.register(schema)
+    val created = schemaRegistry.register(schema)
     logger.info { "created: $created" }
 
-    val found = registryClient.findById(fingerprint).orElseThrow()
+    val found = schemaRegistry.findById(fingerprint).orElseThrow()
 
     assertThat(found.schemaId).isEqualTo(fingerprint)
     assertThat(found.schema).isEqualTo(schema)
@@ -55,10 +82,10 @@ internal class ApicurioAvroSchemaRegistryITest {
     val schema: Schema = AvroAdapterTestLib.schemaSampleEvent4711
     val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
 
-    val created = registryClient.register(schema)
+    val created = schemaRegistry.register(schema)
     logger.info { "created: $created" }
 
-    val found = registryClient.findByInfo(
+    val found = schemaRegistry.findByInfo(
       AvroSchemaInfoData(
         namespace = schema.namespace,
         name = schema.name,
@@ -70,7 +97,7 @@ internal class ApicurioAvroSchemaRegistryITest {
     assertThat(found.get().schemaId).isEqualTo(fingerprint)
 
     assertThat(
-      registryClient.findByInfo(
+      schemaRegistry.findByInfo(
         AvroSchemaInfoData(
           namespace = schema.namespace,
           name = schema.name,
@@ -85,10 +112,10 @@ internal class ApicurioAvroSchemaRegistryITest {
     val schema = SampleEventV4711.schema
     val fingerprint = SampleEventV4711.schemaData.fingerPrint.toString()
 
-    val created = registryClient.register(schema)
+    val created = schemaRegistry.register(schema)
     logger.info { "created: $created" }
 
-    val found = registryClient.findAllByCanonicalName(
+    val found = schemaRegistry.findAllByCanonicalName(
       namespace = schema.namespace,
       name = schema.name
     )
