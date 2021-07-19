@@ -3,13 +3,13 @@ package io.holixon.avro.adapter.api.cache
 import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper
 import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.sampleEvent4711
 import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.sampleEvent4712
+import io.holixon.avro.adapter.api.cache.Jsr107AvroAdapterCache.Jsr107AvroSchemaResolverCacheLoader
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
+internal class Jsr107AvroSchemaResolverCacheLoaderTest {
 
-internal class SchemaResolverCacheLoaderTest {
-
-  private val cacheLoader = SchemaResolverCacheLoader(AvroAdapterApiTestHelper.sampleEventsSchemaResolver)
+  private val cacheLoader = Jsr107AvroSchemaResolverCacheLoader(AvroAdapterApiTestHelper.sampleEventsSchemaResolver)
 
   @Test
   internal fun `load single - non existing`() {

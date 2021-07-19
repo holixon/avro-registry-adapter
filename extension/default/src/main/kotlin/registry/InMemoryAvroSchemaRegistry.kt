@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap
  * An implementation of [AvroSchemaRegistry] that does not use persistent storage.
  * Obviously, this is primarily meant for testing and should not be used for real life projects.
  */
-class InMemoryAvroSchemaRegistry(
+open class InMemoryAvroSchemaRegistry(
   store: ConcurrentHashMap<String, Pair<AvroSchemaInfo, Schema>>,
   val schemaIdSupplier: SchemaIdSupplier,
   val schemaRevisionResolver: SchemaRevisionResolver

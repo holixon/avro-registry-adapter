@@ -14,7 +14,7 @@ import org.apache.avro.specific.SpecificRecordBase
 class SchemaResolutionSupport
 @JvmOverloads
 constructor(
-  private val schemaResolver: SchemaResolver,
+  private val schemaResolver: AvroSchemaResolver,
   private val decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver,
   private val schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver
 ) {
