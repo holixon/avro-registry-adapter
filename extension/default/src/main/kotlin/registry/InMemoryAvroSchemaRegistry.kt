@@ -35,5 +35,8 @@ open class InMemoryAvroSchemaRegistry(
       }
   }
 
+  /**
+   * Creates a [AvroSchemaReadOnlyRegistry] copy containing the current registered schemas.
+   */
   fun toReadOnly() = InMemoryAvroSchemaReadOnlyRegistry(store)
 }
