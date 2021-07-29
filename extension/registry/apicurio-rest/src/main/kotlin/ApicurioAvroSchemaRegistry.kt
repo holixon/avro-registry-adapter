@@ -16,12 +16,7 @@ open class ApicurioAvroSchemaRegistry(
   private val schemaIdSupplier: SchemaIdSupplier,
   private val schemaRevisionResolver: SchemaRevisionResolver
 ) : AvroSchemaRegistry {
-  companion object : KLogging() {
-    const val KEY_NAME = "name"
-    const val KEY_NAMESPACE = "namespace"
-    const val KEY_CANONICAL_NAME = "canonicalName"
-    const val KEY_REVISION = "revision"
-  }
+  companion object : KLogging()
 
   constructor(
     client: RegistryClient,
@@ -35,30 +30,30 @@ open class ApicurioAvroSchemaRegistry(
   )
 
   override fun register(schema: Schema): AvroSchemaWithId {
-    val schemaId = schemaIdSupplier.apply(schema)
-    val revision = schemaRevisionResolver.apply(schema).orElse(null)
-
-    client.registerSchema(schema).onFailure {
-      throw it
-    }
-
-    return AvroSchemaWithIdData(
-      schemaId = schemaId,
-      schema = schema,
-      revision = revision
-    )
+    return client.registerSchema(schema).getOrThrow()
   }
 
-  override fun findById(schemaId: AvroSchemaId): Optional<AvroSchemaWithId> = Optional.ofNullable(
-    client.findSchemaById(schemaId)
-      .map {
-        AvroSchemaWithIdData(
-          schemaId = schemaId,
-          schema = it,
-          revision = schemaRevisionResolver.apply(it).orElse(null)
-        )
-      }.getOrNull()
-  )
+  override fun findById(schemaId: AvroSchemaId): Optional<AvroSchemaWithId> {
+    fun findAndUpdateMetaDataIfNotFound(schemaId: AvroSchemaId, recover: Boolean = true): Result<AvroSchemaWithId> {
+      val result = client.findSchemaById(schemaId)
+        .map {
+          AvroSchemaWithIdData(
+            schemaId = schemaIdSupplier.apply(it),
+            schema = it,
+            revision = schemaRevisionResolver.apply(it).orElse(null)
+          )
+        }
+
+      if (result.isFailure && recover) {
+        client.updateAllNotInitializedArtifactMetaData()
+        return findAndUpdateMetaDataIfNotFound(schemaId, !recover)
+      }
+
+      return result
+    }
+
+    return findAndUpdateMetaDataIfNotFound(schemaId).map { Optional.of(it) }.getOrDefault(Optional.empty())
+  }
 
   override fun findByInfo(info: AvroSchemaInfo): Optional<AvroSchemaWithId> {
     return findAllByCanonicalName(info.namespace, info.name).singleOrNull { info.revision == it.revision }
@@ -70,7 +65,7 @@ open class ApicurioAvroSchemaRegistry(
       .asSequence()
       .filter { it.name == name }
       .map { client.findArtifactMetaData(it.id).onFailure { throw it }.getOrNull()!! }
-      .filter { it.namespace ?: "" == namespace }
+      .filter { it.namespaceProperty ?: "" == namespace }
       .map { findById(it.id) }
       .filter { it.isPresent }
       .map { it.get() }

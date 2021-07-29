@@ -4,8 +4,7 @@ import io.apicurio.registry.rest.v2.beans.ArtifactMetaData
 import io.apicurio.registry.types.ArtifactState
 import io.apicurio.registry.types.ArtifactType
 import io.holixon.avro.adapter.api.AvroSchemaRevision
-import io.holixon.avro.adapter.api.SchemaIdSupplier
-import io.holixon.avro.adapter.registry.apicurio.ApicurioAvroSchemaRegistry
+import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.PropertyKey
 import java.util.*
 
 /**
@@ -69,11 +68,13 @@ data class ApicurioArtifactMetaData(
     }
   }
 
-  val revision: AvroSchemaRevision? by lazy {
-    properties[ApicurioAvroSchemaRegistry.KEY_REVISION]
-  }
+  val revisionProperty: AvroSchemaRevision? by lazy { properties[PropertyKey.REVISION] }
+  val canonicalNameProperty: AvroSchemaRevision? by lazy { properties[PropertyKey.CANONICAL_NAME] }
+  val namespaceProperty: String? by lazy { properties[PropertyKey.NAMESPACE] }
+  val nameProperty: String? by lazy { properties[PropertyKey.NAME] }
+  val schemaIdProperty: String? by lazy { properties[PropertyKey.SCHEMA_ID] }
 
-  val namespace: String? by lazy { properties[ApicurioAvroSchemaRegistry.KEY_NAMESPACE] }
+  val isInitialized = revisionProperty != null && namespaceProperty != null && nameProperty != null && schemaIdProperty != null
 
   fun toMetaData() = ArtifactMetaData().apply {
     id = this@ApicurioArtifactMetaData.id
@@ -89,8 +90,8 @@ data class ApicurioArtifactMetaData(
     modifiedBy = this@ApicurioArtifactMetaData.modifiedBy
     modifiedOn = this@ApicurioArtifactMetaData.modifiedOn
 
-    labels = this@ApicurioArtifactMetaData.labels ?: emptyList()
-    properties = this@ApicurioArtifactMetaData.properties ?: emptyMap()
+    labels = this@ApicurioArtifactMetaData.labels
+    properties = this@ApicurioArtifactMetaData.properties
     groupId = this@ApicurioArtifactMetaData.groupId
     contentId = this@ApicurioArtifactMetaData.contentId
   }

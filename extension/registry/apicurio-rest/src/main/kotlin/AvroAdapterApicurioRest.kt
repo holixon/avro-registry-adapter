@@ -2,6 +2,7 @@ package io.holixon.avro.adapter.registry.apicurio
 
 import io.apicurio.registry.rest.client.RegistryClient
 import io.apicurio.registry.rest.client.RegistryClientFactory
+import io.holixon.avro.adapter.api.AvroSchemaWithId
 import org.apache.avro.Schema
 
 /**
@@ -35,4 +36,11 @@ object AvroAdapterApicurioRest {
 
   fun Schema.description(): String? = this.doc
 
+  internal fun AvroSchemaWithId.properties(): Map<String, String? /* = kotlin.String? */> = mapOf(
+    PropertyKey.SCHEMA_ID to schemaId,
+    PropertyKey.NAMESPACE to namespace,
+    PropertyKey.NAME to name,
+    PropertyKey.REVISION to revision,
+    PropertyKey.CANONICAL_NAME to canonicalName
+  )
 }

@@ -2,8 +2,6 @@ package io.holixon.avro.adapter.registry.apicurio.client
 
 import io.apicurio.registry.rest.v2.beans.SearchedArtifact
 import io.holixon.avro.adapter.common.AvroAdapterDefault
-import io.holixon.avro.adapter.registry.apicurio.ApicurioAvroSchemaRegistry
-import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest
 import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.DEFAULT_GROUP
 import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.PropertyKey
 import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRestHelper.ApicurioRegistryTestContainer
@@ -74,10 +72,10 @@ internal class GroupAwareRegistryClientTCTest {
     assertThat(schemaData.name).isEqualTo(SampleEventV4711.schemaData.name)
     assertThat(schemaData.metaData.description).isEqualTo(SampleEventV4711.schema.doc)
 
-    assertThat(schemaData.metaData.properties[ApicurioAvroSchemaRegistry.KEY_NAME]).isEqualTo(SampleEventV4711.schemaData.name)
-    assertThat(schemaData.metaData.properties[ApicurioAvroSchemaRegistry.KEY_NAMESPACE]).isEqualTo(SampleEventV4711.schemaData.namespace)
-    assertThat(schemaData.metaData.properties[ApicurioAvroSchemaRegistry.KEY_CANONICAL_NAME]).isEqualTo(SampleEventV4711.schema.fullName)
-    assertThat(schemaData.metaData.properties[ApicurioAvroSchemaRegistry.KEY_REVISION]).isEqualTo(SampleEventV4711.schemaData.revision)
+    assertThat(schemaData.metaData.nameProperty).isEqualTo(SampleEventV4711.schemaData.name)
+    assertThat(schemaData.metaData.namespaceProperty).isEqualTo(SampleEventV4711.schemaData.namespace)
+    assertThat(schemaData.canonicalName).isEqualTo(SampleEventV4711.schema.fullName)
+    assertThat(schemaData.revision).isEqualTo(SampleEventV4711.schemaData.revision)
   }
 
   @Test
@@ -118,7 +116,7 @@ internal class GroupAwareRegistryClientTCTest {
     assertThat(client.findSchemaById(schemaId).isFailure).isTrue
     assertThat(client.findSchemaById(origMetaData.id).isSuccess).isTrue
 
-    client.updateArtifactMetaData(origMetaData.id, schema)
+    client.updateAllNotInitializedArtifactMetaData()
 
     client.findAllMetaData().getOrThrow().forEach{logger.info { "metaData: $it" }}
 

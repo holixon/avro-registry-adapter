@@ -1,26 +1,24 @@
 package io.holixon.avro.adapter.registry.apicurio.client
 
 import io.apicurio.registry.rest.client.RegistryClient
-import io.apicurio.registry.rest.client.exception.ArtifactNotFoundException
-import io.apicurio.registry.rest.client.exception.NotFoundException
 import io.apicurio.registry.rest.v2.beans.ArtifactMetaData
 import io.apicurio.registry.rest.v2.beans.EditableMetaData
 import io.apicurio.registry.rest.v2.beans.IfExists
 import io.apicurio.registry.rest.v2.beans.SearchedArtifact
 import io.apicurio.registry.types.ArtifactType
-import io.holixon.avro.adapter.api.AvroSchemaInfo.Companion.canonicalName
 import io.holixon.avro.adapter.api.SchemaIdSupplier
 import io.holixon.avro.adapter.api.SchemaRevisionResolver
 import io.holixon.avro.adapter.api.ext.FunctionalExt.invoke
 import io.holixon.avro.adapter.api.ext.SchemaExt.byteContent
 import io.holixon.avro.adapter.api.ext.SchemaExt.schema
+import io.holixon.avro.adapter.api.type.AvroSchemaWithIdData
 import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.DEFAULT_GROUP
 import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.PropertyKey
+import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.properties
 import io.holixon.avro.adapter.registry.apicurio.type.ApicurioArtifactMetaData
 import io.holixon.avro.adapter.registry.apicurio.type.ApicurioSchemaData
 import mu.KLogging
 import org.apache.avro.Schema
-import java.lang.IllegalArgumentException
 
 /**
  * Encapsulates calls to apicurio [RegistryClient] with error handling.
@@ -54,15 +52,18 @@ constructor(
   /**
    * Returns [RegistryClient.listArtifactsInGroup]. Defaults to empty list.
    */
-  fun findAllArtifacts(): Result<List<SearchedArtifact>> = client.runCatching {
+  fun findAllArtifacts(filter: (SearchedArtifact) -> Boolean = { true }): Result<List<SearchedArtifact>> = client.runCatching {
     listArtifactsInGroup(group)
-  }.map { it.artifacts }
+  }.map { it.artifacts.filter(filter) }
 
-  fun findAllMetaData(): Result<List<ApicurioArtifactMetaData>> = client.runCatching {
-    val artifacts = this@GroupAwareRegistryClient.findAllArtifacts().getOrThrow()
+  fun findAllMetaData(filter: (ApicurioArtifactMetaData) -> Boolean = { true }): Result<List<ApicurioArtifactMetaData>> =
+    client.runCatching {
+      val artifacts = this@GroupAwareRegistryClient.findAllArtifacts().getOrThrow()
 
-    artifacts.map { this@GroupAwareRegistryClient.findArtifactMetaData(it.id).getOrNull() }.filterNotNull()
-  }
+      artifacts.mapNotNull { this@GroupAwareRegistryClient.findArtifactMetaData(it.id).getOrNull() }
+        .filter { it.type == ArtifactType.AVRO }
+        .filter(filter)
+    }
 
   /**
    * Returns [RegistryClient.getArtifactMetaData] if found.
@@ -71,25 +72,40 @@ constructor(
     getArtifactMetaData(group, artifactId)
   }.map { ApicurioArtifactMetaData(it) }
 
+  fun updateAllNotInitializedArtifactMetaData(): List<ApicurioSchemaData> {
+    val uninitializedMeta: List<ApicurioArtifactMetaData> = findAllMetaData { !it.isInitialized }.getOrThrow()
+
+    return uninitializedMeta.mapNotNull { updateArtifactMetaData(it.id).getOrNull() }
+  }
+
+  fun updateArtifactMetaData(apicurioArtifactId: String): Result<ApicurioSchemaData> = client.runCatching {
+    val schema = this@GroupAwareRegistryClient.findSchemaById(apicurioArtifactId).getOrThrow()
+    val updatedMeta = this@GroupAwareRegistryClient.updateArtifactMetaData(apicurioArtifactId, schema).getOrThrow()
+    ApicurioSchemaData(
+      apicurioArtifactId = apicurioArtifactId,
+      schema = schema,
+      metaData = updatedMeta
+    )
+  }
+
   /**
    * Update metaData for given artifact with avro adapter values.
    */
   fun updateArtifactMetaData(apicurioArtifactId: String, schema: Schema): Result<ApicurioArtifactMetaData> = client.runCatching {
+    val data = AvroSchemaWithIdData(
+      schemaId = schemaIdSupplier.apply(schema),
+      schema = schema,
+      revision = schemaRevisionResolver.apply(schema).orElse(null)
+    )
+
     val editableMetaData = EditableMetaData().apply {
       name = schema.name
       description = schema.doc
-      properties = mapOf<String, String?>(
-        PropertyKey.SCHEMA_ID to schemaIdSupplier.apply(schema),
-        PropertyKey.NAME to schema.name,
-        PropertyKey.NAMESPACE to schema.namespace,
-        PropertyKey.CANONICAL_NAME to canonicalName(schema.namespace, schema.name),
-        PropertyKey.REVISION to schemaRevisionResolver.apply(schema).orElse(null),
-      )
+      properties = data.properties()
     }
 
     updateArtifactMetaData(group, apicurioArtifactId, editableMetaData)
     val updatedMeta: Result<ApicurioArtifactMetaData> = findArtifactMetaData(apicurioArtifactId)
-
 
     findArtifactMetaData(apicurioArtifactId).getOrThrow()
   }
