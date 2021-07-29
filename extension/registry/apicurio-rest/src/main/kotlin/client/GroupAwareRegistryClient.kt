@@ -1,29 +1,40 @@
 package io.holixon.avro.adapter.registry.apicurio.client
 
 import io.apicurio.registry.rest.client.RegistryClient
+import io.apicurio.registry.rest.client.exception.ArtifactNotFoundException
+import io.apicurio.registry.rest.client.exception.NotFoundException
+import io.apicurio.registry.rest.v2.beans.ArtifactMetaData
 import io.apicurio.registry.rest.v2.beans.EditableMetaData
 import io.apicurio.registry.rest.v2.beans.IfExists
 import io.apicurio.registry.rest.v2.beans.SearchedArtifact
 import io.apicurio.registry.types.ArtifactType
-import io.holixon.avro.adapter.api.AvroSchemaId
-import io.holixon.avro.adapter.api.AvroSchemaRevision
+import io.holixon.avro.adapter.api.AvroSchemaInfo.Companion.canonicalName
+import io.holixon.avro.adapter.api.SchemaIdSupplier
+import io.holixon.avro.adapter.api.SchemaRevisionResolver
+import io.holixon.avro.adapter.api.ext.FunctionalExt.invoke
 import io.holixon.avro.adapter.api.ext.SchemaExt.byteContent
 import io.holixon.avro.adapter.api.ext.SchemaExt.schema
-import io.holixon.avro.adapter.registry.apicurio.ApicurioAvroSchemaRegistry.Companion.KEY_CANONICAL_NAME
-import io.holixon.avro.adapter.registry.apicurio.ApicurioAvroSchemaRegistry.Companion.KEY_NAME
-import io.holixon.avro.adapter.registry.apicurio.ApicurioAvroSchemaRegistry.Companion.KEY_NAMESPACE
-import io.holixon.avro.adapter.registry.apicurio.ApicurioAvroSchemaRegistry.Companion.KEY_REVISION
-import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.description
+import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.DEFAULT_GROUP
+import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.PropertyKey
 import io.holixon.avro.adapter.registry.apicurio.type.ApicurioArtifactMetaData
+import io.holixon.avro.adapter.registry.apicurio.type.ApicurioSchemaData
 import mu.KLogging
 import org.apache.avro.Schema
+import java.lang.IllegalArgumentException
 
 /**
  * Encapsulates calls to apicurio [RegistryClient] with error handling.
  */
-class GroupAwareRegistryClient(
+class GroupAwareRegistryClient
+@JvmOverloads
+constructor(
+  /**
+   * The apicurio [RegistryClient].
+   */
   private val client: RegistryClient,
-  private val group: String
+  private val schemaIdSupplier: SchemaIdSupplier,
+  private val schemaRevisionResolver: SchemaRevisionResolver,
+  private val group: String = DEFAULT_GROUP
 ) {
   companion object : KLogging()
 
@@ -32,7 +43,13 @@ class GroupAwareRegistryClient(
    */
   fun findSchemaById(id: String): Result<Schema> = client.runCatching {
     getLatestArtifact(group, id)
-  }.mapCatching { it.schema() }
+  }
+    .recoverCatching { ex ->
+      val meta = findAllMetaData().getOrThrow().map { it to it.properties[PropertyKey.SCHEMA_ID] }.filterNot { it.second == null }
+        .find { it.second == id }?.first ?: throw IllegalArgumentException("no schema found for schemaId= $id")
+      client.getLatestArtifact(group, meta.id)
+    }.mapCatching { it.schema() }
+
 
   /**
    * Returns [RegistryClient.listArtifactsInGroup]. Defaults to empty list.
@@ -41,34 +58,61 @@ class GroupAwareRegistryClient(
     listArtifactsInGroup(group)
   }.map { it.artifacts }
 
+  fun findAllMetaData(): Result<List<ApicurioArtifactMetaData>> = client.runCatching {
+    val artifacts = this@GroupAwareRegistryClient.findAllArtifacts().getOrThrow()
+
+    artifacts.map { this@GroupAwareRegistryClient.findArtifactMetaData(it.id).getOrNull() }.filterNotNull()
+  }
+
   /**
    * Returns [RegistryClient.getArtifactMetaData] if found.
    */
-  fun findArtifactMetaData(id: String): Result<ApicurioArtifactMetaData> = client.runCatching {
-    getArtifactMetaData(group, id)
+  fun findArtifactMetaData(artifactId: String): Result<ApicurioArtifactMetaData> = client.runCatching {
+    getArtifactMetaData(group, artifactId)
   }.map { ApicurioArtifactMetaData(it) }
 
   /**
-   * Register new schema using [RegistryClient.createArtifact] and [RegistryClient.updateArtifactMetaData].
+   * Update metaData for given artifact with avro adapter values.
    */
-  fun registerSchema(schema: Schema, schemaId: AvroSchemaId, revision: AvroSchemaRevision?): Result<ApicurioArtifactMetaData> =
-    client.runCatching {
-      val metaData: ApicurioArtifactMetaData = ApicurioArtifactMetaData(
-        createArtifact(group, schemaId, ArtifactType.AVRO, IfExists.RETURN_OR_UPDATE, schema.byteContent())
+  fun updateArtifactMetaData(apicurioArtifactId: String, schema: Schema): Result<ApicurioArtifactMetaData> = client.runCatching {
+    val editableMetaData = EditableMetaData().apply {
+      name = schema.name
+      description = schema.doc
+      properties = mapOf<String, String?>(
+        PropertyKey.SCHEMA_ID to schemaIdSupplier.apply(schema),
+        PropertyKey.NAME to schema.name,
+        PropertyKey.NAMESPACE to schema.namespace,
+        PropertyKey.CANONICAL_NAME to canonicalName(schema.namespace, schema.name),
+        PropertyKey.REVISION to schemaRevisionResolver.apply(schema).orElse(null),
       )
-      logger.info { "Registered schema and received the following metadata: $metaData" }
+    }
 
-      updateArtifactMetaData(group, schemaId, EditableMetaData().apply {
-        name = schema.name
-        description = schema.description()
-        properties = mapOf(
-          KEY_NAME to schema.name,
-          KEY_NAMESPACE to schema.namespace,
-          KEY_CANONICAL_NAME to schema.fullName,
-          KEY_REVISION to revision
-        )
-      })
+    updateArtifactMetaData(group, apicurioArtifactId, editableMetaData)
+    val updatedMeta: Result<ApicurioArtifactMetaData> = findArtifactMetaData(apicurioArtifactId)
 
-      findArtifactMetaData(requireNotNull(metaData.id)).getOrThrow()
+
+    findArtifactMetaData(apicurioArtifactId).getOrThrow()
+  }
+
+  /**
+   * Register new schema using [RegistryClient.createArtifact].
+   */
+  fun registerSchema(schema: Schema): Result<ApicurioSchemaData> =
+    client.runCatching {
+      val schemaId = schemaIdSupplier.invoke(schema)
+
+      val created: ArtifactMetaData = createArtifact(
+        group,
+        schemaId,
+        ArtifactType.AVRO,
+        IfExists.RETURN_OR_UPDATE,
+        schema.byteContent()
+      )
+
+      val updated = this@GroupAwareRegistryClient.updateArtifactMetaData(created.id, schema).getOrThrow()
+
+      ApicurioSchemaData(metaData = updated, schema = schema).also {
+        logger.info { "registered: $it" }
+      }
     }
 }

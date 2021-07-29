@@ -29,16 +29,16 @@ open class ApicurioAvroSchemaRegistry(
     schemaIdSupplier: SchemaIdSupplier,
     schemaRevisionResolver: SchemaRevisionResolver
   ) : this(
-    GroupAwareRegistryClient(client, group),
-    schemaIdSupplier,
-    schemaRevisionResolver
+    client = GroupAwareRegistryClient(client, schemaIdSupplier, schemaRevisionResolver, group),
+    schemaIdSupplier = schemaIdSupplier,
+    schemaRevisionResolver = schemaRevisionResolver
   )
 
   override fun register(schema: Schema): AvroSchemaWithId {
     val schemaId = schemaIdSupplier.apply(schema)
     val revision = schemaRevisionResolver.apply(schema).orElse(null)
 
-    client.registerSchema(schema, schemaId, revision).onFailure {
+    client.registerSchema(schema).onFailure {
       throw it
     }
 

@@ -4,6 +4,7 @@ import io.apicurio.registry.rest.v2.beans.ArtifactMetaData
 import io.apicurio.registry.types.ArtifactState
 import io.apicurio.registry.types.ArtifactType
 import io.holixon.avro.adapter.api.AvroSchemaRevision
+import io.holixon.avro.adapter.api.SchemaIdSupplier
 import io.holixon.avro.adapter.registry.apicurio.ApicurioAvroSchemaRegistry
 import java.util.*
 
@@ -42,13 +43,15 @@ data class ApicurioArtifactMetaData(
   val contentId: Long? = null
 ) {
   companion object {
+    //fun factory(schemaIdSupplier: SchemaIdSupplier, )
+
     /**
      * Create data class from [ArtifactMetaData].
      */
     operator fun invoke(metaData: ArtifactMetaData): ApicurioArtifactMetaData = with(metaData) {
       ApicurioArtifactMetaData(
-        globalId = this@with.globalId,
         id = this@with.id,
+        globalId = this@with.globalId,
         version = this@with.version,
         name = this@with.name,
         description = this@with.description,
@@ -66,6 +69,29 @@ data class ApicurioArtifactMetaData(
     }
   }
 
-  val revision: AvroSchemaRevision? = properties[ApicurioAvroSchemaRegistry.KEY_REVISION]
-  val namespace: String? = properties[ApicurioAvroSchemaRegistry.KEY_NAMESPACE]
+  val revision: AvroSchemaRevision? by lazy {
+    properties[ApicurioAvroSchemaRegistry.KEY_REVISION]
+  }
+
+  val namespace: String? by lazy { properties[ApicurioAvroSchemaRegistry.KEY_NAMESPACE] }
+
+  fun toMetaData() = ArtifactMetaData().apply {
+    id = this@ApicurioArtifactMetaData.id
+    globalId = this@ApicurioArtifactMetaData.globalId
+    version = this@ApicurioArtifactMetaData.version
+    name = this@ApicurioArtifactMetaData.name
+    description = this@ApicurioArtifactMetaData.description
+    type = this@ApicurioArtifactMetaData.type
+    state = this@ApicurioArtifactMetaData.state
+    createdBy = this@ApicurioArtifactMetaData.createdBy
+    createdOn = this@ApicurioArtifactMetaData.createdOn
+
+    modifiedBy = this@ApicurioArtifactMetaData.modifiedBy
+    modifiedOn = this@ApicurioArtifactMetaData.modifiedOn
+
+    labels = this@ApicurioArtifactMetaData.labels ?: emptyList()
+    properties = this@ApicurioArtifactMetaData.properties ?: emptyMap()
+    groupId = this@ApicurioArtifactMetaData.groupId
+    contentId = this@ApicurioArtifactMetaData.contentId
+  }
 }
