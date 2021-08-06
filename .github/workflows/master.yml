@@ -59,7 +59,7 @@ jobs:
 
       # Code analysis
       - name: Upolad coverage information
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v1.0.2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
 
