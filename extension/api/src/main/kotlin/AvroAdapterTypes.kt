@@ -60,10 +60,13 @@ interface AvroSchemaInfo {
      */
     const val NAME_SEPARATOR = "."
 
+    fun canonicalName(namespace: String, name: String) = "$namespace$NAME_SEPARATOR$name"
+
     /**
      * Compare field by field, instance equals does not work when comparing [AvroSchemaInfo] with [AvroSchemaWithId].
      */
-    fun AvroSchemaInfo.equalsByFields(other: AvroSchemaInfo) = this.namespace == other.namespace && this.name == other.name && this.revision == other.revision
+    fun AvroSchemaInfo.equalsByFields(other: AvroSchemaInfo) =
+      this.namespace == other.namespace && this.name == other.name && this.revision == other.revision
   }
 
   /**
@@ -85,7 +88,7 @@ interface AvroSchemaInfo {
    * Canonical schema revision.
    */
   val canonicalName: String
-    get() = "$namespace$NAME_SEPARATOR$name"
+    get() = canonicalName(namespace, name)
 }
 
 /**

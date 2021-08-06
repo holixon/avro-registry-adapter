@@ -1,7 +1,7 @@
 package io.holixon.avro.adapter.common.converter
 
 import io.holixon.avro.adapter.api.AvroSchemaIncompatibilityResolver
-import io.holixon.avro.adapter.api.SchemaResolver
+import io.holixon.avro.adapter.api.AvroSchemaResolver
 import io.holixon.avro.adapter.api.converter.GenericDataRecordToSpecificRecordConverter
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.adapter.common.AvroAdapterDefault.toSpecificDataRecord
@@ -19,7 +19,7 @@ class DefaultGenericDataRecordToSpecificRecordChangingSchemaConverter(
 
   @JvmOverloads
   constructor(
-    schemaResolver: SchemaResolver,
+    schemaResolver: AvroSchemaResolver,
     decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver,
     schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver
   ) : this(

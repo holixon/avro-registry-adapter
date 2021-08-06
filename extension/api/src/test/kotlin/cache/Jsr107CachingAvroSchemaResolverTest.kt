@@ -1,10 +1,12 @@
 package io.holixon.avro.adapter.api.cache
 
 import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper
-import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.InMemorySchemaResolver
+import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.InMemoryAvroSchemaResolver
 import io.holixon.avro.adapter.api.AvroAdapterApiTestHelper.avroSchemaWithId
 import io.holixon.avro.adapter.api.AvroSchemaId
 import io.holixon.avro.adapter.api.AvroSchemaWithId
+import io.holixon.avro.adapter.api.cache.Jsr107AvroAdapterCache.DEFAULT_CACHE_NAME
+import io.holixon.avro.adapter.api.cache.Jsr107AvroAdapterCache.Jsr107CachingAvroSchemaResolver
 import io.holixon.avro.lib.test.schema.SampleEventV4711
 import io.holixon.avro.lib.test.schema.SampleEventV4712
 import io.holixon.avro.lib.test.schema.SampleEventV4713
@@ -15,23 +17,21 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.spy
+import org.mockito.kotlin.verify
 import javax.cache.Cache
 import javax.cache.CacheManager
 import javax.cache.Caching
 
-internal class CachingSchemaResolverTest {
+internal class Jsr107CachingAvroSchemaResolverTest {
   companion object {
-    // to test eviction, lets assume a max size of two, so the third entry will force eviction
-    const val MAX_CACHE_SIZE = 2L
-
     val sampleEvent4711 = avroSchemaWithId(SampleEventV4711)
     val sampleEvent4712 = avroSchemaWithId(SampleEventV4712)
     val sampleEvent4713 = avroSchemaWithId(SampleEventV4713)
   }
 
   private lateinit var cache: Cache<AvroSchemaId /* = kotlin.String */, AvroSchemaWithId?>
-  private lateinit var spyingSchemaResolver: InMemorySchemaResolver
-  private lateinit var cachingSchemaResolver: CachingSchemaResolver
+  private lateinit var spyingSchemaResolver: InMemoryAvroSchemaResolver
+  private lateinit var cachingSchemaResolver: Jsr107CachingAvroSchemaResolver
 
   @BeforeEach
   internal fun setUp() {
@@ -39,19 +39,16 @@ internal class CachingSchemaResolverTest {
 
     spyingSchemaResolver = spy(AvroAdapterApiTestHelper.sampleEventsSchemaResolver)
 
-
     cache = cacheManager.createCache(
-      CachingSchemaResolver.DEFAULT_CACHE_NAME,
-      AvroAdapterCache.mutableConfiguration(spyingSchemaResolver)
+      DEFAULT_CACHE_NAME,
+      Jsr107AvroAdapterCache.mutableConfiguration(spyingSchemaResolver)
     )
-
-
-    cachingSchemaResolver = CachingSchemaResolver(cache)
+    cachingSchemaResolver = Jsr107CachingAvroSchemaResolver(cache)
   }
 
   @Test
   internal fun `cache is filled on first hit`() {
-    assertThat(cache.name).isEqualTo(CachingSchemaResolver.DEFAULT_CACHE_NAME)
+    assertThat(cache.name).isEqualTo(DEFAULT_CACHE_NAME)
     assertContainsKeys(
       sampleEvent4711.schemaId to false,
       sampleEvent4712.schemaId to false,
@@ -59,8 +56,12 @@ internal class CachingSchemaResolverTest {
     )
 
     val resolve4711 = cachingSchemaResolver.apply(sampleEvent4711.schemaId)
+    cachingSchemaResolver.apply(sampleEvent4711.schemaId)
 
     assertThat(resolve4711).hasValue(sampleEvent4711)
+
+    // resolver only called once
+    verify(spyingSchemaResolver).apply(sampleEvent4711.schemaId)
 
     assertContainsKeys(
       sampleEvent4711.schemaId to true,

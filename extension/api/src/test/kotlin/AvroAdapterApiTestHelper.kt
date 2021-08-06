@@ -15,9 +15,9 @@ object AvroAdapterApiTestHelper {
   val sampleEvent4712 = avroSchemaWithId(SampleEventV4712)
   val sampleEvent4713 = avroSchemaWithId(SampleEventV4713)
 
-  val sampleEventsSchemaResolver = InMemorySchemaResolver(listOf(sampleEvent4711, sampleEvent4712, sampleEvent4713))
+  val sampleEventsSchemaResolver = InMemoryAvroSchemaResolver(listOf(sampleEvent4711, sampleEvent4712, sampleEvent4713))
 
-  fun avroSchemaWithId(schema : Schema): AvroSchemaWithIdData {
+  fun avroSchemaWithId(schema: Schema): AvroSchemaWithIdData {
     return AvroSchemaWithIdData(
       schemaId = SchemaNormalization.parsingFingerprint64(schema).toString(),
       schema = schema,
@@ -25,13 +25,13 @@ object AvroAdapterApiTestHelper {
     )
   }
 
-  fun avroSchemaWithId(testData: TestSchemaDataProvider) : AvroSchemaWithIdData = AvroSchemaWithIdData(
+  fun avroSchemaWithId(testData: TestSchemaDataProvider): AvroSchemaWithIdData = AvroSchemaWithIdData(
     schemaId = testData.schemaData.schemaId,
     schema = testData.schema,
     revision = testData.schemaData.revision
   )
 
-  open class InMemorySchemaResolver(schemas: List<AvroSchemaWithId>) : SchemaResolver {
+  open class InMemoryAvroSchemaResolver(schemas: List<AvroSchemaWithId>) : AvroSchemaResolver {
     val map: Map<AvroSchemaId /* = kotlin.String */, AvroSchemaWithId> = schemas.associateBy { it.schemaId }
 
     override fun apply(schemaId: AvroSchemaId): Optional<AvroSchemaWithId> = Optional.ofNullable(map[schemaId])

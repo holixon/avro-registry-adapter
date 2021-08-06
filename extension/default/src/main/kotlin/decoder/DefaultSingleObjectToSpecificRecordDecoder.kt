@@ -2,7 +2,7 @@ package io.holixon.avro.adapter.common.decoder
 
 import io.holixon.avro.adapter.api.AvroSchemaIncompatibilityResolver
 import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
-import io.holixon.avro.adapter.api.SchemaResolver
+import io.holixon.avro.adapter.api.AvroSchemaResolver
 import io.holixon.avro.adapter.api.decoder.SingleObjectToSpecificRecordDecoder
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.adapter.common.DefaultSchemaStore
@@ -26,7 +26,7 @@ class DefaultSingleObjectToSpecificRecordDecoder(
 
   @JvmOverloads
   constructor(
-    schemaResolver: SchemaResolver,
+    schemaResolver: AvroSchemaResolver,
     decoderSpecificRecordClassResolver: AvroAdapterDefault.DecoderSpecificRecordClassResolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver,
     schemaIncompatibilityResolver: AvroSchemaIncompatibilityResolver = AvroAdapterDefault.defaultSchemaCompatibilityResolver
   ) : this(

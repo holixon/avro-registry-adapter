@@ -80,14 +80,11 @@ object AvroAdapterDefault {
     schemaRevisionResolver = schemaRevisionResolver
   )
 
-
-
   /**
    * Reflective access using the method of generated specific record to access byte buffer representation.
    */
   @JvmStatic
   fun SpecificRecordBase.toByteBuffer(): ByteBuffer = this.javaClass.getDeclaredMethod("toByteBuffer").invoke(this) as ByteBuffer
-
 
   /**
    * Reflective access using the method of generated specific record to access data fields.

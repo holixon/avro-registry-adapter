@@ -1,8 +1,8 @@
 package io.holixon.avro.adapter.common.converter
 
+import io.holixon.avro.adapter.api.AvroSchemaResolver
 import io.holixon.avro.adapter.api.AvroSingleObjectEncoded
 import io.holixon.avro.adapter.api.JsonString
-import io.holixon.avro.adapter.api.SchemaResolver
 import io.holixon.avro.adapter.api.converter.SingleObjectToJsonConverter
 import io.holixon.avro.adapter.common.AvroAdapterDefault.readPayloadAndSchemaId
 import org.apache.avro.Schema
@@ -10,12 +10,11 @@ import org.apache.avro.generic.GenericDatumReader
 import org.apache.avro.generic.GenericDatumWriter
 import org.apache.avro.io.*
 import java.io.ByteArrayOutputStream
-import java.nio.charset.StandardCharsets
 
 /**
  * Uses the schema encoded in the single object bytes to create a generic datum and convert it to json.
  */
-class DefaultSingleObjectToJsonConverter(private val schemaResolver: SchemaResolver) : SingleObjectToJsonConverter {
+class DefaultSingleObjectToJsonConverter(private val schemaResolver: AvroSchemaResolver) : SingleObjectToJsonConverter {
 
   override fun convert(bytes: AvroSingleObjectEncoded): JsonString {
     val (schemaId, payload) = bytes.readPayloadAndSchemaId().let { it.schemaId to it.payload }
@@ -32,7 +31,7 @@ class DefaultSingleObjectToJsonConverter(private val schemaResolver: SchemaResol
     writer.write(genericDatum, encoder)
     encoder.flush()
     it.flush()
-    return String(it.toByteArray(), StandardCharsets.UTF_8)
+    return String(it.toByteArray(), Charsets.UTF_8)
   }
 
   private fun readGenericDatum(schema: Schema, avroBinary: ByteArray): Any {
