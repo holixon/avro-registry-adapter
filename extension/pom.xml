@@ -18,6 +18,7 @@
     <module>api</module>
     <module>default</module>
     <module>registry/apicurio-rest</module>
+    <module>registry/reflection</module>
   </modules>
 
   <dependencies>
