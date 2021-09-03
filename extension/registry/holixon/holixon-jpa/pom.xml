@@ -5,14 +5,14 @@
 
   <parent>
     <groupId>io.holixon.avro._</groupId>
-    <artifactId>extension</artifactId>
+    <artifactId>holixon</artifactId>
     <version>0.0.6-SNAPSHOT</version>
-    <relativePath>../../pom.xml</relativePath>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <groupId>io.holixon.avro</groupId>
-  <artifactId>avro-registry-adapter-reflection</artifactId>
-  <description>Local reflection based registry.</description>
+  <artifactId>avro-registry-holixon-jpa</artifactId>
+  <description>Registry saving schemas into relational database using JPA.</description>
 
   <properties>
     <jacoco.skip>false</jacoco.skip>
@@ -23,11 +23,9 @@
       <groupId>io.holixon.avro</groupId>
       <artifactId>avro-registry-adapter-default</artifactId>
     </dependency>
-
     <dependency>
-      <groupId>io.github.classgraph</groupId>
-      <artifactId>classgraph</artifactId>
-      <version>4.8.115</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
 
   </dependencies>

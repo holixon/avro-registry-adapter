@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.holixon.avro._</groupId>
+    <artifactId>holixon</artifactId>
+    <version>0.0.6-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <groupId>io.holixon.avro</groupId>
+  <artifactId>avro-registry-holixon-rest-api</artifactId>
+  <description>RESTful API for remote registry.</description>
+
+  <properties>
+    <jacoco.skip>false</jacoco.skip>
+    <api.base-package>io.holixon.avro.adapter.registry.remote.api</api.base-package>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-webflux</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlinx</groupId>
+      <artifactId>kotlinx-coroutines-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlinx</groupId>
+      <artifactId>kotlinx-coroutines-reactor</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-annotations</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <resources>
+      <resource>
+        <directory>src/main/api</directory>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>4.3.1</version>
+        <executions>
+
+          <execution>
+            <id>generate-swagger-json</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/api/openapi.yaml</inputSpec>
+              <generatorName>openapi</generatorName>
+              <output>${project.build.outputDirectory}</output>
+              <configOptions>
+                <outputFile>openapi.json</outputFile>
+              </configOptions>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>generate-server-stubs</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>${project.basedir}/src/main/api/openapi.yaml</inputSpec>
+              <generatorName>kotlin-spring</generatorName>
+              <library>spring-boot</library>
+              <apiPackage>${api.base-package}.api</apiPackage>
+              <modelPackage>${api.base-package}.model</modelPackage>
+              <modelNamePrefix />
+              <modelNameSuffix>Dto</modelNameSuffix>
+              <ignoreFileOverride>${basedir}/src/main/api/.openapi-generator-ignore</ignoreFileOverride>
+              <configOptions>
+                <sourceFolder>src/gen/kotlin</sourceFolder>
+                <basePackage>${api.base-package}</basePackage>
+                <configPackage>${api.base-package}</configPackage>
+                <enumPropertyNaming>UPPERCASE</enumPropertyNaming>
+                <interfaceOnly>true</interfaceOnly>
+                <gradleBuildFile>false</gradleBuildFile>
+                <reactive>true</reactive>
+                <serializationLibrary>jackson</serializationLibrary>
+                <swaggerAnnotations>true</swaggerAnnotations>
+                <useBeanValidation>false</useBeanValidation>
+                <useTags>false</useTags>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+</project>

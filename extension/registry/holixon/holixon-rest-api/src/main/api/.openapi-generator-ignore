@@ -1,0 +1,4 @@
+**/openapi/pom.xml
+**/openapi/README.md
+**/openapi/src/main/resources/application.yaml
+**/openapi/src/gen/kotlin/io/aviatar/returnmanagement/rest/Application.kt
