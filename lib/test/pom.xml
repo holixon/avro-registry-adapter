@@ -10,6 +10,7 @@
   </parent>
 
   <artifactId>avro-registry-adapter-lib-test</artifactId>
+  <name>lib: test-fixture</name>
   <description>Internally used test library</description>
 
   <properties>

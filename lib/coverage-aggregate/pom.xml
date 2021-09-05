@@ -9,7 +9,8 @@
     <version>0.0.6-SNAPSHOT</version>
   </parent>
 
-  <artifactId>avro-registry-adapter-lib-coverage-aggregator</artifactId>
+  <artifactId>coverage-aggregator</artifactId>
+  <name>lib: coverage-aggregator</name>
   <description>Aggregates coverage reports from JUnit test an I-Tests.</description>
 
   <properties>

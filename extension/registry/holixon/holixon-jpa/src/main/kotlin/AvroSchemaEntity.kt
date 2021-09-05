@@ -1,5 +1,6 @@
 package io.holixon.avro.adapter.registry.jpa
 
+import io.holixon.avro.adapter.api.type.AvroSchemaWithIdData
 import org.apache.avro.Schema
 import javax.persistence.*
 
@@ -7,9 +8,8 @@ import javax.persistence.*
  * Entity to store the schema in a RDBMS.
  */
 @Entity
-@Table(name = "AVR_SCHEMA")
+@Table(name = "HLX_AVRO_SCHEMA")
 class AvroSchemaEntity(
-
   @Column(name = "SCHEMA_ID")
   @Id
   var schemaId: String,
@@ -31,7 +31,7 @@ class AvroSchemaEntity(
   /**
    * Creates the DTO out of entity.
    */
-  fun toDto() = AvroSchemaWithIdDto(
+  fun toDto() = AvroSchemaWithIdData(
     namespace = this.namespace,
     name = this.name,
     revision = this.revision,

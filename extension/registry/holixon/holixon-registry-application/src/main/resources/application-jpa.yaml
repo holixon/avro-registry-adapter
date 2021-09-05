@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    generate: create-drop
+
+avro:
+  registry:
+    holixon:
+      mode: jpa
+

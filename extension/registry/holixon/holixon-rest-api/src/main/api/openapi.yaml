@@ -4,6 +4,17 @@ info:
   title: Holixon Avro Schema Registry API
   version: 1.0.0
   description: API of of schema registry.
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  contact:
+    name: Holisticon AG
+    url: https://www.holisticon.de
+    email: info@holisticon.de
+
+tags:
+  - name: Schema
+    description: Operations to register and retrieve schema.
 
 servers:
   - url: "http://localhost:8080/public/api"
@@ -12,6 +23,8 @@ servers:
 paths:
   '/schema':
     post:
+      tags:
+        - Schema
       operationId: registerSchema
       description: Registers a new schema.
       requestBody:
@@ -23,9 +36,14 @@ paths:
       responses:
         201:
           description: Schema registered.
+          links:
+            GetSchemaById:
+              $ref: '#/components/links/GetSchemaById'
         400:
           description: Schema registration failed.
     get:
+      tags:
+        - Schema
       operationId: findAll
       description: Retrieves all schemas available in the registry.
       responses:
@@ -40,6 +58,8 @@ paths:
 
   '/schema/id/{id}':
     get:
+      tags:
+        - Schema
       parameters:
         - in: path
           name: id
@@ -59,8 +79,10 @@ paths:
         404:
           description: No schema matching specified paramters found.
 
-  '/schema/info/{namespace}/${name}':
+  '/schema/info/{namespace}/{name}':
     get:
+      tags:
+        - Schema
       parameters:
         - in: path
           name: namespace
@@ -93,8 +115,10 @@ paths:
         404:
           description: No schema matching specified paramters found.
 
-  '/schema/search/{namespace}/${name}':
+  '/schema/search/{namespace}/{name}':
     get:
+      tags:
+        - Schema
       parameters:
         - in: path
           name: namespace
@@ -122,27 +146,16 @@ paths:
                   $ref: '#/components/schemas/AvroSchemaWithId'
 
 components:
+  links:
+    getSchemaById:
+      operationRef: '#/paths/~1schema~1id~1{id}/get'
+      description: Use the schema is to find the schema.
+      parameters:
+        id: '$response.header.location'
   schemas:
     AvroSchema:
       type: object
       description: Avro Schema with schema id.
-      properties:
-        namespace:
-          type: string
-          description: Namespace of the schema.
-        name:
-          type: string
-          description: Schema name.
-        revision:
-          type: string
-          description: Revision.
-        content:
-          type: string
-          description: Schema document.
-      required:
-        - namespace
-        - name
-        - content
 
     AvroSchemaWithId:
       type: object

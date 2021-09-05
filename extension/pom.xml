@@ -12,7 +12,7 @@
 
   <artifactId>extension</artifactId>
   <packaging>pom</packaging>
-  <description>Parent pom for the extension.</description>
+  <name>POM: extension</name>
 
   <modules>
     <module>api</module>

@@ -11,6 +11,7 @@
   </parent>
 
   <artifactId>examples</artifactId>
+  <name>POM: examples</name>
   <packaging>pom</packaging>
 
   <properties>
@@ -26,5 +27,5 @@
   <dependencies>
     <!-- No dependencies here, define explicitly in example -->
   </dependencies>
-  
+
 </project>
