@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.holixon.avro._</groupId>
+    <artifactId>holixon-registry-parent</artifactId>
+    <version>0.0.6-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <groupId>io.holixon.avro</groupId>
+  <artifactId>avro-registry-holixon-application</artifactId>
+  <description>Registry application.</description>
+
+  <properties>
+    <jacoco.skip>false</jacoco.skip>
+    <springfox.version>3.0.0</springfox.version>
+  </properties>
+
+  <dependencies>
+    <!-- REST API -->
+    <dependency>
+      <groupId>io.holixon.avro</groupId>
+      <artifactId>avro-registry-holixon-rest-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-boot-starter</artifactId>
+      <version>${springfox.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-bean-validators</artifactId>
+      <version>${springfox.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>${springfox.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.module</groupId>
+      <artifactId>jackson-module-kotlin</artifactId>
+    </dependency>
+
+    <!-- API -->
+    <dependency>
+      <groupId>io.holixon.avro</groupId>
+      <artifactId>avro-registry-adapter-api</artifactId>
+    </dependency>
+
+    <!-- Implementations -->
+    <dependency>
+      <groupId>io.holixon.avro</groupId>
+      <artifactId>avro-registry-holixon-jpa</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.holixon.avro</groupId>
+      <artifactId>avro-registry-holixon-axon</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+  </dependencies>
+</project>
