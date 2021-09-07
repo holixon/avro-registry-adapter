@@ -16,12 +16,16 @@ fun main(vararg args: String) {
 
 /**
  * Main application class.
+ * Supports two modes, see [HolixonRegistryProperties].
  */
 @SpringBootApplication
 @EnableOpenApi
 @EnableConfigurationProperties(HolixonRegistryProperties::class)
 class HolixonRegistryApplication {
 
+  /**
+   * Jackson object mapper.
+   */
   @Bean
   fun myObjectMapper() = jacksonObjectMapper()
 }

@@ -1,0 +1,49 @@
+{
+  "type": "record",
+  "namespace": "holixon.registry.event",
+  "name": "AvroSchemaRegisteredEvent",
+  "doc": "A new schema has been registered.",
+  "revision": "1",
+  "fields": [
+    {
+      "name": "schemaId",
+      "doc": "Schema id",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "namespace",
+      "doc": "Namespace of the schema.",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "name",
+      "doc": "Name of the schema.",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "revision",
+      "doc": "Optional revision of the schema.",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    },
+    {
+      "name": "content",
+      "doc": "Schema definition JSON.",
+      "type": {
+        "type": "string",
+        "avro.java.string": "String"
+      }
+    }
+  ]
+}

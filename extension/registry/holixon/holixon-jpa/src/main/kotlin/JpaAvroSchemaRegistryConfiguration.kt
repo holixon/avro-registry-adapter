@@ -21,6 +21,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 )
 class JpaAvroSchemaRegistryConfiguration {
 
+  /**
+   * Provide the registry.
+   */
   @Bean
   fun avroRegistry(avroSchemaRepository: AvroSchemaRepository) = JpaAvroSchemaRegistry(
     avroSchemaRepository = avroSchemaRepository,

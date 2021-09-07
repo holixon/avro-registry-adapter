@@ -11,11 +11,12 @@
   </parent>
 
   <groupId>io.holixon.avro</groupId>
-  <artifactId>avro-registry-holixon-jpa</artifactId>
-  <description>Registry saving schemas into relational database using JPA.</description>
+  <artifactId>avro-registry-holixon-axon</artifactId>
+  <description>Registry saving schemas into Axon Event Store.</description>
 
   <properties>
     <jacoco.skip>false</jacoco.skip>
+    <axon.version>4.5.3</axon.version>
   </properties>
 
   <dependencies>
@@ -24,9 +25,19 @@
       <artifactId>avro-registry-adapter-default</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <groupId>org.axonframework</groupId>
+      <artifactId>axon-spring-boot-starter</artifactId>
+      <version>${axon.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -54,9 +65,10 @@
               <goal>schema</goal>
             </goals>
             <configuration>
-              <sourceDirectory>${project.basedir}/src/test/avro/</sourceDirectory>
+              <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
               <outputDirectory>${project.build.directory}/generated-sources/avro/</outputDirectory>
               <stringType>String</stringType>
+
             </configuration>
           </execution>
         </executions>

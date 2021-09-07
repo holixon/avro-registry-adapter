@@ -7,12 +7,12 @@ import org.springframework.context.annotation.Configuration
 import javax.annotation.PostConstruct
 
 /**
- * Configuration for JPA.
+ * Configuration for Axon.
  */
 @Configuration
-@ConditionalOnProperty(name = ["avro.registry.holixon.mode"], havingValue = "jpa")
-@ComponentScan("io.holixon.avro.adapter.registry.jpa")
-class HolixonRegistryJpaConfiguration {
+@ConditionalOnProperty(name = ["avro.registry.holixon.mode"], havingValue = "axon", matchIfMissing = true)
+@ComponentScan("io.holixon.avro.adapter.registry.axon")
+class HolixonRegistryAxonConfiguration {
 
   companion object : KLogging()
 
@@ -21,6 +21,6 @@ class HolixonRegistryJpaConfiguration {
    */
   @PostConstruct
   fun activated() {
-    logger.info { "HLX-REGISTRY: Activated JPA mode" }
+    logger.info { "HLX-REGISTRY: Activated Axon mode" }
   }
 }

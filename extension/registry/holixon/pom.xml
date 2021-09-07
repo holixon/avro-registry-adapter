@@ -24,6 +24,7 @@
     <module>holixon-rest-api</module>
     <module>holixon-rest-adapter</module>
     <module>holixon-jpa</module>
+    <module>holixon-axon</module>
     <module>holixon-registry-application</module>
   </modules>
 
@@ -52,6 +53,11 @@
       <dependency>
         <groupId>io.holixon.avro</groupId>
         <artifactId>avro-registry-holixon-jpa</artifactId>
+        <version>${project.parent.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.holixon.avro</groupId>
+        <artifactId>avro-registry-holixon-axon</artifactId>
         <version>${project.parent.version}</version>
       </dependency>
       <dependency>

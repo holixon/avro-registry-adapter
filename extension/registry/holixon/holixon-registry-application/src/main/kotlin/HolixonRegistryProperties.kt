@@ -19,5 +19,10 @@ enum class RegistryMode {
   /**
    * Use JPA.
    */
-  JPA
+  JPA,
+
+  /**
+   * Use Axon Event Sourcing.
+   */
+  AXON
 }

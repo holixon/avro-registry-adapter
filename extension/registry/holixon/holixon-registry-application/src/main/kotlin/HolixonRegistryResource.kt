@@ -9,10 +9,10 @@ import io.holixon.avro.adapter.registry.remote.rest.model.AvroSchemaWithIdDto
 import mu.KLogging
 import org.apache.avro.Schema
 import org.springframework.http.ResponseEntity
-import org.springframework.http.ResponseEntity.*
+import org.springframework.http.ResponseEntity.notFound
+import org.springframework.http.ResponseEntity.ok
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import org.springframework.web.util.UriComponentsBuilder
 
 /**
  * Rest controller.
@@ -44,15 +44,16 @@ class HolixonRegistryResource(
     ).map { ok(it.toDto()) }.orElse(notFound().build())
   }
 
-  override fun registerSchema(schema: Any): ResponseEntity<Unit> {
+  override fun registerSchema(schema: Any): ResponseEntity<AvroSchemaWithIdDto> {
     val json = objectMapper.writeValueAsString(schema)
     val schemaWithId = service.register(Schema.Parser().parse(json))
     logger.info { "Registered schema: $schemaWithId" }
-    return created(
-      UriComponentsBuilder.fromPath("/schema/id/{id}").buildAndExpand(schemaWithId.schemaId).toUri()
-    ).build()
+    return ok(schemaWithId.toDto())
   }
 
+  /**
+   * Converter to DTO defined in the API.
+   */
   private fun AvroSchemaWithId.toDto() = AvroSchemaWithIdDto(
     namespace = this.namespace,
     name = this.name,
