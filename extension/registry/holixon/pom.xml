@@ -16,16 +16,14 @@
   <description>Parent pom for the holixon registries, api and adapter.</description>
 
   <properties>
-    <spring-cloud-openfeign.version>2.2.5.RELEASE</spring-cloud-openfeign.version>
+
   </properties>
 
 
   <modules>
-    <module>holixon-rest-api</module>
     <module>holixon-rest-adapter</module>
     <module>holixon-jpa</module>
     <module>holixon-axon</module>
-    <module>holixon-registry-application</module>
   </modules>
 
   <dependencyManagement>
@@ -47,11 +45,6 @@
 
       <dependency>
         <groupId>io.holixon.avro</groupId>
-        <artifactId>avro-registry-holixon-rest-api</artifactId>
-        <version>${project.parent.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.holixon.avro</groupId>
         <artifactId>avro-registry-holixon-jpa</artifactId>
         <version>${project.parent.version}</version>
       </dependency>
@@ -65,12 +58,6 @@
         <artifactId>avro-registry-adapter-holixon</artifactId>
         <version>${project.parent.version}</version>
       </dependency>
-
-      <dependency>
-        <groupId>org.openapitools</groupId>
-        <artifactId>jackson-databind-nullable</artifactId>
-        <version>0.2.0</version>
-      </dependency>
       <dependency>
         <groupId>io.swagger</groupId>
         <artifactId>swagger-annotations</artifactId>
@@ -82,9 +69,9 @@
         <version>3.0.2</version>
       </dependency>
       <dependency>
-        <groupId>javax.annotation</groupId>
-        <artifactId>javax.annotation-api</artifactId>
-        <version>1.3.2</version>
+        <groupId>org.openapitools</groupId>
+        <artifactId>jackson-databind-nullable</artifactId>
+        <version>0.2.0</version>
       </dependency>
       <!-- javax -->
       <dependency>

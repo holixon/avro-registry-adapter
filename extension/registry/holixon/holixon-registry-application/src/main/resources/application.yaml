@@ -1,8 +1,0 @@
-server:
-  error:
-    includeStacktrace: ALWAYS
-
-avro:
-  registry:
-    holixon:
-      mode: axon

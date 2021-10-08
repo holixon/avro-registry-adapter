@@ -18,8 +18,10 @@
     <module>api</module>
     <module>default</module>
     <module>registry/apicurio-rest</module>
+    <module>registry/axon</module>
+    <module>registry/holixon-rest</module>
+    <module>registry/jpa</module>
     <module>registry/reflection</module>
-    <module>registry/holixon</module>
   </modules>
 
   <dependencies>

@@ -1,5 +1,0 @@
-**/openapi/pom.xml
-**/openapi/README.md
-**/openapi/src/main/resources/application.yaml
-**/openapi/src/gen/kotlin/io/holixon/avro/adapter/registry/remote/rest/Application.kt
-**/openapi/src/gen/kotlin/io/holixon/avro/adapter/registry/remote/rest/api/ApiUtil.kt

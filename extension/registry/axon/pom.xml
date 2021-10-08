@@ -5,9 +5,9 @@
 
   <parent>
     <groupId>io.holixon.avro._</groupId>
-    <artifactId>holixon-registry-parent</artifactId>
+    <artifactId>extension</artifactId>
     <version>0.0.6-SNAPSHOT</version>
-    <relativePath>../pom.xml</relativePath>
+    <relativePath>../../pom.xml</relativePath>
   </parent>
 
   <groupId>io.holixon.avro</groupId>
@@ -18,6 +18,19 @@
     <jacoco.skip>false</jacoco.skip>
     <axon.version>4.5.3</axon.version>
   </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
