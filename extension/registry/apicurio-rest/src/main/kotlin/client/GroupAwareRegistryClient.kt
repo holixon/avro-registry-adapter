@@ -106,8 +106,7 @@ constructor(
 
     updateArtifactMetaData(group, apicurioArtifactId, editableMetaData)
     val updatedMeta: Result<ApicurioArtifactMetaData> = findArtifactMetaData(apicurioArtifactId)
-
-    findArtifactMetaData(apicurioArtifactId).getOrThrow()
+    updatedMeta.getOrThrow()
   }
 
   /**
