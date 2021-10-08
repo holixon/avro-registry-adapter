@@ -22,20 +22,38 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>avro-registry-adapter-api</artifactId>
-        <groupId>${project.groupId}</groupId>
         <version>${avro-registry-adapter.version}</version>
       </dependency>
 
       <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>avro-registry-adapter-default</artifactId>
-        <groupId>${project.groupId}</groupId>
         <version>${avro-registry-adapter.version}</version>
       </dependency>
 
       <dependency>
-        <artifactId>avro-registry-adapter-apicurio</artifactId>
         <groupId>${project.groupId}</groupId>
+        <artifactId>avro-registry-adapter-apicurio</artifactId>
+        <version>${avro-registry-adapter.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>avro-registry-adapter-jpa</artifactId>
+        <version>${avro-registry-adapter.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>avro-registry-adapter-axon</artifactId>
+        <version>${avro-registry-adapter.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>avro-registry-adapter-reflection</artifactId>
         <version>${avro-registry-adapter.version}</version>
       </dependency>
 
