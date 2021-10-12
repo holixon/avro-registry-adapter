@@ -6,7 +6,7 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.holixon.avro/avro-registry-adapter-bom/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.holixon.avro/avro-registry-adapter-bom)
 [![sponsored](https://img.shields.io/badge/sponsoredBy-Holisticon-RED.svg)](https://holisticon.de/)
 
-Convenient support for working with avro serialization on the JVM
+Convenient support for working with Apache Avro serialization on the JVM
 
 ## Modules
 

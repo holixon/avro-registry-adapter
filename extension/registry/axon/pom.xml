@@ -11,7 +11,7 @@
   </parent>
 
   <groupId>io.holixon.avro</groupId>
-  <artifactId>avro-registry-holixon-axon</artifactId>
+  <artifactId>avro-registry-adapter-axon</artifactId>
   <description>Registry saving schemas into Axon Event Store.</description>
 
   <properties>
