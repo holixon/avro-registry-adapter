@@ -91,7 +91,7 @@ internal class CompositeRegistryTest {
     registry.register(schema4711.schema)
 
     verify(slowRwRegistry).register(schema4711.schema)
-    verifyZeroInteractions(mediumRwRegistry)
+    verifyNoInteractions(mediumRwRegistry)
   }
 
   @Test
