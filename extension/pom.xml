@@ -12,19 +12,21 @@
 
   <artifactId>extension</artifactId>
   <packaging>pom</packaging>
-  <description>Parent pom for the extension.</description>
+  <name>POM: extension</name>
 
   <modules>
     <module>api</module>
     <module>default</module>
     <module>registry/apicurio-rest</module>
+    <module>registry/axon</module>
+    <module>registry/jpa</module>
     <module>registry/reflection</module>
   </modules>
 
   <dependencies>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-stdlib-jdk8</artifactId>
+      <artifactId>kotlin-stdlib</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>

@@ -11,29 +11,52 @@
   </parent>
 
   <groupId>io.holixon.avro</groupId>
-  <artifactId>avro-registry-adapter-reflection</artifactId>
-  <description>Local reflection based registry.</description>
+  <artifactId>avro-registry-adapter-jpa</artifactId>
+  <description>Registry saving schemas into relational database using JPA.</description>
 
   <properties>
     <jacoco.skip>false</jacoco.skip>
   </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
       <groupId>io.holixon.avro</groupId>
       <artifactId>avro-registry-adapter-default</artifactId>
     </dependency>
-
     <dependency>
-      <groupId>io.github.classgraph</groupId>
-      <artifactId>classgraph</artifactId>
-      <version>4.8.128</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
-
   </dependencies>
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-maven-plugin</artifactId>
+        <configuration>
+          <compilerPlugins>
+            <plugin>spring</plugin>
+            <plugin>no-arg</plugin>
+            <plugin>all-open</plugin>
+            <plugin>jpa</plugin>
+          </compilerPlugins>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.avro</groupId>
         <artifactId>avro-maven-plugin</artifactId>

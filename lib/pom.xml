@@ -12,6 +12,7 @@
 
   <artifactId>lib</artifactId>
   <packaging>pom</packaging>
+  <name>POM: help libraries</name>
 
   <modules>
     <module>test</module>

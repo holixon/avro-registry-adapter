@@ -42,7 +42,7 @@ constructor(
   fun findSchemaById(id: String): Result<Schema> = client.runCatching {
     getLatestArtifact(group, id)
   }
-    .recoverCatching { ex ->
+    .recoverCatching { _ ->
       val meta = findAllMetaData().getOrThrow().map { it to it.properties[PropertyKey.SCHEMA_ID] }.filterNot { it.second == null }
         .find { it.second == id }?.first ?: throw IllegalArgumentException("no schema found for schemaId= $id")
       client.getLatestArtifact(group, meta.id)
@@ -106,8 +106,7 @@ constructor(
 
     updateArtifactMetaData(group, apicurioArtifactId, editableMetaData)
     val updatedMeta: Result<ApicurioArtifactMetaData> = findArtifactMetaData(apicurioArtifactId)
-
-    findArtifactMetaData(apicurioArtifactId).getOrThrow()
+    updatedMeta.getOrThrow()
   }
 
   /**

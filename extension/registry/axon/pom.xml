@@ -11,29 +11,63 @@
   </parent>
 
   <groupId>io.holixon.avro</groupId>
-  <artifactId>avro-registry-adapter-reflection</artifactId>
-  <description>Local reflection based registry.</description>
+  <artifactId>avro-registry-adapter-axon</artifactId>
+  <description>Registry saving schemas into Axon Event Store.</description>
 
   <properties>
     <jacoco.skip>false</jacoco.skip>
+    <axon.version>4.5.3</axon.version>
   </properties>
+
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
       <groupId>io.holixon.avro</groupId>
       <artifactId>avro-registry-adapter-default</artifactId>
     </dependency>
-
     <dependency>
-      <groupId>io.github.classgraph</groupId>
-      <artifactId>classgraph</artifactId>
-      <version>4.8.128</version>
+      <groupId>org.axonframework</groupId>
+      <artifactId>axon-spring-boot-starter</artifactId>
+      <version>${axon.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
     </dependency>
 
   </dependencies>
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-maven-plugin</artifactId>
+        <configuration>
+          <compilerPlugins>
+            <plugin>spring</plugin>
+            <plugin>no-arg</plugin>
+            <plugin>all-open</plugin>
+            <plugin>jpa</plugin>
+          </compilerPlugins>
+        </configuration>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.avro</groupId>
         <artifactId>avro-maven-plugin</artifactId>
@@ -44,9 +78,10 @@
               <goal>schema</goal>
             </goals>
             <configuration>
-              <sourceDirectory>${project.basedir}/src/test/avro/</sourceDirectory>
+              <sourceDirectory>${project.basedir}/src/main/avro/</sourceDirectory>
               <outputDirectory>${project.build.directory}/generated-sources/avro/</outputDirectory>
               <stringType>String</stringType>
+
             </configuration>
           </execution>
         </executions>
