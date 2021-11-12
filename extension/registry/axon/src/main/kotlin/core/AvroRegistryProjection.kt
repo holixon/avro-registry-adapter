@@ -18,6 +18,7 @@ import org.axonframework.queryhandling.QueryHandler
 import org.axonframework.queryhandling.QueryUpdateEmitter
 import org.springframework.stereotype.Component
 import java.util.*
+import java.util.function.Predicate
 
 /**
  * Projection backed by an in-memory registry.
@@ -47,10 +48,12 @@ class AvroRegistryProjection(
   @EventHandler
   fun on(event: AvroSchemaRegisteredEvent) {
     val registered = registry.register(Schema.Parser().parse(event.content))
+
+    val check: Predicate<FindSchemaById> = Predicate {
+        query -> query.schemaId == registered.schemaId
+    }
     queryUpdateEmitter.emit(
-      FindSchemaById::class.java,
-      { query -> query.schemaId == registered.schemaId },
-      GenericSubscriptionQueryUpdateMessage.asUpdateMessage<AvroSchemaWithId>(registered)
+      FindSchemaById::class.java, check, registered
     )
   }
 

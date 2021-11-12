@@ -12,6 +12,8 @@ import org.axonframework.eventsourcing.eventstore.EventStore
 import org.axonframework.modelling.command.Aggregate
 import org.axonframework.modelling.command.AggregateNotFoundException
 import org.axonframework.queryhandling.QueryGateway
+import org.axonframework.springboot.util.ConditionalOnQualifiedBean
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
@@ -20,7 +22,6 @@ import java.util.*
 /**
  * Configuration of Axon (Server) based registry.
  */
-@Configuration
 @ComponentScan
 class AxonAvroRegistryConfiguration {
 
@@ -44,12 +45,14 @@ class AxonAvroRegistryConfiguration {
    * Schema id supplier.
    */
   @Bean
+  @ConditionalOnMissingBean(SchemaIdSupplier::class)
   fun schemaIdSupplier() = DefaultSchemaIdSupplier()
 
   /**
    * Schema revision resolver.
    */
   @Bean
+  @ConditionalOnMissingBean(SchemaRevisionResolver::class)
   fun schemaRevisionResolver() = DefaultSchemaRevisionResolver()
 
   /**

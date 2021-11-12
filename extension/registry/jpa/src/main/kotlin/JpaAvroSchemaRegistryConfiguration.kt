@@ -11,8 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 /**
  * Configuration for JPA registry.
  */
-@Configuration
-@ComponentScan
 @EnableJpaRepositories(
   basePackageClasses = [JpaAvroSchemaRegistryConfiguration::class]
 )

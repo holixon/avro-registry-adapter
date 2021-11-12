@@ -6,9 +6,12 @@ import org.apache.avro.Schema
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.responsetypes.ResponseTypes
 import org.axonframework.messaging.responsetypes.ResponseTypes.instanceOf
+import org.axonframework.messaging.responsetypes.ResponseTypes.optionalInstanceOf
 import org.axonframework.queryhandling.QueryGateway
-import org.reactivestreams.Publisher
+import java.time.Duration
 import java.util.*
+import java.util.concurrent.CompletableFuture
+import java.util.concurrent.atomic.AtomicReference
 import kotlin.Result.Companion.failure
 import kotlin.Result.Companion.success
 
@@ -28,7 +31,14 @@ open class AxonAvroRegistry(
 
   override fun register(schema: Schema): AvroSchemaWithId {
     val schemaId = schemaIdSupplier.apply(schema)
-    commandGateway.sendAndWait<Void>(
+
+    val query = queryGateway.subscriptionQuery(
+      FindSchemaById(schemaId),
+      optionalInstanceOf(returnClazz),
+      optionalInstanceOf(returnClazz)
+    )
+
+    commandGateway.send<Void>(
       RegisterAvroSchemaCommand(
         namespace = schema.namespace,
         name = schema.name,
@@ -38,20 +48,14 @@ open class AxonAvroRegistry(
       )
     )
 
-    val query = queryGateway.subscriptionQuery(
-      FindSchemaById(schemaId),
-      instanceOf(returnClazz),
-      instanceOf(returnClazz)
-    )
+    return query.initialResult().concatWith { query.updates() }
 
-    val result: Result<AvroSchemaWithId> = query.initialResult()
-      .concatWith { query.updates() }
-      .map { success(it) }
-      .onErrorResume { e -> Publisher { failure<AvroSchemaWithId>(e) } }
+      .filter { it.isPresent }
+
+//      .timeout(Duration.ofSeconds(10L))
+      .map { it.get() }
       .shareNext()
       .block()!!
-
-    return result.getOrThrow()
   }
 
   override fun findById(schemaId: AvroSchemaId): Optional<AvroSchemaWithId> {
