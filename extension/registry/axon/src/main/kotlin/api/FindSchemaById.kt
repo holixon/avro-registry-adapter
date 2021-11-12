@@ -1,13 +1,19 @@
 package io.holixon.avro.adapter.registry.axon.api
 
+import io.holixon.avro.adapter.api.AvroSchemaId
 import io.holixon.avro.adapter.api.AvroSchemaInfo
+import java.util.function.Predicate
 
 /**
  * Find the query by id.
  */
 data class FindSchemaById(
-  val schemaId: String
-)
+  val schemaId: AvroSchemaId
+) {
+  companion object {
+    internal fun predicate(schemaId: AvroSchemaId): Predicate<FindSchemaById> = Predicate { query -> query.schemaId == schemaId }
+  }
+}
 
 /**
  * Find the query by info.

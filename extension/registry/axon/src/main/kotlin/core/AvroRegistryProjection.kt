@@ -13,12 +13,10 @@ import io.holixon.avro.adapter.registry.axon.core.AvroRegistryProjection.Compani
 import org.apache.avro.Schema
 import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
-import org.axonframework.queryhandling.GenericSubscriptionQueryUpdateMessage
 import org.axonframework.queryhandling.QueryHandler
 import org.axonframework.queryhandling.QueryUpdateEmitter
 import org.springframework.stereotype.Component
 import java.util.*
-import java.util.function.Predicate
 
 /**
  * Projection backed by an in-memory registry.
@@ -47,14 +45,8 @@ class AvroRegistryProjection(
    */
   @EventHandler
   fun on(event: AvroSchemaRegisteredEvent) {
-    val registered = registry.register(Schema.Parser().parse(event.content))
-
-    val check: Predicate<FindSchemaById> = Predicate {
-        query -> query.schemaId == registered.schemaId
-    }
-    queryUpdateEmitter.emit(
-      FindSchemaById::class.java, check, registered
-    )
+    val registered: AvroSchemaWithId = registry.register(Schema.Parser().parse(event.content))
+    queryUpdateEmitter.emit(FindSchemaById::class.java, FindSchemaById.predicate(registered.schemaId), Optional.of(registered))
   }
 
   /**

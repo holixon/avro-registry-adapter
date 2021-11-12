@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -19,7 +19,6 @@
     <axon.version>4.5.4</axon.version>
     <axon-testcontainer.version>0.0.1-SNAPSHOT</axon-testcontainer.version>
   </properties>
-
 
   <dependencyManagement>
     <dependencies>
@@ -65,21 +64,6 @@
       <version>${axon-testcontainer.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jdk8</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
-      <scope>test</scope>
-    </dependency>
-  <dependency>
-    <groupId>com.fasterxml.jackson.module</groupId>
-    <artifactId>jackson-module-kotlin</artifactId>
-      <scope>test</scope>
-  </dependency>
 
   </dependencies>
 

@@ -1,22 +1,22 @@
 package io.holixon.avro.adapter.registry.axon
 
+import com.thoughtworks.xstream.XStream
+import com.thoughtworks.xstream.security.AnyTypePermission
 import io.holixon.avro.adapter.api.AvroSchemaRegistry
 import io.holixon.avro.adapter.api.SchemaIdSupplier
 import io.holixon.avro.adapter.api.SchemaRevisionResolver
 import io.holixon.avro.adapter.common.DefaultSchemaIdSupplier
 import io.holixon.avro.adapter.common.DefaultSchemaRevisionResolver
-import io.holixon.avro.adapter.registry.axon.command.AvroSchemaAggregate
+import io.holixon.avro.adapter.registry.axon.core.AvroSchemaAggregate
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.eventsourcing.EventSourcingRepository
 import org.axonframework.eventsourcing.eventstore.EventStore
 import org.axonframework.modelling.command.Aggregate
 import org.axonframework.modelling.command.AggregateNotFoundException
 import org.axonframework.queryhandling.QueryGateway
-import org.axonframework.springboot.util.ConditionalOnQualifiedBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
-import org.springframework.context.annotation.Configuration
 import java.util.*
 
 /**
@@ -26,7 +26,7 @@ import java.util.*
 class AxonAvroRegistryConfiguration {
 
   /**
-   * Registry.
+   * Registry configuration.
    */
   @Bean
   fun axonRegistry(
@@ -38,7 +38,8 @@ class AxonAvroRegistryConfiguration {
     commandGateway = commandGateway,
     queryGateway = queryGateway,
     schemaIdSupplier = schemaIdSupplier,
-    schemaRevisionResolver = schemaRevisionResolver
+    schemaRevisionResolver = schemaRevisionResolver,
+    schemaRegistrationTimeout = 10L
   )
 
   /**
@@ -65,6 +66,7 @@ class AxonAvroRegistryConfiguration {
       .eventStore(eventStore)
       .build()
   }
+
 }
 
 /**
@@ -72,7 +74,7 @@ class AxonAvroRegistryConfiguration {
  * @param id aggregate identifier.
  * @return Optional result, if found.
  */
-fun <T : Any> EventSourcingRepository<T>.loadOptional(id: String): Optional<Aggregate<T>> =
+internal fun <T : Any> EventSourcingRepository<T>.loadOptional(id: String): Optional<Aggregate<T>> =
   try {
     Optional.of(this.load(id))
   } catch (e: AggregateNotFoundException) {

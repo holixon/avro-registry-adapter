@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -31,7 +31,6 @@
       <artifactId>kotlin-logging-jvm</artifactId>
       <version>${kotlin-logging.version}</version>
     </dependency>
-
 
     <!-- all test dependencies are on the compile scope, because this is a test lib which is used on the test scope -->
     <dependency>
@@ -67,7 +66,7 @@
       <scope>compile</scope>
       <version>1.16.2</version>
     </dependency>
-
+    
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>

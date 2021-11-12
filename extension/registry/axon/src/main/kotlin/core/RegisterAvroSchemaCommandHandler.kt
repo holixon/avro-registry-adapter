@@ -1,7 +1,6 @@
 package io.holixon.avro.adapter.registry.axon.core
 
 import io.holixon.avro.adapter.registry.axon.api.RegisterAvroSchemaCommand
-import io.holixon.avro.adapter.registry.axon.command.AvroSchemaAggregate
 import io.holixon.avro.adapter.registry.axon.loadOptional
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingRepository
@@ -24,14 +23,14 @@ class RegisterAvroSchemaCommandHandler(
       { aggregate ->
         // re-apply creation.
         aggregate.invoke {
-          it.create(command)
+          it.handle(command)
         }
       },
       {
         repository.newInstance {
           AvroSchemaAggregate()
             .apply {
-              create(command)
+              handle(command)
             }
         }
       }
