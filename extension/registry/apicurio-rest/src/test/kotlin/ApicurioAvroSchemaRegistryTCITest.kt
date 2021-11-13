@@ -21,7 +21,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
 @TestMethodOrder(OrderAnnotation::class)
-internal class ApicurioAvroSchemaRegistryTCTest {
+internal class ApicurioAvroSchemaRegistryTCITest {
   companion object : KLogging() {
 
     @Container
@@ -35,13 +35,13 @@ internal class ApicurioAvroSchemaRegistryTCTest {
 
   @Test
   @Order(1)
-  internal fun `findById is empty`() {
+  fun `findById is empty`() {
     assertThat(schemaRegistry.findById("xxx")).isEmpty
   }
 
   @Test
   @Order(2)
-  internal fun `findByInfo is empty`() {
+  fun `findByInfo is empty`() {
     assertThat(
       schemaRegistry.findByInfo(
         AvroSchemaInfoData(
@@ -55,19 +55,19 @@ internal class ApicurioAvroSchemaRegistryTCTest {
 
   @Test
   @Order(3)
-  internal fun `findAllByCanonicalName is empty`() {
+  fun `findAllByCanonicalName is empty`() {
     assertThat(schemaRegistry.findAllByCanonicalName("bar", "foo")).isEmpty()
   }
 
   @Test
   @Order(4)
-  internal fun `findAll is empty`() {
+  fun `findAll is empty`() {
     assertThat(schemaRegistry.findAll()).isEmpty()
   }
 
 
   @Test
-  internal fun `find by id`() {
+  fun `find by id`() {
     val schema: Schema = SampleEventV4711.schema
     val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
 
@@ -82,7 +82,7 @@ internal class ApicurioAvroSchemaRegistryTCTest {
   }
 
   @Test
-  internal fun `find by info`() {
+  fun `find by info`() {
     val schema: Schema = AvroAdapterTestLib.schemaSampleEvent4711
     val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
 
@@ -118,7 +118,7 @@ internal class ApicurioAvroSchemaRegistryTCTest {
     .map { it.orElseThrow() }
 
   @Test
-  internal fun `find by context and name`() {
+  fun `find by context and name`() {
     val registered = installedSampleEventSchemaIds()
 
     val schema = SampleEventV4711.schema
@@ -136,7 +136,7 @@ internal class ApicurioAvroSchemaRegistryTCTest {
   }
 
   @Test
-  internal fun `update metadata for manually installed schema`() {
+  fun `update metadata for manually installed schema`() {
     val sampleEvent4712 = SampleEventV4712
     assertThat(schemaRegistry.findById(sampleEvent4712.schemaData.schemaId)).isEmpty
 
