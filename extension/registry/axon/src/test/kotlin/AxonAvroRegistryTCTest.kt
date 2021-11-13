@@ -7,9 +7,10 @@ import io.holixon.avro.adapter.registry.axon.AxonAvroRegistry
 import io.holixon.avro.adapter.registry.axon.EnableAxonAvroRegistry
 import io.holixon.avro.lib.test.schema.SampleEventV4711
 import io.holixon.axon.testcontainer.AxonServerContainer
-import io.holixon.axon.testcontainer.AxonServerContainerSpring.addDynamicProperties
+import io.holixon.axon.testcontainer.spring.addDynamicProperties
 import mu.KLogging
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -30,11 +31,21 @@ internal class AxonAvroRegistryTCTest {
   companion object : KLogging() {
 
     @Container
-    val axon = AxonServerContainer()
+    val axon = AxonServerContainer.builder()
+      .enableDevMode()
+      .build().apply {
+        logger.info { "Started $this" }
+      }
 
     @JvmStatic
     @DynamicPropertySource
     fun axonProperties(registry: DynamicPropertyRegistry) = axon.addDynamicProperties(registry)
+
+    @JvmStatic
+    @AfterAll
+    internal fun tearDown() {
+      axon.stop()
+    }
   }
 
   @Autowired
