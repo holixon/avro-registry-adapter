@@ -20,7 +20,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 
 @Testcontainers
 @TestMethodOrder(OrderAnnotation::class)
-internal class GroupAwareRegistryClientTCTest {
+internal class GroupAwareRegistryClientTCITest {
   companion object : KLogging() {
 
     @Container
