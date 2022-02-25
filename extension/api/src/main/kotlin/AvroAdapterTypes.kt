@@ -4,6 +4,8 @@ import org.apache.avro.Schema
 
 /**
  * The unique id of a schema artifact, published to a repo.
+ *
+ * Note: The default implementation uses the avro schema fingerprint, only change if required.
  */
 typealias AvroSchemaId = String
 
