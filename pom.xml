@@ -13,7 +13,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <java.version>11.0</java.version>
 
-    <kotlin.version>1.5.31</kotlin.version>
+    <kotlin.version>1.6.10</kotlin.version>
 
     <pattern.class.itest>**/*ITest.*</pattern.class.itest>
     <pattern.package.itest>**/itest/**/*.*</pattern.package.itest>
@@ -76,7 +76,7 @@
           <!-- java compiler -->
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.1</version>
+          <version>3.10.0</version>
           <configuration>
             <encoding>${project.build.sourceEncoding}</encoding>
             <release>11</release>
@@ -229,7 +229,7 @@
         <plugin>
           <groupId>org.jetbrains.dokka</groupId>
           <artifactId>dokka-maven-plugin</artifactId>
-          <version>1.5.31</version>
+          <version>1.6.10</version>
           <executions>
             <execution>
               <phase>package</phase>
@@ -248,7 +248,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.3.2</version>
           <configuration>
             <failOnError>false</failOnError>
             <doclint>none</doclint>
@@ -267,7 +267,7 @@
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
-          <version>3.2.0</version>
+          <version>3.3.0</version>
           <executions>
             <execution>
               <phase>generate-sources</phase>
@@ -307,7 +307,7 @@
         <plugin>
           <groupId>com.amashchenko.maven.plugin</groupId>
           <artifactId>gitflow-maven-plugin</artifactId>
-          <version>1.16.0</version>
+          <version>1.17.0</version>
           <configuration>
             <gitFlowConfig>
               <productionBranch>master</productionBranch>
@@ -360,7 +360,7 @@
         <plugin>
           <groupId>org.sonatype.plugins</groupId>
           <artifactId>nexus-staging-maven-plugin</artifactId>
-          <version>1.6.8</version>
+          <version>1.6.12</version>
           <configuration>
             <autoReleaseAfterClose>true</autoReleaseAfterClose>
             <serverId>ossrh</serverId>

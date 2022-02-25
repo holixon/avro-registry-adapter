@@ -37,7 +37,7 @@
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>compile</scope>
-      <version>5.8.1</version>
+      <version>5.8.2</version>
     </dependency>
 
     <dependency>
@@ -50,7 +50,7 @@
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
       <scope>compile</scope>
-      <version>4.1.0</version>
+      <version>4.3.1</version>
     </dependency>
 
     <dependency>
@@ -64,20 +64,20 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
       <scope>compile</scope>
-      <version>1.16.2</version>
+      <version>1.16.3</version>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.32</version>
+      <version>1.7.36</version>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.21.0</version>
+      <version>3.22.0</version>
       <scope>compile</scope>
     </dependency>
 
@@ -91,7 +91,7 @@
     <dependency>
       <groupId>org.ehcache</groupId>
       <artifactId>ehcache</artifactId>
-      <version>3.9.7</version>
+      <version>3.9.8</version>
       <scope>compile</scope>
     </dependency>
 
