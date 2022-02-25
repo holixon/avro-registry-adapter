@@ -24,7 +24,7 @@ object AvroAdapterApicurioRestHelper {
   /**
    * Test container for apicurio tests.
    */
-  class ApicurioRegistryTestContainer : GenericContainer<ApicurioRegistryTestContainer>("apicurio/apicurio-registry-mem:2.1.2.Final") {
+  class ApicurioRegistryTestContainer : GenericContainer<ApicurioRegistryTestContainer>("apicurio/apicurio-registry-mem:2.1.3.Final") {
     companion object : KLogging() {
       const val EXPOSED_PORT = 8080
     }
