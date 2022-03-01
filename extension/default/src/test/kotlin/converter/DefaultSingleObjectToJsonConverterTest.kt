@@ -22,7 +22,7 @@ internal class DefaultSingleObjectToJsonConverterTest {
   private val fn = DefaultSingleObjectToJsonConverter(registry.schemaResolver())
 
   @Test
-  internal fun `convert bytes to json`() {
+  fun `convert bytes to json`() {
     assertThat(fn.convert(bytes)).isEqualTo(expectedJson)
   }
 }

@@ -63,7 +63,7 @@ internal class CompositeRegistryTest {
   }
 
   @Test
-  internal fun `findAllByCanonicalName returns schemas with different revisions from different registries`() {
+  fun `findAllByCanonicalName returns schemas with different revisions from different registries`() {
     mockRegistryFindMethods(mediumRwRegistry, schema4711)
     mockRegistryFindMethods(slowRwRegistry, schema4712)
 
@@ -95,7 +95,7 @@ internal class CompositeRegistryTest {
   }
 
   @Test
-  internal fun `findAll returns combined list`() {
+  fun `findAll returns combined list`() {
     mockRegistryFindMethods(fastRoRegistry, schema4711)
     mockRegistryFindMethods(mediumRwRegistry, schema4712)
     mockRegistryFindMethods(slowRwRegistry, null)

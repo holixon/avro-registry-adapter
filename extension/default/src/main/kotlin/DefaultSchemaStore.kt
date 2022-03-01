@@ -5,7 +5,7 @@ import org.apache.avro.Schema
 import org.apache.avro.message.SchemaStore
 
 /**
- * Schema store using the schema resolver.
+ * Avro [SchemaStore] using the schema resolver.
  */
 class DefaultSchemaStore(private val schemaResolver: AvroSchemaResolver) : SchemaStore {
 

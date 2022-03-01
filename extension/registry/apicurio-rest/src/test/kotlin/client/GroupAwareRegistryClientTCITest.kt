@@ -102,7 +102,7 @@ internal class GroupAwareRegistryClientTCITest {
   }
 
   @Test
-  internal fun `modify metadata for externally registered schema`() {
+  fun `modify metadata for externally registered schema`() {
     val schema = SampleEventV4712.schema
     val schemaId = AvroAdapterDefault.schemaIdSupplier.apply(schema)
     val origMetaData = registryClient.registerDefaultRandomId(schema)

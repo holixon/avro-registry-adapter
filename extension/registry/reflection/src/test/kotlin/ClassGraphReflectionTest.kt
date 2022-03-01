@@ -12,12 +12,12 @@ import upcaster.itest.DummyEvent
 internal class ClassGraphReflectionTest {
 
   @Test
-  internal fun `empty for package without classes`() {
+  fun `empty for package without classes`() {
     assertThat(ClassGraphReflection.findSpecificRecordBaseClasses("xxx.xxx")).isEmpty()
   }
 
   @Test
-  internal fun `find sample event in test_fixture`() {
+  fun `find sample event in test_fixture`() {
     val result = ClassGraphReflection.findSpecificRecordBaseClasses("test.fixture")
 
     assertThat(result).containsExactlyInAnyOrder(
@@ -27,7 +27,7 @@ internal class ClassGraphReflectionTest {
   }
 
   @Test
-  internal fun `find all bankaccount and upcaster`() {
+  fun `find all bankaccount and upcaster`() {
     assertThat(ClassGraphReflection.findSpecificRecordBaseClasses(
       "upcaster",
       "bankaccount.event"
@@ -40,7 +40,7 @@ internal class ClassGraphReflectionTest {
   }
 
   @Test
-  internal fun `find all`() {
+  fun `find all`() {
     assertThat(ClassGraphReflection.findSpecificRecordBaseClasses()).containsExactlyInAnyOrder(
       DummyEvent::class,
       BankAccountCreated::class,

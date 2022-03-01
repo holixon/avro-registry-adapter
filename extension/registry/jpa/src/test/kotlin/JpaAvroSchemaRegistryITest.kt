@@ -15,7 +15,7 @@ internal class JpaAvroSchemaRegistryITest {
   private lateinit var registry: JpaAvroSchemaRegistry
 
   @Test
-  internal fun `register schema and find`() {
+  fun `register schema and find`() {
     assertThat(registry.findAll()).isEmpty()
 
     val registered = registry.register(SampleEventV4711.schema)

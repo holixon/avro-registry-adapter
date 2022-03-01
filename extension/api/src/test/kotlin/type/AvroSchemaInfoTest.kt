@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 internal class AvroSchemaInfoTest {
 
   @Test
-  internal fun `avro schema info`() {
+  fun `avro schema info`() {
     val data: AvroSchemaInfo = AvroSchemaInfoData(namespace = "foo", name = "bar", revision = "1")
 
     assertThat(data.namespace).isEqualTo("foo")
@@ -18,7 +18,7 @@ internal class AvroSchemaInfoTest {
   }
 
   @Test
-  internal fun `equals by field`() {
+  fun `equals by field`() {
     assertThat(AvroSchemaInfoData("foo","bar", "47")
       .equalsByFields(AvroSchemaInfoData("foo","bar", "47"))
     ).isTrue

@@ -14,7 +14,7 @@ internal class ApicurioSchemaDataTest {
   private val now = Date()
 
   @Test
-  internal fun `create from metadata`() {
+  fun `create from metadata`() {
     val schema = SampleEventV4712.schema
     val schemaInfo = schema.avroSchemaWithId
     val metaData = ApicurioTypeFixtures.artifactMetaData(schemaInfo)
@@ -25,7 +25,7 @@ internal class ApicurioSchemaDataTest {
   }
 
   @Test
-  internal fun `fails when metaData is not initialized`() {
+  fun `fails when metaData is not initialized`() {
     val schema = SampleEventV4712.schema
     val schemaInfo = schema.avroSchemaWithId
     val metaData = ApicurioTypeFixtures.artifactMetaData(schemaInfo).toDataClass().copy(properties = emptyMap())

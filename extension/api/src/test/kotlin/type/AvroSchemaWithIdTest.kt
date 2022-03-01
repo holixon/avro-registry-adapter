@@ -12,7 +12,7 @@ internal class AvroSchemaWithIdTest {
   private val schemaRevisionResolver = AvroAdapterApi.propertyBasedSchemaRevisionResolver("revision")
 
   @Test
-  internal fun `read schema and derive values`() {
+  fun `read schema and derive values`() {
     val schema = Schema.Parser().parse(sampleEventSchema)
 
     val avroSchema = AvroSchemaWithIdData(

@@ -11,7 +11,7 @@ internal class AvroPayloadAndSchemaIdDataTest {
   private val avroSchemaWithId4711 = AvroAdapterApiTestHelper.avroSchemaWithId(SampleEventV4711.schema)
 
   @Test
-  internal fun `equals and hashcode`() {
+  fun `equals and hashcode`() {
     val a1 = AvroPayloadAndSchemaIdData(
       schemaId = avroSchemaWithId4711.schemaId,
       payload = SampleEvent("foo").toByteBuffer().array()

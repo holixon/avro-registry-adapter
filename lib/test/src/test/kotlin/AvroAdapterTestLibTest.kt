@@ -12,12 +12,12 @@ import test.fixture.SampleEvent
 internal class AvroAdapterTestLibTest {
 
   @Test
-  internal fun `schema matches`() {
+  fun `schema matches`() {
     assertThat(SampleEvent.`SCHEMA$`).isEqualTo(SampleEventV4711.schema)
   }
 
   @Test
-  internal fun `create specific from generic`() {
+  fun `create specific from generic`() {
     val generic = GenericData.Record(SampleEvent.`SCHEMA$`).apply {
       put("value", "foo")
     }
@@ -28,7 +28,7 @@ internal class AvroAdapterTestLibTest {
   }
 
   @Test
-  internal fun `generic record from schema 4712`() {
+  fun `generic record from schema 4712`() {
 
     println(SampleEventV4712.create("foo"))
     println(SampleEventV4712.create(value = "foo", anotherValue = "bar"))

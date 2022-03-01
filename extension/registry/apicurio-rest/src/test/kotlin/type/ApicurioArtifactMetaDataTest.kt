@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 internal class ApicurioArtifactMetaDataTest {
 
   @Test
-  internal fun `not initialized when required properties are not set`() {
+  fun `not initialized when required properties are not set`() {
     val artifactMetaData: ArtifactMetaData = ApicurioTypeFixtures.artifactMetaData(SampleEventV4712.schema.avroSchemaWithId)
 
     assertThat(ApicurioArtifactMetaData(artifactMetaData).copy(properties = emptyMap()).isInitialized).isFalse
@@ -17,7 +17,7 @@ internal class ApicurioArtifactMetaDataTest {
 
 
   @Test
-  internal fun `initialized when required properties are set`() {
+  fun `initialized when required properties are set`() {
     val artifactMetaData: ArtifactMetaData = ApicurioTypeFixtures.artifactMetaData(SampleEventV4712.schema.avroSchemaWithId)
 
     assertThat(ApicurioArtifactMetaData(artifactMetaData).isInitialized).isTrue
