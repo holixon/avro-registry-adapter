@@ -44,3 +44,8 @@ object AvroAdapterApicurioRest {
     PropertyKey.CANONICAL_NAME to canonicalName
   )
 }
+
+typealias GroupId = String
+typealias ArtifactId = String
+typealias ArtifactName = String
+typealias Version = String

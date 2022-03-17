@@ -4,7 +4,6 @@ import io.holixon.avro.adapter.api.AvroSchemaWithId
 import io.holixon.avro.adapter.api.type.AvroSchemaInfoData
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRestHelper.ApicurioRegistryTestContainer
-import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRestHelper.registerDefaultRandomId
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import io.holixon.avro.lib.test.schema.SampleEventV4711
 import io.holixon.avro.lib.test.schema.SampleEventV4712
@@ -135,14 +134,14 @@ internal class ApicurioAvroSchemaRegistryTCITest {
     assertThat(found).containsExactlyInAnyOrder(*(registered.toTypedArray()))
   }
 
-  @Test
-  fun `update metadata for manually installed schema`() {
-    val sampleEvent4712 = SampleEventV4712
-    assertThat(schemaRegistry.findById(sampleEvent4712.schemaData.schemaId)).isEmpty
-
-    val artifactId = CONTAINER.restClient().registerDefaultRandomId(sampleEvent4712.schema).id
-    assertThat(schemaRegistry.findById(artifactId)).isNotEmpty
-
-    assertThat(schemaRegistry.findById(sampleEvent4712.schemaData.schemaId)).isNotEmpty
-  }
+//  @Test
+//  fun `update metadata for manually installed schema`() {
+//    val sampleEvent4712 = SampleEventV4712
+//    assertThat(schemaRegistry.findById(sampleEvent4712.schemaData.schemaId)).isEmpty
+//
+//    val artifactId = CONTAINER.restClient().registerDefaultRandomId(sampleEvent4712.schema).id
+//    assertThat(schemaRegistry.findById(artifactId)).isNotEmpty
+//
+//    assertThat(schemaRegistry.findById(sampleEvent4712.schemaData.schemaId)).isNotEmpty
+//  }
 }

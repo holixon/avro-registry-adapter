@@ -11,6 +11,16 @@ import org.apache.avro.Schema
 typealias AvroSchemaId = String
 
 /**
+ * Alias for [Schema.getNamespace]
+ */
+typealias AvroSchemaNamespace = String
+
+/**
+ * Alias for [Schema.getName]
+ */
+typealias AvroSchemaName = String
+
+/**
  * The version of a schema.
  */
 typealias AvroSchemaRevision = String
@@ -48,6 +58,23 @@ interface AvroPayloadAndSchema {
 }
 
 /**
+ * Tuple containing namespace and name.
+ */
+interface AvroSchemaFqn {
+
+  /**
+   * Schema namespace.
+   */
+  val namespace: AvroSchemaNamespace
+
+  /**
+   * Schema name.
+   */
+  val name: AvroSchemaName
+
+}
+
+/**
  * The schema info provides the relevant identifiers for a schema:
  *
  * * context (aka namespace)
@@ -55,7 +82,7 @@ interface AvroPayloadAndSchema {
  * * revision
  *
  */
-interface AvroSchemaInfo {
+interface AvroSchemaInfo : AvroSchemaFqn{
 
   companion object {
     /**
@@ -75,12 +102,12 @@ interface AvroSchemaInfo {
   /**
    * Schema namespace.
    */
-  val namespace: String
+  override val namespace: String
 
   /**
    * Schema name.
    */
-  val name: String
+  override val name: String
 
   /**
    * Optional revision.
@@ -91,7 +118,7 @@ interface AvroSchemaInfo {
    * Canonical schema revision.
    */
   val canonicalName: String
-    get() = canonicalName(namespace, name)
+    get() = canonicalName(namespace, name) // has to be get() ... properties cannot be initialized in interfaces
 }
 
 /**
