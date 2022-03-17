@@ -34,11 +34,7 @@ internal class ApicurioRegistryClientTCITest {
 
   @BeforeEach
   fun setUp() {
-    searchArtifact.findDistinctGroupIds().forEach {
-      registryClient.deleteArtifactsInGroup(it)
-    }
-
-    assertThat(client.findAll()).isEmpty()
+    CONTAINER.clear()
   }
 
   @Test

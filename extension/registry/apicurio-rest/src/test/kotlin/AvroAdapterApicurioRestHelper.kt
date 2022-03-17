@@ -4,7 +4,10 @@ import io.apicurio.registry.rest.client.RegistryClient
 import io.holixon.avro.adapter.api.SchemaIdSupplier
 import io.holixon.avro.adapter.api.SchemaRevisionResolver
 import io.holixon.avro.adapter.common.AvroAdapterDefault
+import io.holixon.avro.adapter.registry.apicurio.client.RegistryClientExt.queryArtifacts
 import mu.KLogging
+import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
@@ -43,5 +46,15 @@ object AvroAdapterApicurioRestHelper {
       schemaIdSupplier: SchemaIdSupplier = AvroAdapterDefault.schemaIdSupplier,
       schemaRevisionResolver: SchemaRevisionResolver = AvroAdapterDefault.schemaRevisionResolver
     ) = ApicurioAvroSchemaRegistry(registryClient, schemaIdSupplier, schemaRevisionResolver)
+
+    fun clear() = with(restClient()) {
+
+      queryArtifacts().map {
+        it.map { it.groupId }.toSet()
+      }.getOrThrow().forEach {
+        deleteArtifactsInGroup(it)
+      }
+
+    }
   }
 }

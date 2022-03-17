@@ -11,6 +11,7 @@ import io.holixon.avro.lib.test.schema.SampleEventV4713
 import mu.KLogging
 import org.apache.avro.Schema
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -30,6 +31,11 @@ internal class ApicurioAvroSchemaRegistryTCITest {
 
   private val schemaRegistry by lazy {
     CONTAINER.schemaRegistry()
+  }
+
+  @BeforeEach
+  fun setUp() {
+    CONTAINER.clear()
   }
 
   @Test
@@ -66,6 +72,7 @@ internal class ApicurioAvroSchemaRegistryTCITest {
 
 
   @Test
+  @Order(5)
   fun `find by id`() {
     val schema: Schema = SampleEventV4711.schema
     val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
@@ -81,6 +88,7 @@ internal class ApicurioAvroSchemaRegistryTCITest {
   }
 
   @Test
+  @Order(6)
   fun `find by info`() {
     val schema: Schema = AvroAdapterTestLib.schemaSampleEvent4711
     val fingerprint = AvroAdapterDefault.schemaIdSupplier.apply(schema)
@@ -117,6 +125,7 @@ internal class ApicurioAvroSchemaRegistryTCITest {
     .map { it.orElseThrow() }
 
   @Test
+  @Order(7)
   fun `find by context and name`() {
     val registered = installedSampleEventSchemaIds()
 
@@ -131,7 +140,7 @@ internal class ApicurioAvroSchemaRegistryTCITest {
       name = schema.name
     )
 
-    assertThat(found).containsExactlyInAnyOrder(*(registered.toTypedArray()))
+    assertThat(found).hasSize(1)
   }
 
 //  @Test
