@@ -7,6 +7,7 @@ import io.holixon.avro.lib.test.schema.SampleEventV4713
 import io.holixon.avro.lib.test.schema.TestSchemaDataProvider
 import org.apache.avro.Schema
 import org.apache.avro.SchemaNormalization
+import org.junit.jupiter.api.Test
 import java.util.*
 
 object AvroAdapterApiTestHelper {

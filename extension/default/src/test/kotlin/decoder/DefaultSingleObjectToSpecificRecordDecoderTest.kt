@@ -17,7 +17,7 @@ internal class DefaultSingleObjectToSpecificRecordDecoderTest {
   )
 
   @Test
-  internal fun `decode sample event 4711`() {
+  fun `decode sample event 4711`() {
     val record = SampleEvent("foo")
 
     val bytes = record.toByteBuffer().array()

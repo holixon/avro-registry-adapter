@@ -14,7 +14,7 @@ internal class DefaultSingleObjectToGenericDataRecordDecoderTest {
   private val decoder = DefaultSingleObjectToGenericDataRecordDecoder(registry.schemaResolver())
 
   @Test
-  internal fun `decode sample event 4711`() {
+  fun `decode sample event 4711`() {
     val bytes = SampleEventV4711.createSpecificRecord("foo").toByteArray()
 
     val record = decoder.decode(bytes)

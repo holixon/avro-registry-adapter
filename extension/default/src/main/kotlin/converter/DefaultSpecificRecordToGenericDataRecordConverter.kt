@@ -9,7 +9,7 @@ import org.apache.avro.specific.SpecificRecordBase
  * Converts any instance derived from [SpecificRecordBase] (generated from avsc) to a [GenericData.Record].
  * On decoding, the schema change from Writer to Reader takes place.
  */
-class DefaultSpecificRecordToGenericDataRecordConverter() : SpecificRecordToGenericDataRecordConverter {
+open class DefaultSpecificRecordToGenericDataRecordConverter() : SpecificRecordToGenericDataRecordConverter {
 
   override fun <T : SpecificRecordBase> convert(data: T): GenericData.Record = data.toGenericDataRecord()
 }

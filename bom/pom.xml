@@ -6,7 +6,7 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>avro-registry-adapter</artifactId>
-    <version>0.0.5</version>
+    <version>0.1.0</version>
   </parent>
 
   <groupId>io.holixon.avro</groupId>
@@ -15,27 +15,45 @@
 
   <properties>
     <avro-registry-adapter.version>${project.version}</avro-registry-adapter.version>
-    <avro.version>1.10.2</avro.version>
+    <avro.version>1.11.0</avro.version>
     <jcache.version>1.1.1</jcache.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>avro-registry-adapter-api</artifactId>
-        <groupId>${project.groupId}</groupId>
         <version>${avro-registry-adapter.version}</version>
       </dependency>
 
       <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>avro-registry-adapter-default</artifactId>
-        <groupId>${project.groupId}</groupId>
         <version>${avro-registry-adapter.version}</version>
       </dependency>
 
       <dependency>
-        <artifactId>avro-registry-adapter-apicurio</artifactId>
         <groupId>${project.groupId}</groupId>
+        <artifactId>avro-registry-adapter-apicurio</artifactId>
+        <version>${avro-registry-adapter.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>avro-registry-adapter-jpa</artifactId>
+        <version>${avro-registry-adapter.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>avro-registry-adapter-axon</artifactId>
+        <version>${avro-registry-adapter.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>avro-registry-adapter-reflection</artifactId>
         <version>${avro-registry-adapter.version}</version>
       </dependency>
 

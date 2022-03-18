@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class SampleEventV4712Test {
 
   @Test
-  internal fun `parse schema data`() {
+  fun `parse schema data`() {
     val schemaData = SampleEventV4712.schemaData
 
     assertThat(schemaData.namespace).isEqualTo("test.fixture")

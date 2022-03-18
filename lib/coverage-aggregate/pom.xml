@@ -6,10 +6,11 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>lib</artifactId>
-    <version>0.0.5</version>
+    <version>0.1.0</version>
   </parent>
 
-  <artifactId>avro-registry-adapter-lib-coverage-aggregator</artifactId>
+  <artifactId>coverage-aggregator</artifactId>
+  <name>lib: coverage-aggregator</name>
   <description>Aggregates coverage reports from JUnit test an I-Tests.</description>
 
   <properties>

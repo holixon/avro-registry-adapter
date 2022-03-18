@@ -17,23 +17,23 @@ internal class InMemoryAvroSchemaReadOnlyRegistryTest {
   )
 
   @Test
-  internal fun `empty registry`() {
+  fun `empty registry`() {
     assertThat(createWithSchemas().findAll()).isEmpty()
   }
 
   @Test
-  internal fun `has been registered correctly`() {
+  fun `has been registered correctly`() {
     println(registry.findAll())
   }
 
   @Test
-  internal fun `findById sample4711`() {
+  fun `findById sample4711`() {
     val schema = registry.findById(SampleEventV4711.schemaData.schemaId).orElseThrow()
     assertThat(schema.schema).isEqualTo(SampleEventV4711.schema)
   }
 
   @Test
-  internal fun `findByInfo sample4712 by schema with id`() {
+  fun `findByInfo sample4712 by schema with id`() {
     val info: AvroSchemaWithId = SampleEventV4712.schema.avroSchemaWithId
     val schema: AvroSchemaWithId = registry.findByInfo(info).orElseThrow()
 
@@ -41,7 +41,7 @@ internal class InMemoryAvroSchemaReadOnlyRegistryTest {
   }
 
   @Test
-  internal fun `findByInfo sample4712 by schema info`() {
+  fun `findByInfo sample4712 by schema info`() {
     val info = SampleEventV4712.schema.avroSchemaInfo
     assertThat(info.canonicalName).isEqualTo("test.fixture.SampleEvent")
     assertThat(info.revision).isEqualTo("4712")
@@ -53,7 +53,7 @@ internal class InMemoryAvroSchemaReadOnlyRegistryTest {
   }
 
   @Test
-  internal fun `findAll contains 4711 and 4712`() {
+  fun `findAll contains 4711 and 4712`() {
     val all = registry.findAll()
 
     assertThat(all).hasSize(2)
@@ -64,7 +64,7 @@ internal class InMemoryAvroSchemaReadOnlyRegistryTest {
   }
 
   @Test
-  internal fun `findAllByCanonicalName  contains 4711 and 4712`() {
+  fun `findAllByCanonicalName  contains 4711 and 4712`() {
     val byNames = registry.findAllByCanonicalName("test.fixture", "SampleEvent")
 
     assertThat(byNames).hasSize(2)

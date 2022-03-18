@@ -25,13 +25,13 @@ internal class ConcurrentMapCachingAvroSchemaResolverTest {
   private val cachingResolver = ConcurrentMapCachingAvroSchemaResolver(schemaRegistry.schemaResolver())
 
   @Test
-  internal fun `cache is empty`() {
+  fun `cache is empty`() {
     assertThat(cachingResolver.cache).isEmpty()
     verifyNoInteractions(schemaRegistry)
   }
 
   @Test
-  internal fun `resolver is only called once`() {
+  fun `resolver is only called once`() {
     val schema4711 = cachingResolver.apply(SampleEventV4711.schemaData.schemaId)
     assertThat(schema4711).hasValue(SampleEventV4711.schema.avroSchemaWithId)
 

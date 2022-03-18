@@ -21,7 +21,7 @@ internal class DefaultGenericDataRecordToSpecificRecordChangingSchemaConverterTe
   private val converter = DefaultGenericDataRecordToSpecificRecordChangingSchemaConverter(resolver)
 
   @Test
-  internal fun `convert generic record same schema`() {
+  fun `convert generic record same schema`() {
     val r4711 = schema4711.createGenericRecord {
       put("value", "foo")
     }
@@ -33,7 +33,7 @@ internal class DefaultGenericDataRecordToSpecificRecordChangingSchemaConverterTe
   }
 
   @Test
-  internal fun `convert generic record downgrade schema`() {
+  fun `convert generic record downgrade schema`() {
     val r4712 = schema4712.createGenericRecord {
       put("value", "foo")
       put("anotherValue", "bar")

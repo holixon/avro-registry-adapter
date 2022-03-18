@@ -27,8 +27,6 @@ _old/
 **/.tmp/
 .repository
 
-docs/
-
 javacore.*.txt
 Snap.*.trc
 

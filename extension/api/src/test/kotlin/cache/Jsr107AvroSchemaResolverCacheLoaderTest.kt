@@ -12,17 +12,17 @@ internal class Jsr107AvroSchemaResolverCacheLoaderTest {
   private val cacheLoader = Jsr107AvroSchemaResolverCacheLoader(AvroAdapterApiTestHelper.sampleEventsSchemaResolver)
 
   @Test
-  internal fun `load single - non existing`() {
+  fun `load single - non existing`() {
     assertThat(cacheLoader.load("xxx")).isNull()
   }
 
   @Test
-  internal fun `load single - existing`() {
+  fun `load single - existing`() {
     assertThat(cacheLoader.load(sampleEvent4711.schemaId)).isEqualTo(sampleEvent4711)
   }
 
   @Test
-  internal fun `loadAll - existing and non existing`() {
+  fun `loadAll - existing and non existing`() {
     val map = cacheLoader.loadAll(listOf(sampleEvent4711.schemaId, sampleEvent4712.schemaId, "xxx"))
     assertThat(map).hasSize(3)
 

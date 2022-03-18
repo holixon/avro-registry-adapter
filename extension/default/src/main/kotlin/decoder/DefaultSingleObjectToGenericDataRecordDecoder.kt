@@ -11,7 +11,7 @@ import org.apache.avro.message.BinaryMessageDecoder
  * Uses default [BinaryMessageDecoder] and given [AvroSchemaResolver] to decode the single object
  * bytes to a generic record.
  */
-class DefaultSingleObjectToGenericDataRecordDecoder(private val schemaResolver: AvroSchemaResolver) : SingleObjectToGenericDataRecordDecoder {
+open class DefaultSingleObjectToGenericDataRecordDecoder(private val schemaResolver: AvroSchemaResolver) : SingleObjectToGenericDataRecordDecoder {
 
   override fun decode(bytes: AvroSingleObjectEncoded): GenericData.Record {
     val schemaId = bytes.readPayloadAndSchemaId().schemaId

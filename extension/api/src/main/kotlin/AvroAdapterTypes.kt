@@ -4,8 +4,21 @@ import org.apache.avro.Schema
 
 /**
  * The unique id of a schema artifact, published to a repo.
+ *
+ * Note: The default implementation uses the avro schema fingerprint [SchemaNormalization.parsingFingerprint64(this)],
+ * only change if required.
  */
 typealias AvroSchemaId = String
+
+/**
+ * Alias for [Schema.getNamespace]
+ */
+typealias AvroSchemaNamespace = String
+
+/**
+ * Alias for [Schema.getName]
+ */
+typealias AvroSchemaName = String
 
 /**
  * The version of a schema.
@@ -37,11 +50,38 @@ interface AvroPayloadAndSchemaId {
 }
 
 /**
+ * Wrapper type for [AvroSchemaId] and the encoded message as [JsonString].
+ */
+interface JsonStringAndSchemaId {
+  val schemaId: AvroSchemaId
+  val json: JsonString
+}
+
+
+/**
  * Wrapper type containing the [AvroSingleObjectPayload], the [Schema] and the artifacts [AvroSchemaId].
  */
 interface AvroPayloadAndSchema {
   val schema: AvroSchemaWithId
   val payload: AvroSingleObjectPayload
+}
+
+
+/**
+ * Tuple containing namespace and name.
+ */
+interface AvroSchemaFqn {
+
+  /**
+   * Schema namespace.
+   */
+  val namespace: AvroSchemaNamespace
+
+  /**
+   * Schema name.
+   */
+  val name: AvroSchemaName
+
 }
 
 /**
@@ -52,9 +92,10 @@ interface AvroPayloadAndSchema {
  * * revision
  *
  */
-interface AvroSchemaInfo {
+interface AvroSchemaInfo : AvroSchemaFqn {
 
   companion object {
+
     /**
      * Default separator used in canonical name.
      */
@@ -72,12 +113,12 @@ interface AvroSchemaInfo {
   /**
    * Schema namespace.
    */
-  val namespace: String
+  override val namespace: String
 
   /**
    * Schema name.
    */
-  val name: String
+  override val name: String
 
   /**
    * Optional revision.
@@ -88,7 +129,7 @@ interface AvroSchemaInfo {
    * Canonical schema revision.
    */
   val canonicalName: String
-    get() = canonicalName(namespace, name)
+    get() = canonicalName(namespace, name) // has to be get() ... properties cannot be initialized in interfaces
 }
 
 /**

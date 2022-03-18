@@ -1,20 +1,16 @@
 package io.holixon.avro.adapter.registry.apicurio
 
 import io.apicurio.registry.rest.client.RegistryClient
-import io.apicurio.registry.types.ArtifactType
 import io.holixon.avro.adapter.api.SchemaIdSupplier
 import io.holixon.avro.adapter.api.SchemaRevisionResolver
-import io.holixon.avro.adapter.api.ext.SchemaExt.byteContent
 import io.holixon.avro.adapter.common.AvroAdapterDefault
-import io.holixon.avro.adapter.registry.apicurio.AvroAdapterApicurioRest.DEFAULT_GROUP
-import io.holixon.avro.adapter.registry.apicurio.client.GroupAwareRegistryClient
-import io.holixon.avro.adapter.registry.apicurio.type.ApicurioArtifactMetaData
+import io.holixon.avro.adapter.registry.apicurio.client.RegistryClientExt.queryArtifacts
 import mu.KLogging
-import org.apache.avro.Schema
+import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.testcontainers.containers.GenericContainer
 import org.testcontainers.containers.output.Slf4jLogConsumer
 import org.testcontainers.containers.wait.strategy.HostPortWaitStrategy
-import java.util.*
 
 /**
  * Test Helpers
@@ -24,7 +20,7 @@ object AvroAdapterApicurioRestHelper {
   /**
    * Test container for apicurio tests.
    */
-  class ApicurioRegistryTestContainer : GenericContainer<ApicurioRegistryTestContainer>("apicurio/apicurio-registry-mem:2.0.1.Final") {
+  class ApicurioRegistryTestContainer : GenericContainer<ApicurioRegistryTestContainer>("apicurio/apicurio-registry-mem:2.1.3.Final") {
     companion object : KLogging() {
       const val EXPOSED_PORT = 8080
     }
@@ -49,26 +45,16 @@ object AvroAdapterApicurioRestHelper {
       registryClient: RegistryClient = restClient(),
       schemaIdSupplier: SchemaIdSupplier = AvroAdapterDefault.schemaIdSupplier,
       schemaRevisionResolver: SchemaRevisionResolver = AvroAdapterDefault.schemaRevisionResolver
-    ) = ApicurioAvroSchemaRegistry(registryClient, DEFAULT_GROUP, schemaIdSupplier, schemaRevisionResolver)
+    ) = ApicurioAvroSchemaRegistry(registryClient, schemaIdSupplier, schemaRevisionResolver)
+
+    fun clear() = with(restClient()) {
+
+      queryArtifacts().map {
+        it.map { it.groupId }.toSet()
+      }.getOrThrow().forEach {
+        deleteArtifactsInGroup(it)
+      }
+
+    }
   }
-
-  fun RegistryClient.registerDefaultRandomId(schema: Schema) =
-    ApicurioArtifactMetaData(createArtifact(DEFAULT_GROUP, UUID.randomUUID().toString(), ArtifactType.AVRO, schema.byteContent()))
-}
-
-fun main() {
-  val registryClient = AvroAdapterApicurioRest.registryRestClient("localhost", 7777)
-  //val metaDataPropertiesFactory = ApicurioArtifactMetaDataPropertiesFactory(schemaIdSupplier = AvroAdapterDefault.schemaIdSupplier, schemaRevisionResolver = AvroAdapterDefault.schemaRevisionResolver)
-
-  println(registryClient.listGlobalRules())
-  println(registryClient.listArtifactsInGroup("default"))
-  println(registryClient.listArtifactsInGroup("default").count)
-
-  val c = GroupAwareRegistryClient(
-    client = registryClient,
-    schemaIdSupplier = AvroAdapterDefault.schemaIdSupplier,
-    schemaRevisionResolver = AvroAdapterDefault.schemaRevisionResolver
-  )
-  println(c.findArtifactMetaData("6edc992f-494b-42ea-9665-8061aa6fc930").getOrNull())
-
 }

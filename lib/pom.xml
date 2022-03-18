@@ -6,12 +6,13 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>avro-registry-adapter-parent</artifactId>
-    <version>0.0.5</version>
+    <version>0.1.0</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
   <artifactId>lib</artifactId>
   <packaging>pom</packaging>
+  <name>POM: help libraries</name>
 
   <modules>
     <module>test</module>

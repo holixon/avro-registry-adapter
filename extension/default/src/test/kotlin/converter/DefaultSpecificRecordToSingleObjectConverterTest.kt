@@ -23,7 +23,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
   private val registry = AvroAdapterDefault.inMemorySchemaRegistry()
 
   @Test
-  internal fun `encode and decode same writer and reader schema`() {
+  fun `encode and decode same writer and reader schema`() {
     registry.register(AvroAdapterTestLib.schemaSampleEvent4711)
 
     val data: SampleEvent = AvroAdapterTestLib.sampleFoo
@@ -41,7 +41,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
   }
 
   @Test
-  internal fun `encode and decode different writer and reader schema`() {
+  fun `encode and decode different writer and reader schema`() {
 
     val reg1 = registry.register(AvroAdapterTestLib.schemaSampleEvent4711)
     val reg2 = registry.register(AvroAdapterTestLib.schemaSampleEvent4713)
@@ -66,7 +66,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
 
 
   @Test
-  internal fun `encode and decode different writer and reader schema ignoring NAME_MISMATCH`() {
+  fun `encode and decode different writer and reader schema ignoring NAME_MISMATCH`() {
 
     registry.register(AvroAdapterTestLib.schemaSampleEvent4711)
     registry.register(AvroAdapterTestLib.schemaSampleEvent4713)
@@ -93,7 +93,7 @@ internal class DefaultSpecificRecordToSingleObjectConverterTest {
   }
 
   @Test
-  internal fun `encode and decode different writer=4713 and reader=4711 schema ignoring NAME_MISMATCH`() {
+  fun `encode and decode different writer=4713 and reader=4711 schema ignoring NAME_MISMATCH`() {
 
     registry.register(AvroAdapterTestLib.schemaSampleEvent4711)
     registry.register(AvroAdapterTestLib.schemaSampleEvent4713)

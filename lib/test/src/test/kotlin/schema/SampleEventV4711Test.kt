@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 internal class SampleEventV4711Test {
 
   @Test
-  internal fun `load from resource`() {
+  fun `load from resource`() {
     val schemaData = SampleEventV4711.schemaData
 
     assertThat(schemaData.name).isEqualTo("SampleEvent")

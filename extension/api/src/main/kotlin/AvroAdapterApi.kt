@@ -21,6 +21,11 @@ fun interface SchemaIdSupplier : Function<Schema, AvroSchemaId>
 fun interface SchemaRevisionResolver : Function<Schema, Optional<AvroSchemaRevision>>
 
 /**
+ * Provides the (implementation specific) [AvroSchemaRevision] for a given [AvroSchemaId].
+ */
+fun interface AvroSchemaRevisionForSchemaIdResolver : Function<AvroSchemaId, Optional<AvroSchemaRevision>>
+
+/**
  * Returns `true` if the [ByteBuffer] conforms to the singleObject encoding specification.
  */
 fun interface IsAvroSingleObjectEncodedPredicate : Predicate<ByteBuffer>

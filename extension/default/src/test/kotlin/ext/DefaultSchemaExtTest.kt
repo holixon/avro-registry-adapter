@@ -21,22 +21,22 @@ internal class DefaultSchemaExtTest {
   private val fingerprint = SchemaNormalization.parsingFingerprint64(schema)
 
   @Test
-  internal fun `get fingerprint`() {
+  fun `get fingerprint`() {
     assertThat(schema.fingerprint).isEqualTo(fingerprint)
   }
 
   @Test
-  internal fun `get avroSchemaId`() {
+  fun `get avroSchemaId`() {
     assertThat(schema.avroSchemaId).isEqualTo("$fingerprint")
   }
 
   @Test
-  internal fun `get avroSchemaRevision`() {
+  fun `get avroSchemaRevision`() {
     assertThat(schema.avroSchemaRevision).isEqualTo("4711")
   }
 
   @Test
-  internal fun `get avroSchemaWithId`() {
+  fun `get avroSchemaWithId`() {
     assertThat(schema.avroSchemaWithId).isEqualTo(
       AvroSchemaWithIdData(
         schemaId = "$fingerprint",
@@ -47,7 +47,7 @@ internal class DefaultSchemaExtTest {
   }
 
   @Test
-  internal fun `get avroSchemaWithId 4712`() {
+  fun `get avroSchemaWithId 4712`() {
     val s4712 = SampleEventV4712.schema
 
     assertThat(s4712.avroSchemaWithId).isEqualTo(
@@ -60,7 +60,7 @@ internal class DefaultSchemaExtTest {
   }
 
   @Test
-  internal fun `get avroSchemaInfo`() {
+  fun `get avroSchemaInfo`() {
     assertThat(schema.avroSchemaInfo).isEqualTo(
       AvroSchemaInfoData(
         namespace = "test.fixture",
@@ -71,7 +71,7 @@ internal class DefaultSchemaExtTest {
   }
 
   @Test
-  internal fun `create generic record`() {
+  fun `create generic record`() {
     val record: GenericData.Record = schema.createGenericRecord {
       put("value", "foo")
     }

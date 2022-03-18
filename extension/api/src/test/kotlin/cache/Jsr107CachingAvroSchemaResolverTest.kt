@@ -47,7 +47,7 @@ internal class Jsr107CachingAvroSchemaResolverTest {
   }
 
   @Test
-  internal fun `cache is filled on first hit`() {
+  fun `cache is filled on first hit`() {
     assertThat(cache.name).isEqualTo(DEFAULT_CACHE_NAME)
     assertContainsKeys(
       sampleEvent4711.schemaId to false,
@@ -71,7 +71,7 @@ internal class Jsr107CachingAvroSchemaResolverTest {
   }
 
   @Test
-  internal fun `empty when not found via loader`() {
+  fun `empty when not found via loader`() {
     assertContainsKeys(
       sampleEvent4711.schemaId to false,
       sampleEvent4712.schemaId to false,

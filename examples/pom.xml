@@ -6,11 +6,12 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>avro-registry-adapter-parent</artifactId>
-    <version>0.0.5</version>
+    <version>0.1.0</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
 
   <artifactId>examples</artifactId>
+  <name>POM: examples</name>
   <packaging>pom</packaging>
 
   <properties>
@@ -26,5 +27,5 @@
   <dependencies>
     <!-- No dependencies here, define explicitly in example -->
   </dependencies>
-  
+
 </project>

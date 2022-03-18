@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 internal class SchemaRevisionResolverTest {
 
   @Test
-  internal fun `resolve revision for sample 4712`() {
+  fun `resolve revision for sample 4712`() {
     assertThat(AvroAdapterApi.propertyBasedSchemaRevisionResolver("revision").apply(SampleEventV4712.schema)).hasValue("4712")
   }
 }

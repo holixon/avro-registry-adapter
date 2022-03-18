@@ -30,5 +30,4 @@ object ApicurioTypeFixtures {
     properties = avroSchemaWithId.properties()
   }
 
-  fun ArtifactMetaData.toDataClass() = ApicurioArtifactMetaData(this)
 }

@@ -18,7 +18,7 @@ internal class AvroAdapterDefaultTest {
   private val bytes = AvroAdapterTestLib.sampleFoo.toByteArray()
 
   @Test
-  internal fun `read payload and schemaId from encoded bytes`() {
+  fun `read payload and schemaId from encoded bytes`() {
     logger.info { bytes.toHexString() }
 
     // too short
@@ -37,7 +37,7 @@ internal class AvroAdapterDefaultTest {
   }
 
   @Test
-  internal fun `extract schemaId and payload`() {
+  fun `extract schemaId and payload`() {
     val (schemaId, payload) = bytes.readPayloadAndSchemaId().let { it.schemaId to it.payload }
 
     assertThat(schemaId).isEqualTo(AvroAdapterTestLib.sampleEventFingerprint.toString())
@@ -45,15 +45,14 @@ internal class AvroAdapterDefaultTest {
   }
 
   @Test
-  internal fun `is avro single object encoded`() {
+  fun `is avro single object encoded`() {
     assertThat(bytes.isAvroSingleObjectEncoded()).isTrue
 
     assertThat("foo".encodeToByteArray().isAvroSingleObjectEncoded()).isFalse
   }
 
-
   @Test
-  internal fun `get generic data from specific record`() {
+  fun `get generic data from specific record`() {
     val genericRecord = AvroAdapterTestLib.sampleFoo.toGenericDataRecord()
     assertThat(genericRecord.get("value")).isEqualTo("foo")
   }

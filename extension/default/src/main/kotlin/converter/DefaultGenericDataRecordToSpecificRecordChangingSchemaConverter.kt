@@ -13,7 +13,7 @@ import org.apache.avro.specific.SpecificRecordBase
  * Converts the generic record into specific record.
  * Will change the schema from writer schema to reader schema.
  */
-class DefaultGenericDataRecordToSpecificRecordChangingSchemaConverter(
+open class DefaultGenericDataRecordToSpecificRecordChangingSchemaConverter(
   private val schemaResolutionSupport: SchemaResolutionSupport
 ) : GenericDataRecordToSpecificRecordConverter {
 

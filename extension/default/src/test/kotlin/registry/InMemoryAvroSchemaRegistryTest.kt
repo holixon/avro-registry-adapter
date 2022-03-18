@@ -24,7 +24,7 @@ internal class InMemoryAvroSchemaRegistryTest {
   }
 
   @Test
-  internal fun `register returns schemaWithId`() {
+  fun `register returns schemaWithId`() {
     val r1 = registry.register(schema)
     val r2 = registry.register(SampleEventV4712.schema)
 
@@ -38,7 +38,7 @@ internal class InMemoryAvroSchemaRegistryTest {
   }
 
   @Test
-  internal fun `find by context and name`() {
+  fun `find by context and name`() {
     assertThat(registry.findAllByCanonicalName("test.fixture", "SampleEvent")).isEmpty()
     registry.register(schema)
 
@@ -46,7 +46,7 @@ internal class InMemoryAvroSchemaRegistryTest {
   }
 
   @Test
-  internal fun `can register schema and find by id`() {
+  fun `can register schema and find by id`() {
     registry.register(schema)
     assertThat(registry.findAll()).isNotEmpty
 
@@ -58,7 +58,7 @@ internal class InMemoryAvroSchemaRegistryTest {
   }
 
   @Test
-  internal fun `can transform to read only registry`() {
+  fun `can transform to read only registry`() {
     registry.register(schema)
     val readOnly = registry.toReadOnly()
 
@@ -66,7 +66,7 @@ internal class InMemoryAvroSchemaRegistryTest {
   }
 
   @Test
-  internal fun `register different revisions of sampleEvent and find`() {
+  fun `register different revisions of sampleEvent and find`() {
     registry.close()
     assertThat(registry.findAll()).isEmpty()
     assertThat(registry.register(SampleEventV4711.schema).revision).isEqualTo("4711")

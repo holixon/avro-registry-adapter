@@ -19,7 +19,7 @@ import org.apache.avro.specific.SpecificRecordBase
  * Attention: The returned instance is compliant to the reader schema, since the concrete schema
  * used to decode might differ from the one used for encoding.
  */
-class DefaultSingleObjectToSpecificRecordDecoder(
+open class DefaultSingleObjectToSpecificRecordDecoder(
   private val schemaStore: SchemaStore,
   private val schemaResolutionSupport: SchemaResolutionSupport
 ) : SingleObjectToSpecificRecordDecoder {

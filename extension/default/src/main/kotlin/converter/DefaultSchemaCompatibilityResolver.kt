@@ -10,7 +10,7 @@ import org.apache.avro.SchemaCompatibility.SchemaCompatibilityType.*
 /**
  * Detects and possibly resolves schema incompatibilities.
  */
-class DefaultSchemaCompatibilityResolver @JvmOverloads constructor(
+open class DefaultSchemaCompatibilityResolver @JvmOverloads constructor(
   val ignoredIncompatibilityTypes: Set<SchemaCompatibility.SchemaIncompatibilityType> = setOf()
 ) : AvroSchemaIncompatibilityResolver {
 

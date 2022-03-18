@@ -11,7 +11,7 @@ internal class DefaultSpecificRecordToSingleObjectEncoderTest {
   private val encoder = DefaultSpecificRecordToSingleObjectEncoder()
 
   @Test
-  internal fun `encode sample event 4711`() {
+  fun `encode sample event 4711`() {
     val record = SampleEventV4711.createSpecificRecord("foo")
 
     assertThat(encoder.encode(record).toHexString()).isEqualTo(AvroAdapterTestLib.sampleFooHex)

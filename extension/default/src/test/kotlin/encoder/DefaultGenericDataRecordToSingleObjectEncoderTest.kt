@@ -11,7 +11,7 @@ internal class DefaultGenericDataRecordToSingleObjectEncoderTest {
   private val encoder = DefaultGenericDataRecordToSingleObjectEncoder()
 
   @Test
-  internal fun `encode sample event 4711`() {
+  fun `encode sample event 4711`() {
     val generic = SampleEventV4711.createGenericRecord("foo")
     val specific = SampleEventV4711.createSpecificRecord("foo")
 

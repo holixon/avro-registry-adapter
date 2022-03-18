@@ -15,13 +15,13 @@ internal class ByteArrayExtTest {
   private val helloBytes: ByteArray = "Hello World!".encodeToByteArray()
 
   @Test
-  internal fun `to hex String`() {
+  fun `to hex String`() {
     assertThat(helloBytes.toHexString()).isEqualTo("[48 65 6C 6C 6F 20 57 6F 72 6C 64 21]")
     assertThat(byteArrayOf(-61, 1).toHexString()).isEqualTo("[C3 01]")
   }
 
   @Test
-  internal fun `extract from byte buffer`() {
+  fun `extract from byte buffer`() {
     val buffer = helloBytes.buffer()
     buffer.position(7)
 
@@ -60,7 +60,7 @@ internal class ByteArrayExtTest {
   }
 
   @Test
-  internal fun `split byteArray`() {
+  fun `split byteArray`() {
     assertThatThrownBy { helloBytes.split(-1) }.hasMessage("all indexes have to match '0 < index < size-1', was: indexes=[-1], size=12")
       .isInstanceOf(IllegalArgumentException::class.java)
     assertThatThrownBy { helloBytes.split(100) }.hasMessage("all indexes have to match '0 < index < size-1', was: indexes=[100], size=12")

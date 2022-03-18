@@ -4,7 +4,6 @@ import io.holixon.avro.adapter.api.AvroAdapterApi.schemaResolver
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import io.holixon.avro.adapter.common.decoder.DefaultSingleObjectToGenericDataRecordDecoder
 import io.holixon.avro.adapter.common.encoder.DefaultGenericDataRecordToSingleObjectEncoder
-import io.holixon.avro.adapter.common.encoder.DefaultSpecificRecordToSingleObjectEncoder
 import io.holixon.avro.lib.test.AvroAdapterTestLib
 import io.holixon.avro.lib.test.schema.SampleEventV4713
 import org.apache.avro.SchemaCompatibility
@@ -19,16 +18,13 @@ internal class DefaultConvertersTests {
   private val registry = AvroAdapterDefault.inMemorySchemaRegistry()
 
   @Test
-  internal fun `convert bytes to generic data record to specific record`() {
+  fun `convert bytes to generic data record to specific record`() {
 
     registry.register(AvroAdapterTestLib.schemaSampleEvent4711)
     registry.register(AvroAdapterTestLib.schemaSampleEvent4713)
 
-    val resolver = AvroAdapterDefault.reflectionBasedDecoderSpecificRecordClassResolver
-
     val genericRecordEncoder = DefaultGenericDataRecordToSingleObjectEncoder()
     val genericRecordDecoder = DefaultSingleObjectToGenericDataRecordDecoder(registry.schemaResolver())
-    val specificRecordEncoder = DefaultSpecificRecordToSingleObjectEncoder()
 
     val specificRecordToGenericRecordConverter = DefaultSpecificRecordToGenericDataRecordConverter()
 
