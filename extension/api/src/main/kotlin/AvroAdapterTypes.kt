@@ -50,12 +50,23 @@ interface AvroPayloadAndSchemaId {
 }
 
 /**
+ * Wrapper type for [AvroSchemaId] and the encoded message as [JsonString].
+ */
+interface JsonStringAndSchemaId {
+  val schemaId: AvroSchemaId
+  val json : JsonString
+}
+
+
+/**
  * Wrapper type containing the [AvroSingleObjectPayload], the [Schema] and the artifacts [AvroSchemaId].
  */
 interface AvroPayloadAndSchema {
   val schema: AvroSchemaWithId
   val payload: AvroSingleObjectPayload
 }
+
+
 
 /**
  * Tuple containing namespace and name.
