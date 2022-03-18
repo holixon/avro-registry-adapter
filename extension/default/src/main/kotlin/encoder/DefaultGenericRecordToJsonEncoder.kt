@@ -7,7 +7,10 @@ import io.holixon.avro.adapter.api.type.JsonStringAndSchemaIdData
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import org.apache.avro.generic.GenericData
 
-class DefaultGenericRecordToJsonEncoder
+/**
+ * Default implementation of [GenericRecordToJsonEncoder].
+ */
+open class DefaultGenericRecordToJsonEncoder
 @JvmOverloads
 constructor(
   private val schemaIdSupplier: SchemaIdSupplier = AvroAdapterDefault.schemaIdSupplier

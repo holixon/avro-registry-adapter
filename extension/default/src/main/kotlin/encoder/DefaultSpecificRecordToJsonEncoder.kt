@@ -7,7 +7,10 @@ import io.holixon.avro.adapter.api.type.JsonStringAndSchemaIdData
 import io.holixon.avro.adapter.common.AvroAdapterDefault
 import org.apache.avro.specific.SpecificRecordBase
 
-class DefaultSpecificRecordToJsonEncoder
+/**
+ * Default implementation of [SpecificRecordToJsonEncoder] using `SpecificRecordBase.toString()` to create json string.
+ */
+open class DefaultSpecificRecordToJsonEncoder
 @JvmOverloads
 constructor(
   private val schemaIdSupplier: SchemaIdSupplier = AvroAdapterDefault.schemaIdSupplier

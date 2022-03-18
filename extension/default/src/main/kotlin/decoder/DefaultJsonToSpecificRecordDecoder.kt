@@ -8,7 +8,11 @@ import io.holixon.avro.adapter.api.decoder.JsonToSpecificRecordDecoder
 import org.apache.avro.Schema
 import org.apache.avro.specific.SpecificRecordBase
 
-class DefaultJsonToSpecificRecordDecoder(
+/**
+ * Default implementation of [JsonToSpecificRecordDecoder]. This decodes to `GenericData.Record` first
+ * and then uses the [GenericDataRecordToSpecificRecordConverter] to create a specific record value.
+ */
+open class DefaultJsonToSpecificRecordDecoder(
   private val decoder: JsonToGenericDataRecordDecoder,
   private val converter: GenericDataRecordToSpecificRecordConverter
 ) : JsonToSpecificRecordDecoder {

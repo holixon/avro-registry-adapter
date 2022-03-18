@@ -16,7 +16,7 @@ import java.io.ByteArrayOutputStream
 /**
  * Uses the schema encoded in the single object bytes to create a generic datum and convert it to json.
  */
-class DefaultSingleObjectToJsonConverter(private val schemaResolver: AvroSchemaResolver) : SingleObjectToJsonConverter {
+open class DefaultSingleObjectToJsonConverter(private val schemaResolver: AvroSchemaResolver) : SingleObjectToJsonConverter {
 
   override fun convert(bytes: AvroSingleObjectEncoded): JsonStringAndSchemaId {
     val (schemaId, payload) = bytes.readPayloadAndSchemaId().let { it.schemaId to it.payload }

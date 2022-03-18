@@ -9,7 +9,7 @@ import java.io.ByteArrayOutputStream
 /**
  * Uses [BinaryMessageEncoder] default to convert [org.apache.avro.generic.GenericData.Record] to [AvroSingleObjectEncoded] bytes.
  */
-class DefaultGenericDataRecordToSingleObjectEncoder : GenericDataRecordToSingleObjectEncoder {
+open class DefaultGenericDataRecordToSingleObjectEncoder : GenericDataRecordToSingleObjectEncoder {
 
   override fun encode(data: GenericData.Record): AvroSingleObjectEncoded = ByteArrayOutputStream().use {
     BinaryMessageEncoder<GenericData.Record>(GenericData.get(), data.schema).encode(data, it)

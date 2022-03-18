@@ -54,7 +54,7 @@ interface AvroPayloadAndSchemaId {
  */
 interface JsonStringAndSchemaId {
   val schemaId: AvroSchemaId
-  val json : JsonString
+  val json: JsonString
 }
 
 
@@ -65,7 +65,6 @@ interface AvroPayloadAndSchema {
   val schema: AvroSchemaWithId
   val payload: AvroSingleObjectPayload
 }
-
 
 
 /**
@@ -93,9 +92,10 @@ interface AvroSchemaFqn {
  * * revision
  *
  */
-interface AvroSchemaInfo : AvroSchemaFqn{
+interface AvroSchemaInfo : AvroSchemaFqn {
 
   companion object {
+
     /**
      * Default separator used in canonical name.
      */

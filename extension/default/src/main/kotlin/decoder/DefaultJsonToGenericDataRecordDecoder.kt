@@ -15,7 +15,7 @@ import org.apache.avro.io.DecoderFactory
 /**
  * Default implementation of JsonToGenericDataRecordDecoder.
  */
-class DefaultJsonToGenericDataRecordDecoder(
+open class DefaultJsonToGenericDataRecordDecoder(
   private val schemaResolver: AvroSchemaResolver
 ) : JsonToGenericDataRecordDecoder {
 

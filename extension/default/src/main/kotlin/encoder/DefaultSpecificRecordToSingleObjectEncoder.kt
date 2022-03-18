@@ -10,7 +10,7 @@ import java.io.ByteArrayOutputStream
 /**
  * Uses [BinaryMessageEncoder] default to convert [org.apache.avro.generic.GenericData.Record] to [AvroSingleObjectEncoded] bytes.
  */
-class DefaultSpecificRecordToSingleObjectEncoder : SpecificRecordToSingleObjectEncoder {
+open class DefaultSpecificRecordToSingleObjectEncoder : SpecificRecordToSingleObjectEncoder {
 
   override fun <T : SpecificRecordBase> encode(data: T): AvroSingleObjectEncoded = ByteArrayOutputStream().use {
     BinaryMessageEncoder<T>(SpecificData(), data.schema).encode(data, it)
