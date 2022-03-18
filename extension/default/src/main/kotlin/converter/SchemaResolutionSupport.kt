@@ -11,7 +11,7 @@ import org.apache.avro.specific.SpecificRecordBase
 /**
  * Default reader schema resolver.
  */
-class SchemaResolutionSupport
+open class SchemaResolutionSupport
 @JvmOverloads
 constructor(
   private val schemaResolver: AvroSchemaResolver,
