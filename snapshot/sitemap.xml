@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://www.holixon.io/avro-registry-adapter/snapshot/index.html</loc>
-         <lastmod>2022-04-04</lastmod>
+         <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.holixon.io/avro-registry-adapter/snapshot/schema-registry-api.html</loc>
-         <lastmod>2022-04-04</lastmod>
+         <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.holixon.io/avro-registry-adapter/snapshot/adapter/index.html</loc>
-         <lastmod>2022-04-04</lastmod>
+         <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.holixon.io/avro-registry-adapter/snapshot/adapter/axon.html</loc>
-         <lastmod>2022-04-04</lastmod>
+         <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.holixon.io/avro-registry-adapter/snapshot/adapter/composite.html</loc>
-         <lastmod>2022-04-04</lastmod>
+         <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.holixon.io/avro-registry-adapter/snapshot/adapter/in-memory.html</loc>
-         <lastmod>2022-04-04</lastmod>
+         <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.holixon.io/avro-registry-adapter/snapshot/adapter/jpa.html</loc>
-         <lastmod>2022-04-04</lastmod>
+         <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://www.holixon.io/avro-registry-adapter/snapshot/adapter/reflective.html</loc>
-         <lastmod>2022-04-04</lastmod>
+         <lastmod>2022-04-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
