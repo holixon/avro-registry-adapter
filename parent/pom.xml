@@ -16,7 +16,7 @@
     <avro.version>1.11.0</avro.version>
     <kotlin-logging.version>2.1.21</kotlin-logging.version>
     <apicurio.version>2.2.3.Final</apicurio.version>
-    <spring-boot.version>2.6.6</spring-boot.version>
+    <spring-boot.version>2.6.7</spring-boot.version>
   </properties>
 
   <dependencyManagement>
