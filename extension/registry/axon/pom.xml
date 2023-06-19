@@ -16,7 +16,7 @@
 
   <properties>
     <jacoco.skip>false</jacoco.skip>
-    <axon.version>4.7.0</axon.version>
+    <axon.version>4.7.6</axon.version>
     <axon-testcontainer.version>0.1.0</axon-testcontainer.version>
   </properties>
 
