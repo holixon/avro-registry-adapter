@@ -13,7 +13,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <avro.version>1.11.1</avro.version>
+    <avro.version>1.11.2</avro.version>
     <kotlin-logging.version>3.0.5</kotlin-logging.version>
     <apicurio.version>2.3.1.Final</apicurio.version>
     <spring-boot.version>2.7.5</spring-boot.version>
