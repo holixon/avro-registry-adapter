@@ -15,7 +15,7 @@
 
   <properties>
     <avro-registry-adapter.version>${project.version}</avro-registry-adapter.version>
-    <avro.version>1.11.2</avro.version>
+    <avro.version>1.11.3</avro.version>
     <jcache.version>1.1.1</jcache.version>
   </properties>
 
