@@ -6,7 +6,7 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>extension</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
 
@@ -16,8 +16,8 @@
 
   <properties>
     <jacoco.skip>false</jacoco.skip>
-    <axon.version>4.5.8</axon.version>
-    <axon-testcontainer.version>0.0.2</axon-testcontainer.version>
+    <axon.version>4.7.0</axon.version>
+    <axon-testcontainer.version>0.1.0</axon-testcontainer.version>
   </properties>
 
   <dependencyManagement>

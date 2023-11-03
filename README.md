@@ -1,5 +1,6 @@
 # avro-registry-adapter
 
+[![incubating](https://img.shields.io/badge/lifecycle-INCUBATING-orange.svg)](https://github.com/holisticon#open-source-lifecycle)
 [![Build Status](https://github.com/holixon/avro-registry-adapter/workflows/Development%20branches/badge.svg)](https://github.com/holixon/avro-registry-adapter/actions)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1f099f2971ed401ea1d8d55a7183a00c)](https://www.codacy.com/gh/holixon/avro-registry-adapter/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=holixon/avro-registry-adapter&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/holixon/avro-registry-adapter/branch/develop/graph/badge.svg?token=bjT1hlfnH4)](https://codecov.io/gh/holixon/avro-registry-adapter)

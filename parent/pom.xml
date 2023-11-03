@@ -6,17 +6,17 @@
   <parent>
     <groupId>io.holixon.avro._</groupId>
     <artifactId>avro-registry-adapter</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
   </parent>
 
   <artifactId>avro-registry-adapter-parent</artifactId>
   <packaging>pom</packaging>
 
   <properties>
-    <avro.version>1.11.0</avro.version>
-    <kotlin-logging.version>2.1.21</kotlin-logging.version>
-    <apicurio.version>2.2.1.Final</apicurio.version>
-    <spring-boot.version>2.6.4</spring-boot.version>
+    <avro.version>1.10.2</avro.version>
+    <kotlin-logging.version>3.0.5</kotlin-logging.version>
+    <apicurio.version>2.3.1.Final</apicurio.version>
+    <spring-boot.version>2.7.5</spring-boot.version>
   </properties>
 
   <dependencyManagement>
